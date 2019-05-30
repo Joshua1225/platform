@@ -16,3 +16,5 @@ def data(request):
     response={"backends":1}
     return HttpResponse(json.dumps(response))
 
+def test(request):
+    return render(request, 'test.html')
