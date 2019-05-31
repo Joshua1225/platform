@@ -1,18 +1,28 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-view/>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link> 
-    </div>
+      <el-container>
+        <el-header>
+          <head/>
+        </el-header>
+        <el-main>
+          <router-view/>
+        </el-main>
+
+        <el-footer>
+          <footer/>
+        </el-footer>
+      </el-container>
     
+    </div>
   </div>
 </template>
 
 
+
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

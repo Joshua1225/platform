@@ -1,25 +1,92 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Request Test</title>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+  <title>Request Test</title>
 </head>
+
 <body>
-    A Test for Django!
+  <div id='app'>
+    <el-container>
+
+      <el-header height="200px">
+        <p>{{this.fileUrl}}</p>
+        <el-upload class="upload-demo" action="" :http-request="uploadForm" :on-preview="handlePreview" :on-remove="handleRemove"
+          :before-remove="beforeRemove" :http-request="uploadForm" multiple :limit="3" :on-exceed="handleExceed"
+          :file-list="fileList">
+          <el-button size="small" type="primary">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+      </el-header>
+      <el-main>
+        <p>{{this.dataUrl}}</p>
+        <el-button @click='uploadJson'>上传Json</el-button>
+      </el-main>
+    </el-container>
+  </div>
 </body>
-        
-
-
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-    url="/data"
-    data={"a":1,"b":2}
 
-    axios.post(url,JSON.stringify(data)).then((res) => {
-        console.log(res)
-    })
-    .catch((res) => {
-        console.log(res)
-    })
+<script>
+
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        Json: {
+          key: 1,
+          value: 2
+        },
+        dataUrl: "/data",
+        fileUrl: "/file",
+        fileList: []
+      };
+    },
+    methods: {
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}？`);
+      },
+      uploadForm(param) {
+        //TO DO 更改Url
+        var fileObj = param.file;
+        console.log("upload");
+        var form = new FormData();
+        form.append("file", fileObj);
+        form.append("paperId", 123456);
+
+        axios.post(this.fileUrl, form);
+      },
+      uploadJson() {
+        //TO DO 更改Url
+        axios.post(this.dataUrl, JSON.stringify(data)).then((res) => {
+          console.log(res)
+        }).catch((res) => {
+          console.log(res)
+        })
+      }
+    }
+  })
+
+
+
+
 
 </script>
 
