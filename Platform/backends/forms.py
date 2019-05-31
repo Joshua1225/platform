@@ -1,11 +1,12 @@
 from django.forms import ModelForm
 from django import  forms
-from .models import Users
+from .models import Unidentified_Academia
 
 # 根据实际需求调整
-class UserForm(ModelForm):
+class AcademiaForm(ModelForm):
     class Meta:
-        model = Users
+        model = Unidentified_Academia
+        fields = "__all__"
 
 # 上传文件表单
 class UploadFileForm(forms.Form):
