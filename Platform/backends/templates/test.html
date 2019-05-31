@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Request Test</title>
+</head>
+<body>
+    A Test for Django!
+</body>
+        
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    url="/data"
+    data={"a":1,"b":2}
+
+    axios.post(url,JSON.stringify(data)).then((res) => {
+        console.log(res)
+    })
+    .catch((res) => {
+        console.log(res)
+    })
+
+</script>
+
+</html>
