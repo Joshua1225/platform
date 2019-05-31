@@ -1,29 +1,10 @@
-# paltform
-
-## Project setup
-```
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
 npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+请编码head.vue和footer.vue
 
-### Run your tests
-```
-npm run test
-```
+参考Search和Result理解VUE
 
-### Lints and fixes files
-```
-npm run lint
-```
+head和H5标签重名，换个名字
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
