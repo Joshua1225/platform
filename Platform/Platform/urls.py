@@ -19,7 +19,7 @@ from backends import  views
 
 
 urlpatterns = [
-    path('', include('backends.urls')),
+
     path('admin/', admin.site.urls),
     path('',views.test ),
     path('data',views.data)

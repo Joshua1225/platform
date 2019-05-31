@@ -9,7 +9,7 @@ from django.utils import timezone
 class Unidentified_Academia(models.Model):
     """未认证的专家"""
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, verbose_name="专家ID", db_index=True, editable=False)
-    name = models.CharField(verbose_name="真实姓名")
+    name = models.CharField(max_length=255, verbose_name="真实姓名")
     n_pubs = models.IntegerField(verbose_name="出版数", null=True)
     h_index = models.IntegerField(verbose_name="h指数", null=True)
     n_citation = models.IntegerField(verbose_name="总被引量", null=True)
