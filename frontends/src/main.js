@@ -4,15 +4,19 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import head from '@/components/Top.vue'
 
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
+
 new Vue({
   router,
   store,
+  components: {
+    head
+  },
   render: h => h(App)
 }).$mount('#app')
-router.push("/Search")
+//router.push("/Search")
