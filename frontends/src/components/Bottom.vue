@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'Feader',
+  name: 'bottom',
   props: {
     msg: String
   }

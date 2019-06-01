@@ -3,14 +3,14 @@
     <div id="nav">
       <el-container>
         <el-header>
-          <head/>
+          <top/>
         </el-header>
         <el-main>
           <router-view/>
         </el-main>
 
         <el-footer>
-          <footer/>
+          <bottom/>
         </el-footer>
       </el-container>
     
