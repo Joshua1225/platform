@@ -19,8 +19,7 @@ new Vue({
   },
   render: h => h(App)
 }).$mount('#app')
-<<<<<<< HEAD
 //router.push("/Search")
-=======
+
 router.push("/")
->>>>>>> c5604aba90720a11de80dd28efce46943a2e2d0b
+
