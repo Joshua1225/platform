@@ -15,13 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from backends import views
-
+from backends import views,keywordview
 
 urlpatterns = [
-
+    path('platform/', include('backends.urls')),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('', views.test ),
     path('data', views.data),
     path('search/', include('haystack.urls')),
+=======
+    path('',views.test ),
+    path('data',views.data),
+    path('getkeyword',keywordview.getkeyword )
+>>>>>>> c3b4446af2122341e09b8c3e49a967265cb70bb3
 ]
