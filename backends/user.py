@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 import json
 
@@ -22,6 +22,7 @@ login(username, password)
 [{'code':2}]  账号不存在
 [{'code':3}]  密码不对
 '''
+@csrf_exempt
 def login(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -59,6 +60,7 @@ logout()
 [{'code':1}]  未登录
 [{'code':0}]  注销成功
 '''
+@csrf_exempt
 def logout(request):
     ans = []
     if (check_login(request)):
@@ -80,6 +82,7 @@ register()
 [{'code':1}]  拒绝使用GET方法
 [{'code':2}]  用户已存在
 '''
+@csrf_exempt
 def register(request):
     ans = []
     if request.method == "POST":
