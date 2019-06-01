@@ -6,7 +6,6 @@
 //HTML 标签重复 warn
 
 <template>
-    
     <el-button>A Header</el-button>
 </template>
 
