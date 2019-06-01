@@ -5,6 +5,7 @@ import Appeal from './views/Appeal.vue'
 import Search from './views/Search.vue'
 import Login from './views/Login.vue'
 import Result from './views/Result.vue'
+import PaperList from "./components/PaperList.vue"
 
 Vue.use(Router)
 
@@ -16,7 +17,7 @@ export default new Router({
     {
       path: '/',
       name: 'appeal',
-      component: Appeal
+      component: PaperList
     },
     {
       path: '/about',
