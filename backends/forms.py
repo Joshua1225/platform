@@ -1,11 +1,11 @@
 from django.forms import ModelForm
-from django import  forms
-from .models import Unidentified_Academia
+from django import forms
+from backends.models import UnidentifiedAcademia
 
 # 根据实际需求调整
 class AcademiaForm(ModelForm):
     class Meta:
-        model = Unidentified_Academia
+        model = UnidentifiedAcademia
         fields = "__all__"
 
 # 上传文件表单
