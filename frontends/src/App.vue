@@ -8,7 +8,6 @@
         <el-main>
           <router-view/>
         </el-main>
-        <bottom/>
         <el-footer>
           <bottom/>
         </el-footer>
