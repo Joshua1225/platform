@@ -7,21 +7,20 @@
 
 <template>
 <el-row :gutter="20">
-  <el-col :span="6">
+  <el-col :span="6" style="float:left">
     <div class="grid-content bg-purple">
       <div class="demo-image">
         <div class="block" >
           <el-image
-            style="width: 80px; height: 80px; float:left"
+            style="width: 100px; height: 100px"
             :src="url"
             :fit="fit"></el-image>
         </div>
       </div>
     </div>
   </el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"><userstate/></div></el-col>
+  <el-col :span="6"><div class="grid-content bg-purple" ></div></el-col>
+  <el-col :span="6"  style="float:right"><div class="grid-content bg-purple"><userstate/></div></el-col>
 </el-row>
   
 </template>
@@ -36,7 +35,7 @@ export default {
    data() {
       return {
         fit:  'contain',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+        url: require('@/assets/logo.jpg')
       }
    },
    components: {
