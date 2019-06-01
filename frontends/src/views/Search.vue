@@ -3,7 +3,6 @@
 <template>
   <div>
     <!-- Logo-->
-
     <searchBar/>
   </div>
 </template>

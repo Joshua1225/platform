@@ -10,8 +10,8 @@
             </el-select>
         </el-form-item>
 
-        <el-form-item label="当前文章" v-model='form.obj'>
-            {{form.obj}}
+        <el-form-item label="当前文章" v-model='form'>
+            {{obj}}
         </el-form-item>
 
         
@@ -51,7 +51,10 @@
 
 <script>
 export default{
-    name: 'AppealMessage',
+    name: 'AppealForm',
+    props:{
+        obj:String
+    },
     data:function(){
         return {
             reasons:[

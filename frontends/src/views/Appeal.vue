@@ -1,19 +1,22 @@
-<<template>
-    <div>
-        <el-row>
-          <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="8">
-            <div class="grid-content bg-purple">
-                <router-view></router-view>
-            </div>
-            
-            </el-col>
-           
-        </el-row>
-        <el-row>
-          <el-col :span="24"><div class="grid-content bg-purple"></div></el-col>
-        </el-row>
-    </div>
-</template>>
+<template>
+  <div>
+    <appealForm :obj='obj'></appealForm>
+  </div>
+</template>
+
+<script>
+import AppealForm from "@/components/AppealForm.vue";
+
+export default {
+  name: "appeal",
+  data: function() {
+    return {
+      obj: "father",
+      type: "认证"
+    };
+  },
+  components: {
+    AppealForm
+  }
+};
+</script>

@@ -3,14 +3,13 @@
     <div id="nav">
       <el-container>
         <el-header>
-          <head/>
+          <top/>
         </el-header>
         <el-main>
           <router-view/>
         </el-main>
-
         <el-footer>
-          <footer/>
+          <bottom/>
         </el-footer>
       </el-container>
     
@@ -18,6 +17,16 @@
   </div>
 </template>
 
+<script>
+import Bottom from '@/components/Bottom.vue'
+import Top from '@/components/Top.vue'
+export default {
+  name:"app",
+  components: {
+    Bottom,Top
+  }
+}
+</script>
 
 
 <style>
