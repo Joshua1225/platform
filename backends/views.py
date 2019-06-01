@@ -11,7 +11,6 @@ from backends.models import UnidentifiedAcademia
 def test(request):
     return render(request,"test.html")
 
-
 @csrf_exempt
 def data(request):
     request.method

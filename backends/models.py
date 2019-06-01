@@ -51,11 +51,11 @@ class Users(models.Model):
     """用户"""
     user_id = models.UUIDField(default=uuid.uuid4, max_length=21, primary_key=True, db_index=True, verbose_name="用户ID", editable=False)
     password = models.CharField(max_length=21, verbose_name="用户密码")
-    user_name = models.CharField(max_length=21, verbose_name="用户名字")
+    name = models.CharField(max_length=21, verbose_name="用户名字")
     credit = models.IntegerField(default=0, verbose_name="积分")
     interest = models.CharField(max_length=255, null=True, verbose_name="兴趣领域")
     email = models.EmailField(null=True, verbose_name="邮箱")
-    avator = models.ImageField(verbose_name="头像")     # 这里有两个可选参数规定图片显示大长和宽，根据前端页面需要定，还需要一个default
+    avator = models.ImageField(verbose_name="头像", null=True)     # 这里有两个可选参数规定图片显示大长和宽，根据前端页面需要定，还需要一个default
     signature = models.TextField(null=True, verbose_name="个性签名")
     type = models.IntegerField(default=0, choices=((0, u"普通用户"), (1, u"专家")), verbose_name="用户类型")
     academia_id = models.ForeignKey(UnidentifiedAcademia, null=True, on_delete=models.PROTECT)
