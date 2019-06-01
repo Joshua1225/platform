@@ -8,7 +8,7 @@
         <el-main>
           <router-view/>
         </el-main>
-
+        <bottom/>
         <el-footer>
           <bottom/>
         </el-footer>
@@ -19,12 +19,13 @@
 </template>
 
 <script>
-import bottom from '@/components/Bottom.vue'
-import top from '@/components/Top.vue'
+import Bottom from '@/components/Bottom.vue'
+import Top from '@/components/Top.vue'
 export default {
+  name:"app",
   components: {
-    bottom,top
-  },
+    Bottom,Top
+  }
 }
 </script>
 
