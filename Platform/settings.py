@@ -77,18 +77,13 @@ WSGI_APPLICATION = 'Platform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Remote',
+        'USER': 'root',
+        'PASSWORD': 'Platform123',
+        'HOST': '154.8.237.76',
+        'PORT': '3306'
     }
-
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': '****',
-    #     'USER': 'root',
-    #     'PASSWORD': '******',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306'
-    # }
 }
 
 
