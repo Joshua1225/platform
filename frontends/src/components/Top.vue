@@ -6,13 +6,12 @@
 //HTML 标签重复 warn
 
 <template>
-    
-    <el-button>A header</el-button>
+    <el-button>A Header</el-button>
 </template>
 
 <script>
 export default {
-  name: 'Head',
+  name: 'top',
   props: {
     msg: String
   }
