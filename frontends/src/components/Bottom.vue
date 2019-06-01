@@ -54,26 +54,30 @@
 
 <script>
 import Vue from "vue";
+import App from "../App.vue";
+import router from "../router";
+import store from "../store";
 import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import head from "@/components/Top.vue";
 
 export default {
   name: "bottom",
   props: {
     msg: String
+  },
+  data: function() {
+    return {
+      ask: "关于我们",
+	  question1: "百度学术集成海量学术资源，融合人工智能、深度学习、大数据分析等技术，\
+	  为科研工作者提供全面快捷的学术服务。在这里我们保持学习的态度，不忘初心，砥砺前行。",
+      question2: "如何修改兴趣领域",
+      question3: "如何申诉",
+      contactus: "联系我们",
+      contact1: "1234567890",
+      contact2: "1234567890",
+      contact3: "1234567890"
+    };
   }
 };
-
-new Vue({
-  el: "#main0",
-  data: {
-    ask: "常见问题",
-    question1: "如何充值积分",
-    question2: "如何修改兴趣领域",
-    question3: "如何申诉",
-    contactus: "联系我们",
-    contact1: "1234567890",
-    contact2: "1234567890",
-    contact3: "1234567890"
-  }
-});
 </script>
