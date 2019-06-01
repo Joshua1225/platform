@@ -106,7 +106,7 @@ class Papers(models.Model):
     issn = models.CharField(max_length=255, null=True, verbose_name="ISSN号")
     isbn = models.CharField(max_length=255, null=True, verbose_name="ISBN号")
     doi = models.CharField(max_length=255, null=True, verbose_name="DOI码")
-    pdf = models.FileField(verbose_name="pdf链接", null=True, blank=True, upload_to=upload_to)
+    pdf = models.FileField(verbose_name="pdf链接", null=True, blank=True, upload_to=upload_paper_to)
     url = models.TextField(verbose_name="外部链接", null=True)
     abstract = models.TextField(verbose_name="摘要", null=True)
     """
