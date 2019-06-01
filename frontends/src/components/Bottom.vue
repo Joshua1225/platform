@@ -4,17 +4,23 @@
 
 <style>
 .upper {
-  height: 500px;
+  height: 1px;
+  background-color: blue;
+  width: 100%;
+}
+.blank {
+  height: 50px;
+  width: 100%;
 }
 .outer {
   border: 1px #000000;
-  height: 150px;
-  text-align: left;
+  height: 180px;
 }
 .div-a {
   float: left;
   width: 40%;
   height: 100%;
+  text-align: left;
 }
 .div-b {
   float: right;
@@ -25,32 +31,46 @@
   float: right;
   width: 80%;
   height: 25%;
+  text-align: left;
+  font-size: 16pt;
 }
 .question {
   float: right;
   width: 80%;
   height: 75%;
-  line-height:200%;
+  line-height: 250%;
 }
 .contact {
-  float: left;
-  width: 51%;
+  float: right;
+  width: 80%;
   height: 25%;
+  text-align: left;
 }
 </style>
 
 
 <template>
   <div class="outer" id="main0">
+    <div class="upper"></div>
+    <div class="blank"></div>
     <div class="div-a">
       <div class="about">{{ask}}</div>
       <div class="question">{{question1}}</div>
     </div>
     <div class="div-b">
-      <div class="contact">{{contactus}}</div>
-      <div class="contact">{{contact1}}</div>
-      <div class="contact">{{contact2}}</div>
-      <div class="contact">{{contact3}}</div>
+      <div class="about">{{contactus}}</div>
+      <div class="contact">
+        <i class="el-icon-phone"></i>
+        {{contact1}}
+      </div>
+      <div class="contact">
+        <i class="el-icon-edit-outline"></i>
+        {{contact2}}
+      </div>
+      <div class="contact">
+        <i class="el-icon-s-home"></i>
+        {{contact3}}
+      </div>
     </div>
   </div>
 </template>
