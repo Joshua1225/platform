@@ -17,9 +17,8 @@ from django.contrib import admin
 from django.urls import path,include
 from backends import views,keywordview
 
-
 urlpatterns = [
-
+    path('platform/', include('backends.urls')),
     path('admin/', admin.site.urls),
     path('',views.test ),
     path('data',views.data),
