@@ -15,4 +15,4 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-router.push("/Search")
+router.push("/")
