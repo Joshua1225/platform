@@ -1,8 +1,10 @@
 from django.urls import path
 
-from . import views
+from . import user
 
-
+app_name = 'backends'
 urlpatterns = [
-    path('test/', views.test)
+    path('login/', user.login),
+    path('logout/', user.logout),
+    path('register/', user.register)
 ]
