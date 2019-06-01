@@ -51,6 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Platform.urls'
+MEDIA_ROOT = os.path.join(BASE_DIR,'static')
 
 TEMPLATES = [
     {
