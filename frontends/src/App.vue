@@ -18,6 +18,15 @@
   </div>
 </template>
 
+<script>
+import bottom from '@/components/Bottom.vue'
+import top from '@/components/Top.vue'
+export default {
+  components: {
+    bottom,top
+  },
+}
+</script>
 
 
 <style>

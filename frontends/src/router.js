@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Appeal from './views/Appeal.vue'
 import Search from './views/Search.vue'
+import Login from './views/Login.vue'
 import Result from './views/Result.vue'
 
 Vue.use(Router)
@@ -29,6 +30,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component:Search
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component:Login
     },
     {
       path:'/result',

@@ -16,9 +16,7 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
-  components: {
-    bottom,top
-  },
-  render: h => h(App)
+  render: h => h(App),
+  
 }).$mount('#app')
 router.push("/Search")
