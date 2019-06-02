@@ -1,4 +1,4 @@
-// 搜索系列页面
+// 猜你喜欢
 
 <style>
 .userouter{
@@ -9,15 +9,15 @@
 
 <template>
   <div class="userouter">
-    <userinfo />
+    <guessyoulike />
   </div>
 </template>
 <script>
-import userinfo from "@/components/userinfo.vue";
+import guessyoulikelist from "@/components/guessyoulikelist.vue";
 export default {
   name: "user",
   components: {
-    userinfo
+    guessyoulike
   }
 };
 </script>
