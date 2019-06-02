@@ -2,18 +2,18 @@
   <div>
     <paperinfo/>
     <el-divider></el-divider>
-    <similarpaper/>
+    <paperlist/>
   </div>
 </template>
 
 <script>
 import paperinfo from '@/components/PaperInfo.vue'
-import similarpaper from '@/components/SimilarPaper.vue'
+import paperlist from '@/components/PaperList.vue'
 export default {
   name: "papers",
   components: {
     paperinfo,
-    similarpaper
+    paperlist
   }
 };
 </script>
