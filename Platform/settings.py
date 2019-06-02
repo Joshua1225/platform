@@ -99,8 +99,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Remote',
         'USER': 'root',
-        'PASSWORD': 'Platform123',
-        'HOST': '154.8.237.76',
+        'PASSWORD': 'tbw_broHan970424',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
