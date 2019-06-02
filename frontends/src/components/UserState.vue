@@ -1,20 +1,29 @@
 <template>
-  <div v-if="!isLog">
-    <el-button type="primary" @click="goLogin()">登陆</el-button>
+  <div>
+    <div v-if="!this.$store.state.isLog">
+        <el-button type="primary" style="float:right" @click="goLogin()">登陆</el-button>
+    </div>
+    <div v-else>
+        <i class="el-icon-message"></i>
+        <i class="el-icon-user"></i>
+    </div>
   </div>
 </template>
 
 <script>
+import store from '@/store'
 export default {
   name: "userstate",
   data() {
     return {
-      isLog: false
+      isLog: store.state.isLog
     };
   },
   methods: {
     goLogin() {
-      this.$router.push("/login");
+        store.commit('changeisLog')
+        console.log(this.isLog)
+        this.$router.push("/login")
     }
   }
 };

@@ -45,7 +45,7 @@
           key: 1,
           value: 2
         },
-        dataUrl: "/data",
+        dataUrl: "/getkeyword",
         fileUrl: "/file",
         fileList: []
       };
@@ -75,7 +75,7 @@
       },
       uploadJson() {
         //TO DO 更改Url
-        axios.post(this.dataUrl, JSON.stringify(data)).then((res) => {
+        axios.post(this.dataUrl, JSON.stringify(this.Json)).then((res) => {
           console.log(res)
         }).catch((res) => {
           console.log(res)

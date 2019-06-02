@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from backends import views
+from backends import views,keywordview
 
 urlpatterns = [
-    path('platform/', include('backends.urls')),
-    path('admin/', admin.site.urls),
+
     path('',views.test ),
-    path('data',views.data)
+    path('data',views.data),
+    path('getkeyword',keywordview.getkeyword )
+
 ]
