@@ -4,8 +4,7 @@
         <el-button type="primary" style="float:right" @click="goLogin()">登陆</el-button>
     </div>
     <div v-else>
-        <i class="el-icon-message"></i>
-        <i class="el-icon-user"></i>
+        <i class="el-icon-user" style="font-size:40px" ></i>
     </div>
   </div>
 </template>

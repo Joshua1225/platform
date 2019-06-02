@@ -1,3 +1,10 @@
+import json
+from django.shortcuts import render
+
+# Create your views here.
+from django.views.decorators.csrf import csrf_exempt
+
+
 # 处理上传文件
 def handle_uploaded_file(f):
     with open('some/file/name.txt', 'wb+') as destination:     #需要修改为保存的位置

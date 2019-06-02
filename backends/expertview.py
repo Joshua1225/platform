@@ -1,5 +1,4 @@
 import json
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -8,24 +7,31 @@ from .forms import AcademiaForm, UploadFileForm
 from backends.models import UnidentifiedAcademia
 
 
-#修改专家信息
+'''
+editacademia() 修改专家信息
+
+[{'code':0}]  修改成功
+[{'code':1}]  拒绝使用GET方法
+[{'code':2}]  用户不存在
+'''
 @csrf_exempt
-def academia_edit(request):
-    '''
-        先把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单
-        并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值
-    '''
-    academia = UnidentifiedAcademia.objects.get(id = request.user.academia_id)  #这里是默认发送了user的信息
+def editacademia(request):
+    ans = []
+
     if request.method == "POST":
-        academia_form = AcademiaForm(request.POST)
-        if academia_form.is_valid():
-            academia_cd = academia_form.cleaned_data
-            academia.position = academia_cd['position']
-            academia.experience = academia_cd['experience']
-            academia.education = academia_cd['education']
-            academia.tendency = academia_cd['tendency']
-            academia.save()
-        return HttpResponseRedirect('填写你要跳转的url')
+        id = request.POST.get("id")
+        ac = UnidentifiedAcademia.objects.filter(id)
+        if len(ac) == 0:
+            ans += [{'code': 2}]
+            return JsonResponse(ans, safe=False)
+        else:
+            ac.position = request.POST.get("position")
+            ac.experience = request.POST.get("experience")
+            ac.education = request.POST.get("education")
+            ac.tendency = request.POST.get("tendency")
+            ac.save()
+            ans += [{'code': 0}]
+            return JsonResponse(ans, safe=False)
     else:
-        academia_form = AcademiaForm(instance=request.user)
-        return render(request, "填写你要跳转的html", {"user_form":academia_form})
+        ans += [{'code': 1}]
+        return JsonResponse(ans, safe=False)

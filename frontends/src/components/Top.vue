@@ -12,7 +12,7 @@
       <div class="demo-image">
         <div class="block" >
           <el-image
-            style="width: 100px; height: 100px"
+            style="width: 200px; height: 100px"
             :src="url"
             :fit="fit"></el-image>
         </div>
