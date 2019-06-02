@@ -66,7 +66,7 @@ export default {
 </script>
 <style>
 .paperList {
-  margin: ;
+  margin: 10px;
 }
 .paper {
   margin-top: 10px;
