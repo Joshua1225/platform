@@ -1,11 +1,23 @@
 <template>
-  <div class=''>
-    <el-card shadow="hover" v-for="paper in papers" :key="paper.title">
-      <h1>{{paper.title}}</h1>
-      <el-row>
-        <span v-for="author in paper.authors" :key="author.authorid">{{author.name}}</span>
-      </el-row>
-      <el-row>{{paper.cited}}</el-row>
+  <div class="paper">
+    <el-card
+      :body-style="{ padding: '15px' }"
+      shadow="hover"
+      v-for="paper in papers"
+      :key="paper.title"
+    >
+      <div class="title">
+        <router-link class="title" to="/">{{paper.title}}</router-link>
+      </div>
+      <div class="abstract">{{paper.abstract}}</div>
+      <div class="info">
+        <span v-for="author in paper.authors" :key="author.authorid">
+          <router-link to="/">{{author.name}}</router-link>&nbsp;
+        </span>
+        <span>被引量：{{paper.cited}}</span>
+        &nbsp;&nbsp;
+        <span class="year">-{{paper.year}}年</span>
+      </div>
     </el-card>
   </div>
 </template>
@@ -18,7 +30,7 @@ export default {
       papers: [
         {
           title: "基于深度学习的水文",
-          abstract: "摘要",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
           authors: [
             { name: "作者1", authorid: "12345" },
             { name: "作者2", authorid: "15345" }
@@ -32,3 +44,41 @@ export default {
   }
 };
 </script>
+<style>
+.paper {
+  text-align: left;
+  width: 500px;
+}
+.title {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 6px;
+  color: #06c;
+}
+
+.abstract {
+  font-size: 15px;
+  margin-top: 10px;
+  color: #666;
+}
+.year {
+  color: #999;
+}
+.info {
+  font-size: 13px;
+  margin-top: 5px;
+  font: 100;
+  color: #333;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  color: darkmagenta;
+}
+</style>
+
