@@ -5,6 +5,7 @@ import Appeal from './views/Appeal.vue'
 import Search from './views/Search.vue'
 import Login from './views/Login.vue'
 import Result from './views/Result.vue'
+import User from './views/User.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component:Login
+    },
+    {
+      path: '/User',
+      name: 'User',
+      component: User
     },
     {
       path:'/result',
