@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div>
+  <div class="divx">
+    <div class="divx">
       <span class="left">
         <table border="1">抠脚大汉如何女装</table>
         <table border="1">作者：王佳奇</table>
@@ -10,10 +10,10 @@
         <el-button type="info" round>认证</el-button>
       </span>
     </div>
-    <div>
+    <div class="divx">
       <table width="100%" height="300px" border="1">123</table>
     </div>
-    <div>
+    <div class="divx">
       <span class="left">
         <table border="1">DOI：123456</table>
         <table border="1">被引量：1111111</table>
@@ -42,10 +42,7 @@ table {
 .right {
   float: right;
 }
-div {
+.divx {
   overflow: hidden;
-}
-span {
-  display: inline-block;
 }
 </style>
