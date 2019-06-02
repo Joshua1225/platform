@@ -1,6 +1,6 @@
-import json
+import json,os
 
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from backends.models import Papers,upload_paper_to
 
 '''
-upload_file() 上传文件
+upload_paper() 上传论文
 
 [{'code':0}]  上传成功
 [{'code':1}]  拒绝使用GET方法
@@ -17,18 +17,15 @@ upload_file() 上传文件
 '''
 @csrf_exempt
 # 上传文件
-def upload_file(request):
+def upload_paper(request):
     ans = []
     if request.method == 'POST':
         pid = request.POST.get('id')
         #sta 需要
         pfile = request.POST.get('file')
         paper = Papers.objects.filter(id=pid)
-        if len(paper) == 0:
+        if len(paper) == 0:       #论文不存在
             ans += [{'code':2}]
-            fpath = upload_paper_to(pid)
-            print(fpath)
-
             return JsonResponse(ans, safe=False)
         else:
             fpath = upload_paper_to(pid)
@@ -40,7 +37,7 @@ def upload_file(request):
         ans += [{'code':1}]
         return JsonResponse(ans, safe=False)
 
-# 处理上传文件
+# 处理上传论文文件
 def handle_uploaded_file(f,fpath):
     with open(fpath, 'wb+') as destination:     #需要修改为保存的位置
         for chunk in f.chunks():
@@ -48,13 +45,24 @@ def handle_uploaded_file(f,fpath):
     destination.close()
 
 
-# @csrf_exempt
-# # 下载文件
-# def download(request):
-#     field = request.GET.get('field')
-#     name = request.GET.get('name')
-#     file = open( 'basedir'+field+'/'+name,'rb')    #basedir需要修改为文件保存根目录
-#     response = FileResponse(file)
-#     response['Content-Type']='application/msword'
-#     response['Content-Disposition']='attachment;filename='+name
-#     return response
+'''
+download_paper() 下载论文
+需要论文id 
+return response: 正常下载
+[{'code':2}]  论文不存在
+'''
+@csrf_exempt
+# 下载文件
+def download_paper(request):
+    ans = []
+    if request.method == 'POST':
+        pid = request.POST.get('id')
+        path = os.path.join('papers', pid)  #文件保存目录
+        file = open(path,'rb')
+        response = FileResponse(file)
+        response['Content-Type'] = 'application/octet-stream'    #可以下载任意格式的文件
+        response['Content-Disposition'] = 'attachment;filename='+ pid
+        return response
+    else:
+        ans += [{'code': 2}]
+        return JsonResponse(ans, safe=False)

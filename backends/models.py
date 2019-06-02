@@ -4,8 +4,8 @@ from django.utils import timezone
 # Create your models here.
 
 
-def upload_paper_to(instance, filename):
-    return os.path.join('papers', instance.user_id, filename)
+def upload_paper_to(pid):
+    return os.path.join('papers', pid)
 
 
 def upload_avator_to(instance, filename):
