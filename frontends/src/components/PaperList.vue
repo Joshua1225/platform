@@ -1,11 +1,19 @@
 <template>
-  <div class="paper">
-    <el-card
-      :body-style="{ padding: '15px' }"
-      shadow="hover"
-      v-for="paper in papers"
-      :key="paper.title"
-    >
+  <div style="paperList">
+    <el-dropdown trigger="click">
+      <span class="el-dropdown-link">
+        下拉菜单
+        <i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
+        <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+    <div class="paper" style shadow="hover" v-for="paper in papers" :key="paper.title">
       <div class="title">
         <router-link class="title" to="/">{{paper.title}}</router-link>
       </div>
@@ -18,7 +26,8 @@
         &nbsp;&nbsp;
         <span class="year">-{{paper.year}}年</span>
       </div>
-    </el-card>
+    </div>
+    <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
   </div>
 </template>
 
@@ -38,6 +47,17 @@ export default {
           cited: "555",
           year: "2019",
           origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
         }
       ]
     };
@@ -45,9 +65,14 @@ export default {
 };
 </script>
 <style>
+.paperList {
+  margin: ;
+}
 .paper {
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: left;
-  width: 500px;
+  border-bottom: 1px solid #efefef;
 }
 .title {
   font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;
@@ -68,6 +93,7 @@ export default {
 .info {
   font-size: 13px;
   margin-top: 5px;
+  margin-bottom: 10px;
   font: 100;
   color: #333;
 }
