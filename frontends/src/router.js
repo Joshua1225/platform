@@ -5,7 +5,9 @@ import Appeal from './views/Appeal.vue'
 import Search from './views/Search.vue'
 import Login from './views/Login.vue'
 import Result from './views/Result.vue'
+import User from './views/User.vue'
 import PaperList from "./components/PaperList.vue"
+import Papers from './views/Papers.vue'
 
 Vue.use(Router)
 
@@ -38,9 +40,20 @@ export default new Router({
       component:Login
     },
     {
+      path: '/User',
+      name: 'User',
+      component: User
+    },
+    {
       path:'/result',
       name:'result',
       component:Result
+    },
+    
+    {
+      path:'/papers',
+      name:'papers',
+      component:Papers
     }
   ]
 })

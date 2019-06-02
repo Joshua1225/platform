@@ -1,4 +1,6 @@
 import json
+
+from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -19,17 +21,20 @@ def editacademia(request):
     ans = []
 
     if request.method == "POST":
-        id = request.POST.get("id")
-        ac = UnidentifiedAcademia.objects.filter(id)
+
+        obj = json.loads(request.body)
+        aid = obj["id"]
+        #ans += [{"id": aid}]
+        ac = UnidentifiedAcademia.objects.filter(id=aid)
         if len(ac) == 0:
             ans += [{'code': 2}]
             return JsonResponse(ans, safe=False)
         else:
-            ac.position = request.POST.get("position")
-            ac.experience = request.POST.get("experience")
-            ac.education = request.POST.get("education")
-            ac.tendency = request.POST.get("tendency")
-            ac.save()
+            ac.update(position=obj["position"])
+            ac.update(experience=obj["experience"])
+            ac.update(education=obj["education"])
+            ac.update(tendency=obj["tendency"])
+
             ans += [{'code': 0}]
             return JsonResponse(ans, safe=False)
     else:
