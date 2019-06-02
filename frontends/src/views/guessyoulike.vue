@@ -1,23 +1,24 @@
 // 猜你喜欢
 
 <style>
-.userouter{
-  width: 35%;
-  margin-left: 10%;
+.guessyoulikeouter-style { 
+    float: right;
+    width: 55%;
+    height: 100%;
 }
 </style>
 
 <template>
-  <div class="userouter">
-    <guessyoulike />
+  <div class="guessyoulikeouter-style">
+    <guessyoulikelist />
   </div>
 </template>
 <script>
 import guessyoulikelist from "@/components/guessyoulikelist.vue";
 export default {
-  name: "user",
+  name: "guessyoulike",
   components: {
-    guessyoulike
+    guessyoulikelist
   }
 };
 </script>
