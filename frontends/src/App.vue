@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <el-container>
-        <el-header style="overflow: hidden">
+        <el-header >
           <top/>
         </el-header>
         <el-main>
