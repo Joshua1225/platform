@@ -1,64 +1,4 @@
-<style>
-.infoouter {
-  float: left;
-  width: 40%;
-}
 
-.img-style {
-  width: 100%;
-  height: 210px;
-  background-color: whitesmoke;
-}
-
-.nickname-style {
-  height: 100px;
-  font-size: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: aquamarine;
-}
-.email-style {
-  height: 55px;
-  font-size: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: cornsilk;
-}
-.unknown-style {
-  height: 55px;
-  font-size: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: aquamarine;
-}
-.introduction-style {
-  height: 45px;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: wheat;
-}
-.interests-style {
-  height: 45px;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color:violet;
-}
-.intereststitle-style {
-  height: 45px;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color:steelblue;
-}
-</style>
 
 
 
@@ -122,3 +62,64 @@ export default {
   }
 };
 </script>
+<style>
+.infoouter {
+  float: left;
+  width: 40%;
+}
+
+.img-style {
+  width: 100%;
+  height: 210px;
+  background-color: whitesmoke;
+}
+
+.nickname-style {
+  height: 100px;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+}
+.email-style {
+  height: 55px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: cornsilk;
+}
+.unknown-style {
+  height: 55px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+}
+.introduction-style {
+  height: 45px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: wheat;
+}
+.interests-style {
+  height: 45px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:violet;
+}
+.intereststitle-style {
+  height: 45px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:steelblue;
+}
+</style>

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div >
     <paperinfo/>
     <el-divider></el-divider>
-    <paperlist/>
+    <paperlist class="paper-simple"></paperlist>
   </div>
 </template>
 
@@ -17,3 +17,8 @@ export default {
   }
 };
 </script>
+<style>
+.paper-simple{
+  margin:0 auto
+}
+</style>

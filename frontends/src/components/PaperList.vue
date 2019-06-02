@@ -1,5 +1,5 @@
 <template>
-  <div class="paperList">
+  <el-card class="box-card">
     <el-dropdown trigger="click" style="float:right">
       <span class="el-dropdown-link">
         结果排序
@@ -26,7 +26,7 @@
       </div>
     </div>
     <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -151,9 +151,12 @@ export default {
 };
 </script>
 <style>
+ .box-card {
+    width: 800px;
+  }
 .paperList {
   padding: 40px;
-  width: 650px;
+  width: 750px;
   text-align: center;
 }
 .paper {
