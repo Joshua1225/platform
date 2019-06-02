@@ -7,6 +7,7 @@ import Login from './views/Login.vue'
 import Result from './views/Result.vue'
 import User from './views/User.vue'
 import PaperList from "./components/PaperList.vue"
+import Papers from './views/Papers.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,12 @@ export default new Router({
       path:'/result',
       name:'result',
       component:Result
+    },
+    
+    {
+      path:'/papers',
+      name:'papers',
+      component:Papers
     }
   ]
 })
