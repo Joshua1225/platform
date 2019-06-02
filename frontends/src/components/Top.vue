@@ -6,41 +6,46 @@
 //HTML 标签重复 warn
 
 <template>
-<el-row :gutter="20">
-  <el-col :span="6">
-    <div class="grid-content bg-purple">
-      <div class="demo-image">
-        <div class="block" >
-          <el-image
-            style="width: 80px; height: 80px; float:left"
-            :src="url"
-            :fit="fit"></el-image>
+  <el-row :gutter="20">
+    <el-col :span="6" style="float:left">
+      <div class="grid-content bg-purple">
+        <div class="demo-image">
+          <div class="block">
+            <el-image
+              style="width: 150px; height: 60px;  display: flex; justify-content: center; align-items: center;"
+              :src="url"
+              :fit="fit"
+            ></el-image>
+          </div>
         </div>
       </div>
-    </div>
-  </el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"><userstate/></div></el-col>
-</el-row>
-  
+    </el-col>
+    <el-col :span="6">
+      <div class="grid-content bg-purple"></div>
+    </el-col>
+    <el-col :span="6" style="float:right">
+      <div class="grid-content bg-purple">
+        <userstate/>
+      </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
-import userstate from '@/components/UserState.vue'
+import userstate from "@/components/UserState.vue";
 export default {
-  name: 'top',
+  name: "top",
   props: {
     msg: String
   },
-   data() {
-      return {
-        fit:  'contain',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-      }
-   },
-   components: {
+  data() {
+    return {
+      fit: "fill",
+      url: require("@/assets/logo.jpg")
+    };
+  },
+  components: {
     userstate
   }
-}
+};
 </script>

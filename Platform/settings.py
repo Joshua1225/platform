@@ -25,7 +25,7 @@ SECRET_KEY = '_$7o7w_u89!3lurt6u#8!t8c8rv#%x^xu6k82$&qo0a5oy^_)4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,7 +38,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',  # 搜索
 ]
+
+# Haystack
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'backends.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+# 自动更新索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# 指定搜索结果每页的条数 这里设置成了1条
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,11 +67,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Platform.urls'
+MEDIA_ROOT = os.path.join(BASE_DIR,'static')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'template')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -70,25 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Platform.wsgi.application'
-
-# Haystack
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine', # 指定使用elasticsearch 为搜索引擎
-        'URL': 'http://your_ip:9200/',   # 此处为elasticsearch运行的服务器ip地址，端口号固定为9200
-        # 指定elasticsearch建立的索引库的名称,elastic search 会建立一个非关系型的数据库,这个名称可以根据需要自行确定,但是不能和服务器上已有的库名冲突
-        'INDEX_NAME': 'demo',
-        # 保存索引文件的路径
-        # 'PATH': os.path.join(BASE_DIR, 'elastic_index'), # 如果搜索引擎是whoosh, 还需要设置PATH参数
-    },
-}
-
-# 当添加、修改、删除数据时，自动生成索引
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
-
-
-# 指定搜索结果每页的条数 这里设置成了1条
-HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1
 
 
 # Database
