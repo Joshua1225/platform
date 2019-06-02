@@ -21,5 +21,5 @@ new Vue({
 }).$mount('#app')
 //router.push("/Search")
 
-router.push("/User")
+router.push("/Login")
 
