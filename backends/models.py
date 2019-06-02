@@ -151,7 +151,7 @@ class Trades(models.Model):
 
 class Messages(models.Model):
     """站内信"""
-    type = models.IntegerField(choices=((1, "上传论文认证"), (2, "身份认证"), (3, "论文归属权申诉")), verbose_name="站内信类型")
+    type = models.IntegerField(choices=((1, "上传论文认证"), (2, "身份认证"), (3, "认领论文"),"收藏论文""论文信息申诉","关注专家推送"), verbose_name="站内信类型")
     content = models.TextField(verbose_name="用户内容", null=True)
     reply = models.TextField(verbose_name="管理员回复", null=True)
     time = models.TimeField(auto_now_add=True, verbose_name="生成时间")
