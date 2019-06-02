@@ -2,57 +2,8 @@
 // 删除无用信息
 //仅作为展示性质
 
-<style>
-.upper {
-  height: 1px;
-  background-color: blue;
-  width: 100%;
-}
-.blank {
-  height: 50px;
-  width: 100%;
-}
-.outer {
-  border: 1px #000000;
-  height: 180px;
-}
-.div-a {
-  float: left;
-  width: 40%;
-  height: 100%;
-  text-align: left;
-}
-.div-b {
-  float: right;
-  width: 40%;
-  height: 100%;
-}
-.about {
-  float: right;
-  width: 80%;
-  height: 25%;
-  text-align: left;
-  font-size: 16pt;
-}
-.question {
-  float: right;
-  width: 80%;
-  height: 75%;
-  line-height: 250%;
-}
-.contact {
-  float: right;
-  width: 80%;
-  height: 25%;
-  text-align: left;
-}
-</style>
-
-
 <template>
-  <div class="outer" id="main0">
-    <div class="upper"></div>
-    <div class="blank"></div>
+  <div class="outer">
     <div class="div-a">
       <div class="about">{{ask}}</div>
       <div class="question">{{question1}}</div>
@@ -103,3 +54,43 @@ export default {
   }
 };
 </script>
+
+<style>
+.outer {
+  margin-top:1px;
+  padding-top: 50px;
+  border-top: 1px solid  black;
+  height: 180px;
+}
+.div-a {
+  float: left;
+  width: 40%;
+  height: 100%;
+  text-align: left;
+}
+.div-b {
+  float: right;
+  width: 40%;
+  height: 100%;
+}
+.about {
+  float: right;
+  width: 80%;
+  height: 25%;
+  text-align: left;
+  font-size: 16pt;
+}
+.question {
+  float: right;
+  width: 80%;
+  height: 180px;
+  line-height: 35px;
+  font-size: 17px
+}
+.contact {
+  float: right;
+  width: 80%;
+  margin-bottom: 20px;
+  text-align: left;
+}
+</style>

@@ -1,16 +1,14 @@
 <template>
-  <div style="paperList">
-    <el-dropdown trigger="click">
+  <div class="paperList">
+    <el-dropdown trigger="click" style="float:right">
       <span class="el-dropdown-link">
-        下拉菜单
+        结果排序
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
+        <el-dropdown-item>按时间排序</el-dropdown-item>
+        <el-dropdown-item>按被引量排序</el-dropdown-item>
+        <el-dropdown-item>按时间降序</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <div class="paper" style shadow="hover" v-for="paper in papers" :key="paper.title">
@@ -38,7 +36,18 @@ export default {
     return {
       papers: [
         {
-          title: "基于深度学习的水文",
+          title: "基于深度学习的水文1",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文2",
           abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
           authors: [
             { name: "作者1", authorid: "12345" },
@@ -49,7 +58,84 @@ export default {
           origin: "BUAA"
         },
         {
-          title: "基于深度学习的水文",
+          title: "基于深度学习的水文3",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文4",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文5",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文6",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文7",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文8",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
+          authors: [  
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文9",
+          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+          authors: [
+            { name: "作者1", authorid: "12345" },
+            { name: "作者2", authorid: "15345" }
+          ],
+          cited: "555",
+          year: "2019",
+          origin: "BUAA"
+        },
+        {
+          title: "基于深度学习的水文10",
           abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
           authors: [
             { name: "作者1", authorid: "12345" },
@@ -66,11 +152,16 @@ export default {
 </script>
 <style>
 .paperList {
-  margin: ;
+  padding: 40px;
+  width: 650px;
+  text-align: center;
 }
 .paper {
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 10px;
+  padding:10px;
+  width: 600px;
   text-align: left;
   border-bottom: 1px solid #efefef;
 }
