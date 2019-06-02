@@ -14,7 +14,9 @@
       <userinfo />
     <guessyoulike />
     </el-tab-pane>
-    <el-tab-pane label="我的关注" name="second">我的关注</el-tab-pane>
+    <el-tab-pane label="我的关注" name="second">
+      <expertspot />
+      </el-tab-pane>
     <el-tab-pane label="我的消息" name="third">我的消息</el-tab-pane>
     <el-tab-pane label="我的论文" name="fourth">
       <mypapers/>
@@ -26,17 +28,19 @@
 import userinfo from "@/components/userinfo.vue";
 import guessyoulike from "@/views/guessyoulike";
 import mypapers from "@/views/mypapers";
+import expertspot from "@/views/expertspot.vue";
 export default {
   name: "user",
   components: {
     userinfo,
     guessyoulike,
-    mypapers
+    mypapers,
+    expertspot
   },
   data: function()
   {
     return {
-      chosen:"first",
+      chosen:"",
     }
   }
 };
