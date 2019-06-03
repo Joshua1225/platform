@@ -1,7 +1,7 @@
 // 搜索系列页面
 
 <style>
-.userouter{
+.userouter {
   width: 80%;
   margin-left: 10%;
 }
@@ -9,43 +9,53 @@
 
 <template>
   <div class="userouter">
-      <el-tabs v-model= "chosen" type="card" @tab-click="handleClick">
-    <el-tab-pane label="我的信息" name="first">
-    <userinforemake />
-    <guessyoulike />
-    </el-tab-pane>
-    <el-tab-pane label="我的关注" name="second">
-      <expertspot />
+    <el-tabs v-model="chosen" type="card" @tab-click="handleClick">
+      <el-tab-pane label="我的信息" name="first">
+        <el-col span="6">
+          <userinforemake/>
+        </el-col>
+        <el-col span='16' offset="1">
+          <paperlist title="根据您的兴趣，为您推荐了高质量的论文。"></paperlist>
+        </el-col>
       </el-tab-pane>
-    <el-tab-pane label="我的消息" name="third">
-      <Message />
-    </el-tab-pane>
-    <el-tab-pane label="我的论文" name="fourth">
-      <mypapers/>
-    </el-tab-pane>
-  </el-tabs>
+      <el-tab-pane label="我的关注" name="second">
+        <el-col>
+          <expertspot/>
+        </el-col>
+        
+      </el-tab-pane>
+      <el-tab-pane label="我的消息" name="third">
+        
+        <Message/>
+      </el-tab-pane>
+      <el-tab-pane label="我的论文" name="fourth">
+        <el-col span="22">
+          <paperlist title="你有100篇论文"></paperlist>
+        </el-col>
+      
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script>
 import userinforemake from "@/components/UserInfoRemake.vue";
 import Message from "@/views/Message.vue";
-import guessyoulike from "@/views/guessyoulike";
+import paperlist from "@/components/PaperList.vue";
 import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
 export default {
   name: "user",
   components: {
     userinforemake,
-    guessyoulike,
+    paperlist,
     mypapers,
     expertspot,
     Message
   },
-  data: function()
-  {
+  data: function() {
     return {
-      chosen:"",
-    }
+      chosen: ""
+    };
   }
 };
 </script>

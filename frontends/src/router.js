@@ -28,7 +28,7 @@ export default new Router({
     {
       path: '/',
       name: 'appeal',
-      component: expertInfo
+      component: User
     },
     {
       path: '/about',

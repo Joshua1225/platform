@@ -1,5 +1,5 @@
 <template>
-  <div class="msgList" style="">
+  <el-card shadow="hover">
     <div class="msg" style shadow="hover" v-for="msg in msgs" :key="msg.time">
       <div class="title">{{msg.type}} &nbsp;{{msg.time}}</div>
       <div class="content">
@@ -12,7 +12,7 @@
       </div>
     </div>
     <el-pagination background layout="prev, pager, next" :total="1"></el-pagination>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -47,15 +47,14 @@ export default {
 
 .msgList {
   padding: 40px;
-  width: 650px;
   text-align: center;
 }
 .msg {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
   margin-left: 10px;
   padding: 10px;
-  width: 600px;
+  width: 800px;
   text-align: left;
   border-bottom: 1px solid #efefef;
 }
