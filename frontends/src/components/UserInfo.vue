@@ -16,7 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
 }
 .email-style {
   height: 55px;
@@ -24,7 +24,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: cornsilk;
+  /* background-color: cornsilk; */
 }
 .unknown-style {
   height: 55px;
@@ -32,7 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
 }
 .introduction-style {
   height: 45px;
@@ -40,7 +40,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: wheat;
+  /* background-color: wheat; */
 }
 .interests-style {
   height: 45px;
@@ -48,7 +48,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color:violet;
+  /* background-color:violet; */
 }
 .intereststitle-style {
   height: 45px;
@@ -56,7 +56,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color:steelblue;
+  /* background-color:steelblue; */
 }
 </style>
 
