@@ -63,10 +63,10 @@
             </el-row>
             <el-row style="margin-top: 8%">
               <el-col span="6" offset="4">
-              <el-button type="primary" plain @click="addUesr()">确定</el-button>
+                <el-button type="primary" plain @click="addUesr()">确定</el-button>
               </el-col>
               <el-col span="14">
-              <el-button plain @click="cancel()">取消</el-button>
+                <el-button plain @click="cancel()">取消</el-button>
               </el-col>
             </el-row>
           </div>
@@ -82,9 +82,6 @@ export default {
   data() {
     return {
       isReg: false,
-      name: "",
-      password: "",
-      repeat: "",
       usernameinput: "",
       passwordinput: "",
       newusernameinput :"",
@@ -100,17 +97,23 @@ export default {
   methods: {
     login() {
       if (
-        this.name === localStorage.getItem("name") &&
-        this.password === localStorage.getItem("password")
+        this.usernameinput === "" ||
+        this.passwordinput === ""
       ) {
-        this.name = "";
-        this.password = "";
-        alert("登陆成功");
-        this.$router.push("/");
-      } else {
-        alert("登陆失败");
-        this.password = "";
+        alert("用户名或密码为空！");
       }
+      else  { 
+       var daiyue={
+          username : this.usernameinput,
+          password : this.passwordinput
+        }
+        axios.post("154.8.237.76/platform/login/", JSON.stringify(daiyue)).then((res) => {
+          console.log(res)
+        }).catch((res) => {
+          console.log(res)
+        })}
+       
+     
     },
     reg() {
       console.log("调用reg");
