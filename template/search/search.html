@@ -4,14 +4,23 @@
     <title></title>
 </head>
 <body>
-<form method='get' action="/search/" target="_blank">
+<form method='post' action="/search/" target="_blank">
     <input type="text" name="q">
     <input type="submit" value="查询">
+</form>
+<form method='get' action="/complex_search/" target="_blank">
+    <input type="text" name="q">
+    <input type="text" name="q_not">
+    <input type="number" name="start_year">
+    <input type="number" name="end_year">
+    <input type="text" name="author">
+    <input type="text" name="language">
+    <input type="submit" value="高级查询">
 </form>
 {% if query %}
     <h3>搜索结果如下：</h3>
     {% for result in page.object_list %}
-        <a href="/{{ result.object.id }}/">{{ result.object.title }} {{ result.object.authors }}</a><br/>
+        <a>{{ result.object.title }} {{ result.object.authors }} {{ result.object.year }} {{ result.object.language }}</a><br/>
     {% empty %}
         <p>啥也没找到</p>
     {% endfor %}
