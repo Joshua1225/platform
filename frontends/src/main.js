@@ -26,4 +26,3 @@ new Vue({
 }).$mount('#app')
 router.push("/Papers")
 
-

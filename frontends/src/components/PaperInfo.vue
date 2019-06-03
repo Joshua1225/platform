@@ -1,34 +1,37 @@
 <template>
-  <div class="divx" style="width : 80% ;margin: 0 auto;">
-    <div class="divx" style shadow="hover">
-      <span>
-        <el-row>
-          <router-link class="title" to="/">{{paper.title}}</router-link>
-        </el-row>
-        <el-row >
-          <span  v-for="author in paper.authors" :key="author.authorid">
+  <div align="center">
+    <el-card class="box-card" >
+      <div slot="header" class="clearfix">
+        <span style="float:left ;font-size:20px;width:75%">
+          论女装
+          <br>
+          <div style="width:300px;float:left" v-for="author in paper.authors" :key="author.authorid">
             <router-link class="author" to="/">{{author.name}}</router-link>as&nbsp;&nbsp;
-          </span>
-          <span class="right">
-            <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-            <el-button type="info" round>认证</el-button>
-          </span>
-        </el-row>
-      </span>
-    </div>
-    <div class="divx">
-      <table width="100%" height="300px" border="1">123</table>
-    </div>
-    <div class="divx">
-      <span class="left">
-        <table border="1">DOI：{{DOI}}</table>
-        <table border="1">被引量：{{reference}}</table>
-      </span>
-      <span class="right">
-        <el-button type="success">下载</el-button>
-      </span>
-    </div>
+          </div>
+        </span>
+        <span style="float:right">
+          <el-button type="warning" icon="el-icon-star-off" circle></el-button>
+          <el-button type="info" round>认证</el-button>
+        </span>
+      </div>
+      <div>摘要</div>
+      <div class="text item">
+        {{abstract}}
+      </div>
+      <el-divider></el-divider>
+      <div class="clearfix">
+        <span style="float:left">
+          <p style="float:left;margin: 4px 0px">DOI：{{DOI}}</p>
+          <br>
+          <p style="float:left;margin: 4px 0px">被引量：{{reference}}</p>
+        </span>
+        <span style="float:right">
+          <el-button type="success">下载</el-button>
+        </span>
+      </div>
+    </el-card>
   </div>
+
 </template>
 
 <script>
@@ -55,17 +58,26 @@ export default {
 
 
 <style scoped>
-table {
-  border: 1;
+.text {
+  font-size: 14px;
 }
-.left {
-  float: left;
+
+.item {
+  margin-bottom: 18px;
+  height:400px
 }
-.right {
-  float: right;
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
 }
-.divx {
-  overflow: hidden;
+.clearfix:after {
+  clear: both;
+}
+
+.box-card {
+  width: 80%;
 }
 .title {
   font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;

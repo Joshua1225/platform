@@ -3,10 +3,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
 
 import json
+import re
 
 # Create your views here.
 
-from .models import Users
+from .models import Users, UnidentifiedAcademia, Papers
 
 def check_login(request):
     flag = request.session.get("username", None)
@@ -29,14 +30,25 @@ POST
 def login(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
-        u = Users.objects.filter(email=data['username'])
+        # data = request.POST
+        print(data)
+        u = Users.objects.get(username=data['username'])
         if (u):
-            #if (u.password == data['password']):
             if (u.password == data['password']):
-                request.session['username'] = u.email
+                '''在当前session容器中加入此次登录者的信息'''
+                request.session['username'] = u.username
+                if not request.session.session_key:
+                    request.session.create()
+                '''处理单点登录'''
                 session_key = request.session.session_key
-                session_data = Session.objects.filter(session_key=session_key).first().session_data
-                Session.objects.filter(session_data=session_data).exclude(session_key=session_key).delete()
+                session_data = Session.objects.get(session_key=session_key).session_data
+                temp_session = Session.objects.filter(session_data=session_data).exclude(session_key=session_key)
+                if temp_session:
+                    temp_session.delete()
+                # if same_session:
+                #     for s in same_session:
+                #         s.clear()
+                '''返回登录成功'''
                 ans = [{
                     'code': 0
                 }]
@@ -63,10 +75,14 @@ http://154.8.237.76:8000/platform/logout/
 '''
 @csrf_exempt
 def logout(request):
-    Session.objects.filter(session_key=request.session.session_key).delete()
+    request.session.flush()
+    ans = [{
+        "code": 0
+    }]
+    return JsonResponse(ans, safe=False)
 
 '''
-register(email, password, name)
+register(username, email, password, name)
 http://154.8.237.76:8000/platform/register/
 POST
 
@@ -79,22 +95,23 @@ POST
 def register(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
+        username = data['username']
         email = data['email']
         password = data['password']
         name = data['name']
-        if (not email or not password or not name):
+        if (not username or not email or not password or not name):
             ans = [{
                 'code': 3
             }]
             return JsonResponse(ans, safe=False)
         else:
-            u = Users.objects.filter(email=email)
+            u = Users.objects.filter(username=username)
             if (u.exists()):
                 ans = [{
                     'code': 2
                 }]
             else:
-                Users.objects.create(email=email, password=password, name=name)
+                Users.objects.create(username=username, email=email, password=password, name=name)
                 ans = [{
                     'code': 0
                 }]
@@ -110,7 +127,10 @@ def register(request):
 def userinfo(request):
     u = []
     if (check_login(request)):
-        u = Users.objects.filter(email=request.session.get("username")).first().values()
+        # u = Users.objects.filter(username=request.session.get("username")).first().values()
+        u += [{
+            "username": request.session.get("username")
+        }]
     return JsonResponse(u, safe=False)
 
 """
@@ -125,10 +145,11 @@ def userinfo(request):
 @csrf_exempt
 def change_info(request):
     ans = []
+    print(request.session.session_key)
     if request.method == "POST":
         if check_login(request):
-            data = json.loads(request.body)
-            user = Users.objects.filter(username=request.session['username'])
+            data = json.loads(request.body.decode("utf-8"))
+            user = Users.objects.get(username=request.session.get('username'))
             ans += [{
                 'code': 0
             }]
@@ -155,6 +176,96 @@ def change_info(request):
     else:
         ans += [{
             'code': 1
+        }]
+    return JsonResponse(ans, safe=False)
+
+
+"""
+[{"code":0}]  关注/取关成功
+[{"code":1}]  拒绝使用GET方法
+[{"code":2}]  用户未登录
+[{"code":3}]  专家不存在
+[{"code":4}]  参数有误
+"""
+@csrf_exempt
+def follow(request):
+    ans = []
+    data = json.loads(request.body)
+    if request.method == "POST":
+        if check_login(request):
+            cur_user = Users.objects.filter(username=request.session['username'])
+            academia = UnidentifiedAcademia.objects.filter(id=data.get('id'))
+            if not academia:
+                if not data.get('type'):
+                    if data.get('type') == 0:
+                        cur_user.follow.add(academia)
+                    else:
+                        cur_user.follow.remove(academia)
+                    ans += [{
+                       "code": 0
+                    }]
+                else:
+                    ans += [{
+                        "code": 4
+                    }]
+            else:
+                ans += [{
+                    "code": 3
+                }]
+        else:
+            ans += [{
+                "code": 2
+            }]
+    else:
+        ans += [{
+            "code": 1
+        }]
+    return JsonResponse(ans, safe=False)
+
+
+
+"""
+需要id type    type = 0 表示收藏 其他表示取消收藏
+[{"code":0}]  收藏成功
+[{"code":1}]  拒绝使用GET方法
+[{"code":2}]  用户未登录
+[{"code":3}]  论文不存在
+[{"code":4}]  参数有误
+"""
+@csrf_exempt
+def collect(request):
+    ans = []
+    data = request.POST
+    # data = json.loads(request.body)
+    if request.method == "POST":
+        if check_login(request):
+            cur_user = Users.objects.filter(username=data['username'])
+            # cur_user = Users.objects.filter(username=request.Username)
+            paper = Papers.objects.filter(id=data.get('id'))
+            if not paper:
+                if not data.get('type'):
+                    if data.get('type') == 0:
+                        cur_user.follow.add(paper)
+                    else:
+                        cur_user.follow.remove(paper)
+                    ans += [{
+                       "code": 0
+                    }]
+                else:
+                    ans += [{
+                        "code": 4
+                    }]
+            else:
+                ans += [{
+                    "code": 3
+                }]
+        else:
+            ans += [{
+                "code": 2
+            }]
+    else:
+        ans += [{
+            "code": 1
         }]
     return JsonResponse(ans, safe=False)
 

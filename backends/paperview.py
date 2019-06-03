@@ -30,7 +30,7 @@ def upload_paper(request):
                 ans += [{'code': 3}]
                 return JsonResponse(ans, safe=False)
             else:
-                fpath = upload_paper_to(pid)
+                fpath = os.path.join('papers', pid)
                 handle_uploaded_file(pfile,fpath)
                 paper.update(pdf=fpath)
                 ans += [{'code':0}]

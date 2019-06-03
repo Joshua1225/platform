@@ -16,6 +16,8 @@ import ExpertList from "./components/ExpertList.vue"
 import uploadImg from "./components/UploadImg.vue"
 
 import userinfoR from "./components/UserInfoRemake.vue"
+import expertInfo from "./views/Expert.vue"
+
 Vue.use(Router)
 
 export default new Router({
@@ -26,7 +28,7 @@ export default new Router({
     {
       path: '/',
       name: 'appeal',
-      component: userinfoR
+      component: expertInfo
     },
     {
       path: '/about',
