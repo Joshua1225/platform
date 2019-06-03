@@ -10,7 +10,7 @@ from backends.user import check_login
 from backends.models import Messages
 
 '''
-appeal(type, content,time,user_id,file,object_id)
+appeal(type, content,user_id,file,object_id)  用户提交申诉
 http://154.8.237.76:8000/platform/appeal/
 POST
 
@@ -30,7 +30,7 @@ def register(request):
             userid = data['user_id']
             file = data['file']
             objectid = data['object_id']
-            if(not type or not content or not time or not userid or not file or not objectid):
+            if(not type or not content or not userid or not file or not objectid):
                 ans = [{'code':3}]
                 return JsonResponse(ans, safe=False)
             else:
