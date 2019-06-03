@@ -26,5 +26,3 @@ new Vue({
 }).$mount('#app')
 router.push("/User")
 
-//router.push("/")
-
