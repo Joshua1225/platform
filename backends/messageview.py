@@ -40,7 +40,7 @@ def appeal(request):
                         ans = [{'code': 3}]
                         return JsonResponse(ans, safe=False)
                     else:
-                        if type ==1:
+                        if type == '1':
                             fpath = os.path.join('documentations','上传论文',username )    #目前将id和申诉类型作为路径
                         else:
                             fpath = os.path.join('documentations', '论文申诉', username)
