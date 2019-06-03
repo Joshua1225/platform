@@ -10,12 +10,14 @@ import PaperList from "./components/PaperList.vue"
 import MessageList from "./components/MessageList.vue"
 import Papers from './views/Papers.vue'
 
-import userinfo from "./components/userinfo.vue"
+//import userinfo from "./components/userinfo.vue"
 import UserState from "./components/UserState.vue"
 import ExpertList from "./components/ExpertList.vue"
 import uploadImg from "./components/UploadImg.vue"
 
 import userinfoR from "./components/UserInfoRemake.vue"
+import expertInfo from "./views/Expert.vue"
+
 Vue.use(Router)
 
 export default new Router({
@@ -26,7 +28,7 @@ export default new Router({
     {
       path: '/',
       name: 'appeal',
-      component: userinfoR
+      component: expertInfo
     },
     {
       path: '/about',

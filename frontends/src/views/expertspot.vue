@@ -9,7 +9,9 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="24"><div class="expertspot-style">您关注了{{papernums}}名学者，被{{quotenums}}人关注</div></el-col>
+      <el-card shadow="always">
+        <div class="expertspot-style">您关注了{{papernums}}名学者，被{{quotenums}}人关注</div>
+      </el-card>
     </el-row>
     <expertList />
   </div>

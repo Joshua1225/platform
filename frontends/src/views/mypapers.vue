@@ -9,7 +9,9 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="24"><div class="mypapers-style">您已有{{papernums}}篇论文，已被引用{{quotenums}}次</div></el-col>
+      <el-card shadow="always">
+        <div class="mypapers-style">您已有{{papernums}}篇论文，已被引用{{quotenums}}次</div>
+      </el-card>
     </el-row>
     <paperlist/>
   </div>

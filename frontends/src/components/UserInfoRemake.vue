@@ -25,9 +25,10 @@ export default {
   }
 };
 </script>
-<style>
+<style scope>
 .user {
-  width: 330px;
+  width: 40%;
+  float: left;
   text-align: center;
 }
 .name {

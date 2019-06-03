@@ -1,28 +1,29 @@
 <style>
-.likeouter-style{
-  height: 55px;
-  font-size: 32px;
+.likeouter-style {
+  float: left;
+  height: 40px;
+  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color:thistle;
 }
-
 </style>
 
 
 
 <template>
-<div>
-  <el-row>
-    <div class="likeouter-style"><el-col :span="24">猜你喜欢</el-col></div>
-  </el-row>
-  <el-row>
-    <el-col :span="24">
-      <PaperList />
-    </el-col>
-  </el-row>
-</div>
+  <div>
+    <el-row>
+      <el-card shadow="always">
+        <div class="likeouter-style">猜你喜欢</div>
+      </el-card>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <PaperList/>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -35,10 +36,9 @@ export default {
   name: "guessyoulikelist",
   props: {},
   data: function() {
-    return {
-    };
+    return {};
   },
-    components: {
+  components: {
     PaperList
   }
 };
