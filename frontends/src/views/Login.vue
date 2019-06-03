@@ -104,11 +104,11 @@ export default {
         alert("用户名或密码为空！");
       }
       else  { 
-       var daiyue={
+       var json={
           username : this.usernameinput,
           password : this.passwordinput
         }
-        axios.post('154.8.237.76/platform/login/', JSON.stringify(daiyue)).then((res) => {
+        axios.post('http://154.8.237.76:8000/login', JSON.stringify(json)).then((res) => {
           console.log(res)
         }).catch((res) => {
           console.log(res)
