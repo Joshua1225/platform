@@ -26,10 +26,10 @@
               </el-col>
             </el-row>
             <el-row style="margin-top: 12%">
-              <el-col span="6" offset="4">
+              <el-col :span="6" offset="4">
                 <el-button type="primary" plain @click="login()">登陆</el-button>
               </el-col>
-              <el-col span="14">
+              <el-col :span="14">
                 <el-button plain @click="reg()">注册</el-button>
               </el-col>
             </el-row>
@@ -62,7 +62,7 @@
               </el-col>
             </el-row>
             <el-row style="margin-top: 8%">
-              <el-col :span="6" offset="4">
+              <el-col :span="6" :offset="4">
               <el-button type="primary" plain @click="addUesr()">确定</el-button>
               </el-col>
               <el-col :span="14">
