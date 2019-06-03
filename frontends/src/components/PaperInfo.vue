@@ -1,6 +1,6 @@
 <template>
-  <div align="center">
-    <el-card class="box-card" >
+  <div align="center" style="padding:10px">
+    <el-card class="box-card" shadow="hover">
       <e slot="header" class="clearfix">
         <span style="float:left ;font-size:20px;width:75%">
           <el-row>
@@ -20,10 +20,10 @@
           <el-button type="info" round style="margin-top:10px ">认证</el-button>
         </span>
       </e>
-      <el-row>
+      <el-row style="height : 290px">
         <el-col span='0.5'><div class="author" style=" float : left ; color : #999 ">摘要：</div></el-col>
         <el-col span='20' class="text item abstract">
-          <div style=" float : left ">
+          <div style=" float : left ; line-height:26px">
             &nbsp;&nbsp;&nbsp;&nbsp;{{paper.abstract}}
           </div>
         </el-col>
@@ -98,7 +98,7 @@ export default {
 }
 
 .box-card {
-  width: 80%;
+  width: 100%;
 }
 .gray{
   color :#999

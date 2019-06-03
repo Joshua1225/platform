@@ -1,23 +1,27 @@
 <template>
-  <el-card shadow="hover" >
-    <div class="expert"   v-for="expert in experts" :key="expert.title">
-      <div class="name">
-        <router-link class="name" to="/">{{expert.name}}</router-link>
+  <div align="center" style="padding:10px">
+    <el-card shadow="always" body-style="text-align : left ; font-size : 13px ;">{{title}}</el-card>
+    <el-card shadow="hover" >
+      <div class="expert"   v-for="expert in experts" :key="expert.title">
+        <div class="name">
+          <router-link class="name" to="/">{{expert.name}}</router-link>
+        </div>
+        <el-button type="danger" icon="el-icon-delete" circle style="float : right"></el-button>
+        <div class="organization">{{expert.organization}}</div>
+        <div class="info">
+          <span>研究领域：{{expert.field}}</span>
+          &nbsp;&nbsp;
+        </div>
       </div>
-      <div class="organization">{{expert.organization}}</div>
-      <div class="info">
-        <span>研究领域：{{expert.field}}</span>
-        &nbsp;&nbsp;
-        <el-button type="danger" icon="el-icon-delete" circle></el-button>
-      </div>
-    </div>
-    <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-  </el-card>
+      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+    </el-card>
+  </div>
 </template>
 
 <script>
 export default {
   name: "expertList",
+  props: { title: String },
   data: function() {
     return {
       experts: [
@@ -26,6 +30,26 @@ export default {
           organization: "河北胡同口大学",
           field:"守望先锋"
 
+        },
+        {
+          name: "王佳奇",
+          organization: "河北胡同口大学",
+          field:"守望先锋"
+        },
+        {
+          name: "王佳奇",
+          organization: "河北胡同口大学",
+          field:"守望先锋"
+        },
+        {
+          name: "王佳奇",
+          organization: "河北胡同口大学",
+          field:"守望先锋"
+        },
+        {
+          name: "王佳奇",
+          organization: "河北胡同口大学",
+          field:"守望先锋"
         },
         {
           name: "王佳奇",
