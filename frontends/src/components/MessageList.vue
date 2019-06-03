@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "paperList",
+  name: "MessageList",
   data: function() {
     return {
       msgs: [
