@@ -21,8 +21,8 @@
         </span>
       </e>
       <el-row>
-        <el-col span='0.5'><div class="author" style=" float : left ; color : #999 ">摘要：</div></el-col>
-        <el-col span='20' class="text item abstract">
+        <el-col :span='0.5'><div class="author" style=" float : left ; color : #999 ">摘要：</div></el-col>
+        <el-col :span='20' class="text item abstract">
           <div style=" float : left ">
             &nbsp;&nbsp;&nbsp;&nbsp;{{paper.abstract}}
           </div>
