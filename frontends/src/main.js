@@ -5,6 +5,10 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import top from '@/components/Top.vue'
+//词云
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+require('echarts-wordcloud')
 
 Vue.use(ElementUI)
 
@@ -21,5 +25,5 @@ new Vue({
 }).$mount('#app')
 //router.push("/Search")
 
-router.push("/papers")
+router.push("/Search")
 
