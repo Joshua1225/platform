@@ -20,7 +20,6 @@ from django.urls import path,include
 from backends import views,keywordview,paperview,messageview,user,expertview
 
 urlpatterns = [
-
     path('', views.test ),
     path('upload_paper',paperview.upload_paper),
     path('down_paper',paperview.download_paper),
@@ -28,7 +27,7 @@ urlpatterns = [
     path('apeal',messageview.appeal),
 
     path('editacademia',expertview.editacademia),
-
+    path('userinfo', user.userinfo),
     path('login',user.login),
     path('logout',user.logout),
     path('register',user.register),

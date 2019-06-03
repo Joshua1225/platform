@@ -8,7 +8,7 @@
       <el-col :span="8">
         <el-card class="box-card-login">
           <div class="login-inner" v-show="!isReg">
-            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fit2"></el-image>
+            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fits2"></el-image>
             <el-row style="margin-top: 12%">
               <el-col :span="6">
                 <div class="tips">用户名：</div>
@@ -26,17 +26,17 @@
               </el-col>
             </el-row>
             <el-row style="margin-top: 12%">
-              <el-col span="6" offset="4">
+              <el-col :span="6" :offset="4">
                 <el-button type="primary" plain @click="login()">登陆</el-button>
               </el-col>
-              <el-col span="14">
+              <el-col :span="14">
                 <el-button plain @click="reg()">注册</el-button>
               </el-col>
             </el-row>
           </div>
 
           <div v-show="isReg">
-            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fit2"></el-image>
+            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fits2"></el-image>
             <el-row style="margin-top: 8%">
               <el-col :span="6">
                 <div class="tips">用户名：</div>
@@ -62,10 +62,10 @@
               </el-col>
             </el-row>
             <el-row style="margin-top: 8%">
-              <el-col span="6" offset="4">
+              <el-col :span="6" :offset="4">
               <el-button type="primary" plain @click="addUesr()">确定</el-button>
               </el-col>
-              <el-col span="14">
+              <el-col :span="14">
               <el-button plain @click="cancel()">取消</el-button>
               </el-col>
             </el-row>
@@ -77,14 +77,12 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "Login",
   data() {
     return {
       isReg: false,
-      name: "",
-      password: "",
-      repeat: "",
       usernameinput: "",
       passwordinput: "",
       newusernameinput :"",
@@ -100,17 +98,23 @@ export default {
   methods: {
     login() {
       if (
-        this.name === localStorage.getItem("name") &&
-        this.password === localStorage.getItem("password")
+        this.usernameinput === "" ||
+        this.passwordinput === ""
       ) {
-        this.name = "";
-        this.password = "";
-        alert("登陆成功");
-        this.$router.push("/");
-      } else {
-        alert("登陆失败");
-        this.password = "";
+        alert("用户名或密码为空！");
       }
+      else  { 
+       var json={
+          username : this.usernameinput,
+          password : this.passwordinput
+        }
+        axios.post('http://154.8.237.76:8000/login', JSON.stringify(json)).then((res) => {
+          console.log(res)
+        }).catch((res) => {
+          console.log(res)
+        })}
+       
+     
     },
     reg() {
       console.log("调用reg");

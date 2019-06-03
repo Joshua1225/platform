@@ -67,7 +67,7 @@ export default {
         type: "申诉原因",
         obj: 12345678,
         resonValue: "",
-        content: ""
+        content: "我叫王佳奇"
       },
       uploadUrl: "",
       file: "",

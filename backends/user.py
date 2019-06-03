@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
+from django.core import serializers
 
 import json
 import re
@@ -18,7 +19,7 @@ def check_login(request):
 
 '''
 login(username, password)
-http://154.8.237.76:8000/platform/login/
+http://154.8.237.76:8000/login
 POST
 
 [{"code":0}]  登录成功
@@ -70,8 +71,8 @@ def login(request):
         return JsonResponse(ans, safe=False)
 
 '''
-logout(sessionid)
-http://154.8.237.76:8000/platform/logout/
+logout()
+http://154.8.237.76:8000/logout/
 '''
 @csrf_exempt
 def logout(request):
@@ -83,7 +84,7 @@ def logout(request):
 
 '''
 register(username, email, password, name)
-http://154.8.237.76:8000/platform/register/
+http://154.8.237.76:8000/register
 POST
 
 [{"code":0}]  注册成功
@@ -122,16 +123,50 @@ def register(request):
         }]
         return JsonResponse(ans, safe=False)
 
+'''
+userinfo()
+POST
 
+返回的是一个JsonArray，内部一个JsonObject
+'''
 @csrf_exempt
 def userinfo(request):
-    u = []
-    if (check_login(request)):
-        # u = Users.objects.filter(username=request.session.get("username")).first().values()
-        u += [{
-            "username": request.session.get("username")
-        }]
-    return JsonResponse(u, safe=False)
+    #if request.method=="POST":
+        print()
+        if (check_login(request)):
+
+            u = Users.objects.filter(username=request.session.get("username"))
+            uinfo = serializers.serialize("json", u)
+            if u.first().type == 1:
+                a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
+                ainfo = serializers.serialize("json", a)
+                ans = [{
+                    "code": 0,
+                    "userinfo": json.loads(uinfo),
+                    "academy": 1,
+                    "academyinfo": json.loads(ainfo)
+                }]
+            else:
+                ans = [{
+                    "code": 0,
+                    "userinfo": json.loads(uinfo),
+                    "academy": 0,
+                    "academyinfo": []
+                }]
+        else:
+            ans = [{
+                "code": 1,
+                "userinfo": [],
+                "academy": 0,
+                "academyinfo": []
+            }]
+        return JsonResponse(ans, safe=False)
+    # else:
+    #     ans = [{
+    #         "code": 2,
+    #         "userinfo": {}
+    #     }]
+    #     return JsonResponse(ans, safe=False)
 
 """
 [{"code":0}]  修改成功
@@ -141,7 +176,6 @@ def userinfo(request):
 [{"code":4}]  邮箱已被占用
 [{"code":5}]  密码最少8位，最长21位
 """
-
 @csrf_exempt
 def change_info(request):
     ans = []
@@ -221,8 +255,6 @@ def follow(request):
             "code": 1
         }]
     return JsonResponse(ans, safe=False)
-
-
 
 """
 需要id type    type = 0 表示收藏 其他表示取消收藏
