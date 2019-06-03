@@ -158,7 +158,7 @@ export default {
   width: 100%;
 }
 .box-card-login {
-  width: 100%;
+  width: 400px;
   height: 400px;
 }
 </style>
