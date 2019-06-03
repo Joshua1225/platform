@@ -4,6 +4,7 @@ from django.contrib.sessions.models import Session
 from django.core import serializers
 
 import json
+import re
 
 # Create your views here.
 
@@ -182,7 +183,7 @@ def change_info(request):
     if request.method == "POST":
         if check_login(request):
             data = json.loads(request.body.decode("utf-8"))
-            user = Users.objects.get(username=request.session.get('username', None))
+            user = Users.objects.get(username=request.session.get('username'))
             ans += [{
                 'code': 0
             }]

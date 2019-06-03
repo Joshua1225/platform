@@ -1,7 +1,7 @@
 <template>
   <div class="expertInfo">
     <el-row >
-    <el-col span="6">
+    <el-col :span="6">
       <el-card class="image">
         <el-image class="icon" :src="this.url"></el-image>
         <div class="name">{{name}}</div>
@@ -23,7 +23,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col span='16' offset="1">
+    <el-col :span='16' offset="1">
       <el-card class="info">
         <div class="flag">大家好，我是练习时长两年半的蔡徐坤，喜欢唱跳rap，篮球</div>
         <div class="interest" v-for="ins in work">
@@ -47,7 +47,7 @@
 
 <script>
 export default {
-  name: "exper",
+  name: "expert",
   data: function() {
     return {
       name: "XiaoZHIPEIEN",

@@ -1,6 +1,6 @@
 <template>
-  <div style="expertList">
-    <div class="expert"  shadow="hover" v-for="expert in experts" :key="expert.title">
+  <el-card shadow="hover" >
+    <div class="expert"   v-for="expert in experts" :key="expert.title">
       <div class="name">
         <router-link class="name" to="/">{{expert.name}}</router-link>
       </div>
@@ -12,7 +12,7 @@
       </div>
     </div>
     <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-  </div>
+  </el-card>
 </template>
 
 <script>

@@ -7,12 +7,11 @@
 </style>
 
 <template>
-  <div>
-    <el-row>
-      <el-card shadow="always">
-        <div class="expertspot-style">您关注了{{papernums}}名学者，被{{quotenums}}人关注</div>
+  <div style="padding :10px">
+      <el-card shadow="always" body-style="{padding-top : 5px ; text-align : left ; font-size : 13px ;}">
+        您关注了{{papernums}}名学者，被{{quotenums}}人关注
       </el-card>
-    </el-row>
+    
     <expertList />
   </div>
 </template>
