@@ -1,13 +1,19 @@
 <template>
-  <div class="divx">
-    <div class="divx">
-      <span class="left">
-        <table border="1">抠脚大汉如何女装</table>
-        <table border="1">作者：王佳奇</table>
-      </span>
-      <span class="right">
-        <el-button type="warning" icon="el-icon-star-off" circle></el-button>
-        <el-button type="info" round>认证</el-button>
+  <div class="divx" style="width : 80% ;margin: 0 auto;">
+    <div class="divx" style shadow="hover">
+      <span>
+        <el-row>
+          <router-link class="title" to="/">{{paper.title}}</router-link>
+        </el-row>
+        <el-row >
+          <span  v-for="author in paper.authors" :key="author.authorid">
+            <router-link class="author" to="/">{{author.name}}</router-link>as&nbsp;&nbsp;
+          </span>
+          <span class="right">
+            <el-button type="warning" icon="el-icon-star-off" circle></el-button>
+            <el-button type="info" round>认证</el-button>
+          </span>
+        </el-row>
       </span>
     </div>
     <div class="divx">
@@ -15,8 +21,8 @@
     </div>
     <div class="divx">
       <span class="left">
-        <table border="1">DOI：123456</table>
-        <table border="1">被引量：1111111</table>
+        <table border="1">DOI：{{DOI}}</table>
+        <table border="1">被引量：{{reference}}</table>
       </span>
       <span class="right">
         <el-button type="success">下载</el-button>
@@ -27,7 +33,23 @@
 
 <script>
 export default {
-  name: "paperinfo"
+  name: "paperinfo",
+  data(){
+    return {
+      paper : {
+        title: "基于深度学习的水文1",
+        abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
+        authors: [
+          { name: "作者1", authorid: "12345" },
+          { name: "作者2", authorid: "15345" }
+        ],
+        cited: "555",
+        year: "2019",
+        origin: "BUAA"
+      }
+      
+    }
+  }
 };
 </script>
 
@@ -44,5 +66,27 @@ table {
 }
 .divx {
   overflow: hidden;
+}
+.title {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 6px;
+  float: left;
+  color: #06c;
+}
+.author {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 2px;
+  margin-top: 6px;
+  float: left;
+  color: #06c;
+  
+}
+a:hover {
+  text-decoration: underline;
+  color: darkmagenta;
 }
 </style>
