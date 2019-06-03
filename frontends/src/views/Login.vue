@@ -8,7 +8,7 @@
       <el-col :span="8">
         <el-card class="box-card-login">
           <div class="login-inner" v-show="!isReg">
-            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fit2"></el-image>
+            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fits2"></el-image>
             <el-row style="margin-top: 12%">
               <el-col :span="6">
                 <div class="tips">用户名：</div>
@@ -36,7 +36,7 @@
           </div>
 
           <div v-show="isReg">
-            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fit2"></el-image>
+            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fits2"></el-image>
             <el-row style="margin-top: 8%">
               <el-col :span="6">
                 <div class="tips">用户名：</div>
