@@ -22,5 +22,5 @@ new Vue({
 }).$mount('#app')
 //router.push("/Search")
 
-router.push("/papers")
+router.push("/")
 
