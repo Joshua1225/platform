@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import top from '@/components/Top.vue'
 //词云
@@ -23,7 +24,6 @@ new Vue({
   },
   render: h => h(App)
 }).$mount('#app')
-//router.push("/Search")
+router.push("/User")
 
-router.push("/Search")
 
