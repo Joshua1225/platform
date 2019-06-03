@@ -18,7 +18,6 @@ export default {
   name: "userstate",
   data() {
     return {
-      isLog: store.state.isLog
     };
   },
   methods: {
