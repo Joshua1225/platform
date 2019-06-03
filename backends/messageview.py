@@ -21,7 +21,7 @@ POST
 '''
 @csrf_exempt
 def register(request):
-    if (check_login(request)):
+    if check_login(request):
         if request.method == "POST":
             data = json.loads(request.body.decode('utf-8'))
             type = data['type']
