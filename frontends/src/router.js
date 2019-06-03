@@ -10,7 +10,7 @@ import PaperList from "./components/PaperList.vue"
 import MessageList from "./components/MessageList.vue"
 import Papers from './views/Papers.vue'
 
-import userinfo from "./components/userinfo.vue"
+//import userinfo from "./components/userinfo.vue"
 import UserState from "./components/UserState.vue"
 import ExpertList from "./components/ExpertList.vue"
 import uploadImg from "./components/UploadImg.vue"
