@@ -15,12 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from backends import views,keywordview
+from backends import views,keywordview,paperview,messageview,user,expertview
 
 urlpatterns = [
-    path('platform/', include('backends.urls')),
+
     path('', views.test ),
-    path('data/', views.data),
-    path('getkeyword/', keywordview.getkeyword)
+    path('upload_paper',paperview.upload_paper),
+    path('down_paper',paperview.download_paper),
+
+    path('apeal',messageview.appeal),
+
+    path('editacademia',expertview.editacademia),
+
+    path('login',user.login),
+    path('logout',user.logout),
+    path('register',user.register),
+    path('change_info',user.change_info),
+    path('check_login',user.check_login),
+
+    path('data', views.data),
+    path('getkeyword', keywordview.getkeyword)
 
 ]
