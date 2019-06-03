@@ -42,16 +42,16 @@
     data() {
       return {
         Json: {
-          key: 1,
-          value: 2
+          username: "dengmofan",
+          password: "12345678"
         },
-        dataUrl: "/getkeyword",
+        dataUrl: "/platform/login/",
         fileUrl: "/file",
         fileList: []
       };
     },
     methods: {
-      handleRemove(file, fileList) {
+     /* handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePreview(file) {
@@ -72,7 +72,7 @@
         form.append("paperId", 123456);
 
         axios.post(this.fileUrl, form);
-      },
+      },*/
       uploadJson() {
         //TO DO 更改Url
         axios.post(this.dataUrl, JSON.stringify(this.Json)).then((res) => {
