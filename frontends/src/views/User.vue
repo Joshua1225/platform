@@ -14,7 +14,7 @@
         <el-col :span="6">
           <userinforemake/>
         </el-col>
-        <el-col :span='16' offset="1">
+        <el-col :span='16' :offset="1">
           <paperlist title="根据您的兴趣，为您推荐了高质量的论文。"></paperlist>
         </el-col>
       </el-tab-pane>
@@ -55,6 +55,11 @@ export default {
   data: function() {
     return {
       chosen:"first",
+    }
+  },
+  methods:{
+    handleClick:function(res){
+
     }
   }
 };

@@ -25,5 +25,4 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-router.push("/user")
 
