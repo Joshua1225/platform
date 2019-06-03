@@ -111,6 +111,7 @@ class Papers(models.Model):
     pdf = models.FileField(verbose_name="pdf链接", null=True, blank=True, upload_to=upload_paper_to)
     url = models.TextField(verbose_name="外部链接", null=True)
     abstract = models.TextField(verbose_name="摘要", null=True)
+
     """
     doi是电子信息唯一索引码
     pdf:  //static.aminer.org/pdf/PDF/001/297/802/genetic_algorithms.pdf

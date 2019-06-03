@@ -5,8 +5,8 @@
         <span style="float:left ;font-size:20px;width:75%">
           论女装
           <br>
-          <div style="width:300px;float:left">
-            <el-link type="info" style="float:left">王佳奇</el-link>
+          <div style="width:300px;float:left" v-for="author in paper.authors" :key="author.authorid">
+            <router-link class="author" to="/">{{author.name}}</router-link>as&nbsp;&nbsp;
           </div>
         </span>
         <span style="float:right">
@@ -16,15 +16,14 @@
       </div>
       <div>摘要</div>
       <div class="text item">
-        This website template has been designed by sc.chinaz.com for you, for free. You can replace all this text with your own text. Consectetur adipiscing elit. Nunc id lectus ante, adipiscing scelerisque odio. Nam non massa felis, ac consequat quam. Sed turpis nisl, convallis ut varius nec, vestibulum vel sapien. Donec euismod varius tellus, blandit egestas felis facilisis ut. Donec mattis purus at dui auctor nec volutpat purus ullamcorper. Phasellus sit amet magna vitae tellus mollis pharetra sed dictum metus. Nam ultrices mauris ut metus lacinia vitae suscipit augue molestie. Nulla facilisi. Fusce eget velit erat. Sed viverra, est vitae viverra convallis, nisi nulla venenatis mauris, vitae sagittis mauris ante in libero. Integer in augue nec arcu bibendum pulvinar vitae in velit. Quisque pretium venenatis sapien, non condimentum purus sodales mattis. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc a quam eu tellus congue ornare quis vel augue.
-        Donec id sapien molestie ipsum blandit pellentesque. Cras molestie aliquet tellus ac interdum. Mauris ullamcorper porttitor justo, ultricies adipiscing massa dapibus non. Cras arcu justo, facilisis sit amet molestie eget, volutpat et urna. Integer diam odio, vestibulum vitae pharetra tempor, porttitor quis nunc. Duis vulputate ante sed enim pharetra facilisis lobortis urna mattis. Donec eu quam ante, vitae ornare neque. Praesent posuere orci nec lorem tempor elementum sed ornare odio. Aenean id interdum augue.
+        {{abstract}}
       </div>
       <el-divider></el-divider>
       <div class="clearfix">
         <span style="float:left">
-          <p style="float:left;margin: 4px 0px">DOI：123545</p>
+          <p style="float:left;margin: 4px 0px">DOI：{{DOI}}</p>
           <br>
-          <p style="float:left;margin: 4px 0px">被引量：1111111</p>
+          <p style="float:left;margin: 4px 0px">被引量：{{reference}}</p>
         </span>
         <span style="float:right">
           <el-button type="success">下载</el-button>
@@ -37,7 +36,23 @@
 
 <script>
 export default {
-  name: "paperinfo"
+  name: "paperinfo",
+  data(){
+    return {
+      paper : {
+        title: "基于深度学习的水文1",
+        abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
+        authors: [
+          { name: "作者1", authorid: "12345" },
+          { name: "作者2", authorid: "15345" }
+        ],
+        cited: "555",
+        year: "2019",
+        origin: "BUAA"
+      }
+      
+    }
+  }
 };
 </script>
 
@@ -63,5 +78,27 @@ export default {
 
 .box-card {
   width: 80%;
+}
+.title {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 6px;
+  float: left;
+  color: #06c;
+}
+.author {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 2px;
+  margin-top: 6px;
+  float: left;
+  color: #06c;
+  
+}
+a:hover {
+  text-decoration: underline;
+  color: darkmagenta;
 }
 </style>

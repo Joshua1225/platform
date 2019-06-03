@@ -54,8 +54,8 @@ export default {
   },
   data: function() {
     return {
-      chosen: ""
-    };
+      chosen:"first",
+    }
   }
 };
 </script>
