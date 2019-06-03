@@ -30,7 +30,7 @@
     name: 'SearchBar',
     methods :{
        toSearch(){
-         this.$router.push('/searchRes')
+         this.$router.push('/Result')
        }
      },
     data() {
