@@ -1,43 +1,48 @@
 <template>
-  <el-card class="box-card">
-    <el-dropdown trigger="click" style="float:right">
-      <span class="el-dropdown-link">
-        结果排序
-        <i class="el-icon-arrow-down el-icon--right"></i>
-      </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>按时间排序</el-dropdown-item>
-        <el-dropdown-item>按被引量排序</el-dropdown-item>
-        <el-dropdown-item>按时间降序</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
-    <div class="paper" style shadow="hover" v-for="paper in papers" :key="paper.title">
-      <div class="title">
-        <router-link class="title" to="/">{{paper.title}}</router-link>
-      </div>
-      <div class="abstract">{{paper.abstract}}</div>
-      <div class="info">
-        <span v-for="author in paper.authors" :key="author.authorid">
-          <router-link to="/">{{author.name}}</router-link>&nbsp;
+  <div style="padding:10px">
+    <el-card shadow="always" body-style="text-align : left ; font-size : 13px ;">{{title}}</el-card>
+    <el-card shadow="hover">
+      <el-dropdown trigger="click" style="float:right">
+        <span class="el-dropdown-link">
+          结果排序
+          <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
-        <span>被引量：{{paper.cited}}</span>
-        &nbsp;&nbsp;
-        <span class="year">-{{paper.year}}年</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>按时间排序</el-dropdown-item>
+          <el-dropdown-item>按被引量排序</el-dropdown-item>
+          <el-dropdown-item>按时间降序</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <div class="paper" style shadow="hover" v-for="paper in papers" :key="paper.title">
+        <div class="title">
+          <router-link class="title" to="/">{{paper.title}}</router-link>
+        </div>
+        <div class="abstract">{{paper.abstract}}</div>
+        <div class="info">
+          <span v-for="author in paper.authors" :key="author.authorid">
+            <router-link to="/">{{author.name}}</router-link>&nbsp;
+          </span>
+          <span>被引量：{{paper.cited}}</span>
+          &nbsp;&nbsp;
+          <span class="year">-{{paper.year}}年</span>
+        </div>
       </div>
-    </div>
-    <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
-  </el-card>
+      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+    </el-card>
+  </div>
 </template>
 
 <script>
 export default {
   name: "paperList",
+  props: { title: String },
   data: function() {
     return {
       papers: [
         {
           title: "基于深度学习的水文1",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
+          abstract:
+            "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
           authors: [
             { name: "作者1", authorid: "12345" },
             { name: "作者2", authorid: "15345" }
@@ -114,8 +119,9 @@ export default {
         },
         {
           title: "基于深度学习的水文8",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
-          authors: [  
+          abstract:
+            "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
+          authors: [
             { name: "作者1", authorid: "12345" },
             { name: "作者2", authorid: "15345" }
           ],
@@ -151,9 +157,7 @@ export default {
 };
 </script>
 <style>
- .box-card {
-    width: 800px;
-  }
+
 .paperList {
   padding: 40px;
   width: 750px;
@@ -163,7 +167,7 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 10px;
-  padding:10px;
+  padding: 10px;
   width: 600px;
   text-align: left;
   border-bottom: 1px solid #efefef;
@@ -198,7 +202,7 @@ a {
 }
 a:hover {
   text-decoration: underline;
-  color: darkmagenta;
+  color:#999;
 }
 </style>
 
