@@ -30,7 +30,7 @@ def upload_paper(request):
         else:
             fpath = upload_paper_to(pid)
             handle_uploaded_file(pfile,fpath)
-            paper.update(pdf="具体存储的位置")
+            paper.update(pdf=fpath)
             ans += [{'code':0}]
             return JsonResponse(ans, safe=False)
     else:
@@ -61,7 +61,7 @@ def download_paper(request):
         file = open(path,'rb')
         response = FileResponse(file)
         response['Content-Type'] = 'application/octet-stream'    #可以下载任意格式的文件
-        response['Content-Disposition'] = 'attachment;filename='+ pid
+        response['Content-Disposition'] = 'attachment;filename=' + pid
         return response
     else:
         ans += [{'code': 2}]
