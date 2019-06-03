@@ -68,7 +68,7 @@ class Users(models.Model):
     name = models.CharField(max_length=21, verbose_name="用户名")
     credit = models.IntegerField(default=0, verbose_name="积分")
     interest = models.CharField(max_length=255, null=True, verbose_name="兴趣领域")
-    email = models.EmailField(verbose_name="邮箱", unique=True)
+    email = models.EmailField(verbose_name="邮箱", unique=True, null=True)
     avator = models.ImageField(verbose_name="头像", null=True, upload_to=upload_avator_to)     # 这里有两个可选参数规定图片显示大长和宽，根据前端页面需要定，还需要一个default
     signature = models.TextField(null=True, verbose_name="个性签名")
     type = models.IntegerField(default=0, choices=((0, u"普通用户"), (1, u"专家")), verbose_name="用户类型")
