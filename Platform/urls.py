@@ -18,9 +18,9 @@ from django.urls import path,include
 from backends import views,keywordview
 
 urlpatterns = [
-
-    path('',views.test ),
-    path('data',views.data),
-    path('getkeyword',keywordview.getkeyword )
+    path('platform/', include('backends.urls')),
+    path('', views.test ),
+    path('data/', views.data),
+    path('getkeyword/', keywordview.getkeyword)
 
 ]

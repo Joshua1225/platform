@@ -25,7 +25,7 @@ export default {
     goLogin() {
       axios
         .post(
-          "http://154.8.237.76:8000/platform/register/?email=1&password=1&name=1"
+          "http://154.8.237.76:8000/platform/register?email=1&password=1&name=1"
         )
         .then(function(response) {
           console.log(response);
@@ -34,9 +34,6 @@ export default {
           console.log(error);
         });
       console.log(123);
-      // store.commit('changeisLog')
-      // console.log(this.isLog)
-      // this.$router.push("/login")
     }
   }
 };
