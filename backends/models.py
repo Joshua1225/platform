@@ -1,5 +1,5 @@
 from django.db import models
-import uuid, os
+import os
 from django.utils import timezone
 # Create your models here.
 
@@ -63,7 +63,7 @@ class UnidentifiedAcademia(models.Model):
 
 class Users(models.Model):
     """用户"""
-    user_id = models.UUIDField(default=uuid.uuid4, primary_key=True, db_index=True, verbose_name="用户ID", editable=False)
+    username = models.CharField(max_length=21, verbose_name="登录用户名")
     password = models.CharField(max_length=21, verbose_name="用户密码")
     name = models.CharField(max_length=21, verbose_name="用户名")
     credit = models.IntegerField(default=0, verbose_name="积分")
@@ -73,6 +73,8 @@ class Users(models.Model):
     signature = models.TextField(null=True, verbose_name="个性签名")
     type = models.IntegerField(default=0, choices=((0, u"普通用户"), (1, u"专家")), verbose_name="用户类型")
     academia_id = models.ForeignKey(UnidentifiedAcademia, null=True, on_delete=models.PROTECT)
+    follow = models.ManyToManyField(UnidentifiedAcademia, related_name='follow')
+    collect = models.ManyToManyField(UnidentifiedAcademia, related_name='collect')
 
     class Meta:
         db_table = 'User'
