@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "Login",
   data() {
@@ -107,7 +108,7 @@ export default {
           username : this.usernameinput,
           password : this.passwordinput
         }
-        axios.post("154.8.237.76/platform/login/", JSON.stringify(daiyue)).then((res) => {
+        axios.post('154.8.237.76/platform/login/', JSON.stringify(daiyue)).then((res) => {
           console.log(res)
         }).catch((res) => {
           console.log(res)
