@@ -52,7 +52,7 @@ def appeal(request):
                     ans = [{'code': 4}]
 
                     return JsonResponse(ans, safe=False)
-            if type == 2:                                  #身份认证
+            if type == '2':                                  #身份认证
                 if (not type or not content or not username or not file or not objectid):
                     ans = [{'code': 3}]
                     return JsonResponse(ans, safe=False)
