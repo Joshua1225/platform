@@ -39,17 +39,23 @@
 
   new Vue({
     el: '#app',
-    data() {
-      return {
-        Json: {
-          key: 1,
-          value: 2
-        },
-        dataUrl: "/getkeyword",
-        fileUrl: "/file",
-        fileList: []
-      };
-    },
+      data: function () {
+          return {
+              Json: {
+                  q: "Present",
+                  q_not: "",
+                  q_or:"",
+                  start_year:2000,
+                  end_year:2018,
+                  language: '',
+                  author: '',
+                  order: 0
+              },
+              dataUrl: "search/",
+              fileUrl: "/file",
+              fileList: []
+          };
+      },
     methods: {
       handleRemove(file, fileList) {
         console.log(file, fileList);
@@ -77,6 +83,7 @@
         //TO DO 更改Url
         axios.post(this.dataUrl, JSON.stringify(this.Json)).then((res) => {
           console.log(res)
+
         }).catch((res) => {
           console.log(res)
         })
