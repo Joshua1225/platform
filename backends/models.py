@@ -63,7 +63,7 @@ class UnidentifiedAcademia(models.Model):
 
 class Users(models.Model):
     """用户"""
-    username = models.CharField(max_length=21, verbose_name="登录用户名")
+    username = models.CharField(primary_key=True, max_length=21, verbose_name="登录用户名")
     password = models.CharField(max_length=21, verbose_name="用户密码")
     name = models.CharField(max_length=21, verbose_name="用户名")
     credit = models.IntegerField(default=0, verbose_name="积分")
