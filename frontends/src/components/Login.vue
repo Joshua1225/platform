@@ -23,6 +23,7 @@
 </template>
 
 <script>
+
   export default {
     name: 'Login',
     data () {
@@ -39,7 +40,8 @@
         this.$router.push('/')
       },
       reg () {
-        console.log("调用reg")
+        // console.log("调用reg")
+        
         this.isReg = true
       },
       cancel () {
@@ -51,13 +53,9 @@
         this.isReg = !this.isReg
       },
       addUesr (){
-        if(this.password === this.repeat){
-          localStorage.setItem("name",this.name)
-          localStorage.setItem("password",this.password)
-        }
-        else{
-          alert("")
-        }
+          
+          // localStorage.setItem("name",this.name)
+          // localStorage.setItem("password",this.password)
         
       }
     }

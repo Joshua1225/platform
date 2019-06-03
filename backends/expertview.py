@@ -1,31 +1,45 @@
 import json
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse
+
+from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 from .forms import AcademiaForm, UploadFileForm
 from backends.models import UnidentifiedAcademia
+from backends.user import check_login
 
+'''
+editacademia() 修改专家信息
 
-#修改专家信息
+[{'code':0}]  修改成功
+[{'code':1}]  拒绝使用GET方法
+[{'code':2}]  用户未登录
+[{'code':3}]  用户不存在
+'''
 @csrf_exempt
-def academia_edit(request):
-    '''
-        先把已有的用户信息读出来，然后判断用户请求是POST还是GET。如果是GET，则显示表单
-        并将用户已有信息也显示在其中，如果是POST，则接收用户提交的表单信息，然后更新各个数据模型实例属性的值
-    '''
-    academia = UnidentifiedAcademia.objects.get(id = request.user.academia_id)  #这里是默认发送了user的信息
-    if request.method == "POST":
-        academia_form = AcademiaForm(request.POST)
-        if academia_form.is_valid():
-            academia_cd = academia_form.cleaned_data
-            academia.position = academia_cd['position']
-            academia.experience = academia_cd['experience']
-            academia.education = academia_cd['education']
-            academia.tendency = academia_cd['tendency']
-            academia.save()
-        return HttpResponseRedirect('填写你要跳转的url')
+def editacademia(request):
+    ans = []
+    if check_login(request):
+        if request.method == "POST":
+            obj = json.loads(request.body)
+            aid = obj["id"]
+            #ans += [{"id": aid}]
+            ac = UnidentifiedAcademia.objects.filter(id=aid)
+            if len(ac) == 0:
+                ans += [{'code': 3}]
+                return JsonResponse(ans, safe=False)
+            else:
+                ac.update(position=obj["position"])
+                ac.update(experience=obj["experience"])
+                ac.update(education=obj["education"])
+                ac.update(tendency=obj["tendency"])
+
+                ans += [{'code': 0}]
+                return JsonResponse(ans, safe=False)
+        else:
+            ans += [{'code': 1}]
+            return JsonResponse(ans, safe=False)
     else:
-        academia_form = AcademiaForm(instance=request.user)
-        return render(request, "填写你要跳转的html", {"user_form":academia_form})
+        ans += [{'code': 2}]
+        return JsonResponse(ans, safe=False)

@@ -4,14 +4,16 @@
   <div>
     <!-- Logo-->
     <searchBar/>
+    <echarts/>
   </div>
 </template>
 <script>
 import SearchBar from "@/components/SearchBar.vue";
+import echarts from "@/components/echarts.vue";
 export default {
   name: "search",
   components: {
-    SearchBar
+    SearchBar,echarts
   }
 };
 </script>

@@ -13,16 +13,31 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
 from backends import views, Search_views
 from backends.forms import MySearchForm
 
+from django.urls import path,include
+from backends import views,keywordview,paperview,messageview,user,expertview
+
 urlpatterns = [
-    path('platform/', include('backends.urls')),
-    path('admin/', admin.site.urls),
-    path('', views.test),
+
+    path('', views.test ),
+    path('upload_paper',paperview.upload_paper),
+    path('down_paper',paperview.download_paper),
+
+    path('apeal',messageview.appeal),
+
+    path('editacademia',expertview.editacademia),
+
+    path('login',user.login),
+    path('logout',user.logout),
+    path('register',user.register),
+    path('change_info',user.change_info),
+    path('check_login',user.check_login),
+
     path('data', views.data),
+    path('getkeyword', keywordview.getkeyword),
     path('search/', Search_views.MySearchView(form_class=MySearchForm),
          name='haystack_search')
+
 ]
