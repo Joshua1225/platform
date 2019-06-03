@@ -61,7 +61,7 @@
                 <el-input v-model="newpasswordreinput" placeholder="请再次输入密码" show-password></el-input>
               </el-col>
             </el-row>
-            <el-row margin-top="8%">
+            <el-row style="margin-top: 8%">
               <el-col span="6" offset="4">
               <el-button type="primary" plain @click="addUesr()">确定</el-button>
               </el-col>
