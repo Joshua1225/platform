@@ -22,9 +22,5 @@ new Vue({
 }).$mount('#app')
 router.push("/User")
 
-<<<<<<< HEAD
 //router.push("/")
-=======
-router.push("/papers")
->>>>>>> 51653082677f14ee2e8b6329a523d459b8031e82
 

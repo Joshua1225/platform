@@ -6,29 +6,20 @@
 //HTML 标签重复 warn
 
 <template>
-  <el-row :gutter="20">
-    <el-col :span="6" style="float:left">
-      <div class="grid-content bg-purple">
-        <div class="demo-image">
-          <div class="block">
-            <el-image
-              style="width: 150px; height: 60px;  display: flex; justify-content: center; align-items: center;"
-              :src="url"
-              :fit="fit"
-            ></el-image>
-          </div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content bg-purple"></div>
-    </el-col>
-    <el-col :span="6" style="float:right">
-      <div class="grid-content bg-purple">
+  <div class="head">
+    <el-row class="head" align="middle">
+      <el-col :span="6" :offset="2" style="float:left">
+        <el-image
+          style="width: 210px; height: 60px;  display: flex; justify-content: center; align-items: center;"
+          :src="url"
+          :fit="fit"
+        ></el-image>
+      </el-col>
+      <el-col :span="4" :offset="11">
         <userstate/>
-      </div>
-    </el-col>
-  </el-row>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -49,3 +40,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.head {
+  background-color: gray;
+  width: 100%;
+}
+</style>
