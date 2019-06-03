@@ -27,17 +27,8 @@ export default {
   },
   methods: {
     goLogin() {
-      axios
-        .post(
-          "http://154.8.237.76:8000/platform/register?email=1&password=1&name=1"
-        )
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      console.log(123);
+      console.log(1)
+      this.$router.push('/Login')
     }
   }
 };
