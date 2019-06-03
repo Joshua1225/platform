@@ -1,36 +1,36 @@
 <style>
-.expertspot-style{
+.message-style{
     float: left;
     font-size: 16px;
     height: 40px;
 }
+
 </style>
 
 <template>
   <div>
     <el-row>
       <el-card shadow="always">
-        <div class="expertspot-style">您关注了{{papernums}}名学者，被{{quotenums}}人关注</div>
+        <div class="message-style">您有{{messagenum}}条未读通知</div>
       </el-card>
     </el-row>
-    <expertList />
+        <MessageList/>
+    
   </div>
 </template>
 
 <script>
-import expertList from '@/components/ExpertList.vue'
+import MessageList from '@/components/MessageList.vue'
 export default {
-  name: "expertspot",
+  name: "Message",
   components: {
-    expertList
+    MessageList
   },
   data: function()
   {
     return {
-        papernums:100,
-        quotenums:999
+        messagenum:100,
     }
   }
 };
 </script>
-
