@@ -62,10 +62,10 @@
               </el-col>
             </el-row>
             <el-row style="margin-top: 8%">
-              <el-col span="6" offset="4">
+              <el-col :span="6" offset="4">
               <el-button type="primary" plain @click="addUesr()">确定</el-button>
               </el-col>
-              <el-col span="14">
+              <el-col :span="14">
               <el-button plain @click="cancel()">取消</el-button>
               </el-col>
             </el-row>
