@@ -47,7 +47,7 @@
 
 <script>
 export default {
-  name: "exper",
+  name: "expert",
   data: function() {
     return {
       name: "XiaoZHIPEIEN",
