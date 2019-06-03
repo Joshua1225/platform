@@ -1,5 +1,5 @@
 from django.db import models
-import uuid, os
+import os
 from django.utils import timezone
 # Create your models here.
 
@@ -63,16 +63,18 @@ class UnidentifiedAcademia(models.Model):
 
 class Users(models.Model):
     """用户"""
-    user_id = models.UUIDField(default=uuid.uuid4, primary_key=True, db_index=True, verbose_name="用户ID", editable=False)
+    username = models.CharField(primary_key=True, max_length=21, verbose_name="登录用户名")
     password = models.CharField(max_length=21, verbose_name="用户密码")
     name = models.CharField(max_length=21, verbose_name="用户名")
     credit = models.IntegerField(default=0, verbose_name="积分")
     interest = models.CharField(max_length=255, null=True, verbose_name="兴趣领域")
-    email = models.EmailField(verbose_name="邮箱", unique=True)
+    email = models.EmailField(verbose_name="邮箱", unique=True, null=True)
     avator = models.ImageField(verbose_name="头像", null=True, upload_to=upload_avator_to)     # 这里有两个可选参数规定图片显示大长和宽，根据前端页面需要定，还需要一个default
     signature = models.TextField(null=True, verbose_name="个性签名")
     type = models.IntegerField(default=0, choices=((0, u"普通用户"), (1, u"专家")), verbose_name="用户类型")
     academia_id = models.ForeignKey(UnidentifiedAcademia, null=True, on_delete=models.PROTECT)
+    follow = models.ManyToManyField(UnidentifiedAcademia, related_name='follow')
+    collect = models.ManyToManyField(UnidentifiedAcademia, related_name='collect')
 
     class Meta:
         db_table = 'User'
@@ -151,7 +153,7 @@ class Trades(models.Model):
 
 class Messages(models.Model):
     """站内信"""
-    type = models.IntegerField(choices=((1, "上传论文认证"), (2, "身份认证"), (3, "论文归属权申诉")), verbose_name="站内信类型")
+    type = models.IntegerField(choices=((1, "上传论文认证"), (2, "身份认证"), (3, "论文申诉"),(4, "专家推送"),(5, "论文推送")), verbose_name="站内信类型")
     content = models.TextField(verbose_name="用户内容", null=True)
     reply = models.TextField(verbose_name="管理员回复", null=True)
     time = models.TimeField(auto_now_add=True, verbose_name="生成时间")
