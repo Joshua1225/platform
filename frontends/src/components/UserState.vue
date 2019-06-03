@@ -5,7 +5,11 @@
       
     </div>
     <div v-else>
-      <i class="el-icon-user" style="font-size:40px"></i>
+      <el-row>
+        <el-col :span="6"><i class="el-icon-user" style="font-size:40px"></i></el-col>
+        <el-col :span="18"><div class="nick">晓之佩恩</div></el-col>
+      </el-row>
+      
     </div>
   </div>
 </template>
@@ -43,5 +47,12 @@ export default {
 .Top {
   margin-top: 10px;
   height: 100%;
+}
+.nick{
+  float: left;
+  margin-top: 7px;
+  height: 100%;
+  font: bolder;
+  font-size: 20px;
 }
 </style>
