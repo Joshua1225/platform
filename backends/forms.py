@@ -24,6 +24,8 @@ class MySearchForm(SearchForm):
     start_year = forms.IntegerField(required=False)
     end_year = forms.IntegerField(required=False)
     order = forms.IntegerField(required=True)
+    page_size = forms.IntegerField(required=True)
+    page_num = forms.IntegerField(required=True)
 
     def search(self):
         if not self.is_valid():
@@ -31,7 +33,9 @@ class MySearchForm(SearchForm):
         if not self.cleaned_data.get('q'):
             return self.no_query_found()
 
-        sqs = self.searchqueryset.auto_query(self.cleaned_data['q'])
+        sqs = self.searchqueryset.auto_query(self.cleaned_data['q']).auto_query(self.cleaned_data['q_not'])
+        # sqs1 = self.searchqueryset.auto_query('q_not')
+        # sqs = sqs & sqs1
         if self.load_all:
             sqs = sqs.load_all()
         if self.cleaned_data['start_year']:
@@ -39,13 +43,13 @@ class MySearchForm(SearchForm):
         if self.cleaned_data['end_year']:
             sqs = sqs.filter(year__lte=self.cleaned_data['end_year'])
         if self.cleaned_data['author']:
-            sqs = sqs.filter(autohr__contains=self.cleaned_data['author'])
+            sqs = sqs.filter(autohrs__contains=self.cleaned_data['author'])
         if self.cleaned_data['language']:
             sqs = sqs.filter(language__content=self.cleaned_data['language'])
         if self.cleaned_data['order'] == 1:
             sqs = sqs.order_by('-year')
         if self.cleaned_data['order'] == 0:
-            sqs = sqs.order_by('n_citation')
+            sqs = sqs.order_by('-n_citation')
         return sqs
 
 
