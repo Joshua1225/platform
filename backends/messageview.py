@@ -29,7 +29,7 @@ def appeal(request):
             type = request.POST.get('type')
             content =  request.POST.get('content')
             time = datetime.now()
-            username =  request.POST.get('username')
+            username =  request.session.get('username')
             file =  request.POST.get('file')
             objectid =  request.POST.get('objectid')
 

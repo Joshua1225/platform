@@ -4,8 +4,8 @@
       <div class="title">{{msg.type}} &nbsp;{{msg.time}}</div>
       <div class="content">
         <el-row :gutter="20">
-          <el-col span='22'><div><router-link to="/">{{msg.content}}</router-link></div></el-col>
-          <el-col style="padding:10px" span="2"> <i class="el-icon-delete"></i></el-col>
+          <el-col :span="22"><div><router-link to="/">{{msg.content}}</router-link></div></el-col>
+          <el-col style="padding:10px" :span="2"> <i class="el-icon-delete"></i></el-col>
         </el-row>
         
         <!-- <i class="el-icon-delete"></i> -->
@@ -33,8 +33,8 @@ export default {
   },
   methods: {
     getData: function(page) {
-      for (i = 0; i < 10; i++) {
-        this.papers.push(this.papers[0]);
+      for (var i = 0; i < 10; i++) {
+        
       }
     }
   },
