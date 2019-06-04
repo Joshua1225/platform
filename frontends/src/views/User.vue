@@ -48,9 +48,15 @@ import paperlist from "@/components/PaperList.vue";
 import userform from "@/components/UserForm.vue";
 import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
+import Axios from 'axios';
 
 export default {
   name: "user",
+  created:function(){
+    Axios.post("http://154.8.237.76:8000/userinfo").then( (res) =>{
+      console.log(res);
+    })
+  },
   components: {
     userinforemake,
     paperlist,
