@@ -338,7 +338,7 @@ def collect(request):
     return JsonResponse(ans, safe=False)
 
 '''
-recommend(paperid)
+relatedacademia(paperid)
 
 code:0  登录状态操作
 code:1  未登录操作
@@ -443,3 +443,30 @@ def academyinfo(request):
         }]
     return JsonResponse(ans, safe=False)
 
+'''
+listfollow()
+'''
+@csrf_exempt
+def listfollow(request):
+    ans = []
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        if check_login(request):
+            #unow = Users.objects.filter(username=request.session['username'])
+            unow = Users.objects.filter(username=data['username']).first().follow.all()
+            followed = serializers.serialize('json', unow)
+            ans +=[{
+                'code':0,
+                'followed':json.loads(followed)
+            }]
+        else:
+            ans += [{
+                'code': 2,
+                'followed': []
+            }]
+    else:
+        ans += [{
+            'code': 2,
+            'followed': []
+        }]
+    return JsonResponse(ans, safe=False)
