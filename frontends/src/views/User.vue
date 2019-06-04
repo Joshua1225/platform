@@ -30,7 +30,7 @@
       </el-tab-pane>
       <el-tab-pane label="我的论文" name="fourth">
         <el-col :span="22">
-          <paperlist title="你有100篇论文"></paperlist>
+          <paperlist title="papernum"></paperlist>
         </el-col>
       
       </el-tab-pane>
