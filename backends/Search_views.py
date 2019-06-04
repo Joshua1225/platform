@@ -1,8 +1,6 @@
 from haystack.views import SearchView
 import json
-from django.core.paginator import InvalidPage, Paginator
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
 
 class MySearchView(SearchView):
     def build_form(self, form_kwargs=None):

@@ -37,7 +37,6 @@ class MySearchForm(SearchForm):
 
         sqs = self.searchqueryset.auto_query(self.cleaned_data['q']).auto_query(self.cleaned_data['q_not'])
         str = self.cleaned_data['q_or']
-        print(str)
         sqs_temp = SearchQuerySet()
         tokenana = StemmingAnalyzer()
         for token in tokenana(str):
@@ -49,8 +48,11 @@ class MySearchForm(SearchForm):
             sqs = sqs.filter(year__gte=self.cleaned_data['start_year'])
         if self.cleaned_data['end_year']:
             sqs = sqs.filter(year__lte=self.cleaned_data['end_year'])
-        # if self.cleaned_data['author']:
-        #         #     sqs = sqs.filter(autohrs__contains=self.cleaned_data['author'])
+        if self.cleaned_data['author']:
+            str=self.cleaned_data['author']
+            tokenana = StemmingAnalyzer()
+            for token in tokenana(str):
+                sqs = sqs.filter(author__icontains=token.text)
         if self.cleaned_data['language']:
             sqs = sqs.filter(language__content=self.cleaned_data['language'])
         if self.cleaned_data['order'] == 1:
