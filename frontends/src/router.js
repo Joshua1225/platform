@@ -8,7 +8,7 @@ import Result from './views/Result.vue'
 import User from './views/User.vue'
 import PaperList from "./components/PaperList.vue"
 import MessageList from "./components/MessageList.vue"
-import Papers from './views/Papers.vue'
+import Paper from './views/Paper.vue'
 
 //import userinfo from "./components/userinfo.vue"
 import UserState from "./components/UserState.vue"
@@ -29,7 +29,12 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: userForm
+      component: Search
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: Search
     },
     {
       path: '/appeal',
@@ -37,9 +42,9 @@ export default new Router({
       component: Appeal
     },
     {
-      path: '/search',
-      name: 'search',
-      component:Search
+      path: '/paper',
+      name: 'paper',
+      component:Paper
     },
     {
       path: '/login',
