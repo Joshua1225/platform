@@ -71,7 +71,6 @@ export default {
       this.work = this.work.split(";;");
     },
     goAppeal(){
-      console.log(555555)
       this.$router.push("/appeal");
     }
   }

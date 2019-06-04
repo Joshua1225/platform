@@ -12,7 +12,7 @@
         您关注了{{papernums}}名学者，被{{quotenums}}人关注
       </el-card>
     
-    <expertList />
+    <expertList flag="true"/>
   </div>
 </template>
 
