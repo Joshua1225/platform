@@ -108,35 +108,42 @@ export default {
   },
   methods: {
     login() {
-      if (
-        this.usernameinput === "" ||
-        this.passwordinput === ""
-      ) {
-        alert("用户名或密码为空！")
+      if (this.usernameinput === "" || this.passwordinput === "") {
+        alert("用户名或密码为空！");
+      } else {
+        var json = {
+          username: this.usernameinput,
+          password: this.passwordinput
+        };
+        axios
+          .post("http://154.8.237.76:8000/login", JSON.stringify(json))
+          .then(res => {
+            console.log(res);
+            console.log(store.state.isLog);
+            store.commit("changeisLog");
+            if (res["data"][0]["code"] === 0) {
+              store.commit("changeisLog");
+              axios
+              .post("http://154.8.237.76:8000/userinfo")
+              .then(res => {
+                  console.log(res);
+
+              })
+              .catch(res => {
+                console.log(res);
+              });
+
+
+            } else if (res["data"][0]["code"] === 2) {
+              alert("账号不存在！");
+            } else if (res["data"][0]["code"] === 3) {
+              alert("密码错误！");
+            }
+          })
+          .catch(res => {
+            console.log(res);
+          });
       }
-      else  { 
-       var json={
-          username : this.usernameinput,
-          password : this.passwordinput
-        }
-        axios.post('http://154.8.237.76:8000/login', JSON.stringify(json)).then((res) => {
-          console.log(res)
-          console.log(store.state.isLog)
-          store.commit('changeisLog')
-          if(res['data'][0]['code'] === 0){
-            store.commit('changeisLog')
-          }
-          else if(res['data'][0]['code'] === 2){
-            alert("账号不存在！")
-          }
-          else if(res['data'][0]['code'] === 3){
-            alert("密码错误！")
-          }
-        }).catch((res) => {
-          console.log(res)
-        })}
-       
-     
     },
     reg() {
       console.log("调用reg");
@@ -144,23 +151,39 @@ export default {
     },
     cancel() {
       console.log("调用cancel");
-      this.name = "";
-      this.password = "";
-      this.repeat = "";
+      this.newusernameinput = "";
+      this.newpasswordinput = "";
+      this.newpasswordreinput = "";
+      this.emailinput = "";
       this.isReg = false;
     },
     addUesr() {
-      if (this.password === this.repeat) {
-        localStorage.setItem("name", this.name);
-        localStorage.setItem("password", this.password);
-        alert("注册成功");
-        this.name = "";
-        this.isReg = false;
+      if (
+        this.newusernameinput === "" ||
+        this.newpasswordinput === "" ||
+        this.newpasswordreinput === "" ||
+        this.emailinput === ""
+      ) {
+        alert("请补全信息！");
       } else {
-        alert("两次输入的密码不同");
-        this.password = "";
-        this.repeat = "";
+        if (this.newpasswordinput === this.newpasswordreinput) {
+          var json = {
+            username :this.newusernameinput,
+            password: this.newpasswordinput
+          };
+        }
       }
+      // if (this.password === this.repeat) {
+      //   localStorage.setItem("name", this.name);
+      //   localStorage.setItem("password", this.password);
+      //   alert("注册成功");
+      //   this.name = "";
+      //   this.isReg = false;
+      // } else {
+      //   alert("两次输入的密码不同");
+      //   this.password = "";
+      //   this.repeat = "";
+      // }
     }
   }
 };

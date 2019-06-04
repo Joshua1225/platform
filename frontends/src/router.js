@@ -6,6 +6,7 @@ import Search from './views/Search.vue'
 import Login from './views/Login.vue'
 import Result from './views/Result.vue'
 import User from './views/User.vue'
+import Expert from './views/Expert.vue'
 import PaperList from "./components/PaperList.vue"
 import MessageList from "./components/MessageList.vue"
 import Papers from './views/Papers.vue'
@@ -34,6 +35,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component:Search
+    },
+    {
+      path: '/expert',
+      name: 'expert',
+      component: Expert
     },
     {
       path: '/login',
