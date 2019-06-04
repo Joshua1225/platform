@@ -1,4 +1,4 @@
-<template  >
+<template>
   <div class="aform" ref="form">
     <el-card body-style="text-align :left ; padding :40px ;">
       <el-form :disabled="false" label-width="80px">
@@ -100,7 +100,7 @@ export default {
 
 <style>
 .aform {
-  margin-left: 30%;
+  margin-left: 5%;
 }
 
 .avatar-uploader .el-upload {
