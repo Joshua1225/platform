@@ -1,7 +1,7 @@
 <template>
   <div class="aform0" ref="form">
     <el-card body-style="text-align :left ; padding :40px ;">
-      <el-form :disabled="false" label-width="80px"  @submit.native.prevent>
+      <el-form :disabled="false" label-width="80px" @submit.native.prevent>
         <el-form-item label="用户名" v-model="form">{{form.email}}</el-form-item>
         <el-form-item label="注册邮箱" v-model="form">{{form.email}}</el-form-item>
         <el-form-item label="个人头像">
@@ -57,20 +57,22 @@
 
 <script>
 import Axios from "axios";
+import { hostname } from "os";
 
 //var host="http://154.8.237.76:8000";
-var host="";
+var host = "";
 
 export default {
   name: "userform",
   props: {
     obj: String
   },
+  created: function() {},
   data: function() {
     return {
       con: true,
       imageUrl: "",
-      email:"",
+      email: "",
       form: {
         interest: "",
         signature: ""
@@ -115,9 +117,17 @@ export default {
       return isJPG && isLt2M;
     },
     submitForm: function() {
-      var info={
-          signature:
+      for (i in this.dynamicTags) {
+        this.interest = this.interest + ";" + i;
       }
+      var info = {
+        username:'123',
+        signature: this.signature,
+        interest: this.interest
+      };
+      Axios.post(host + "/change_info", info).then(res => {
+        console.log(res);
+      });
     },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -129,7 +139,6 @@ export default {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
-
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
@@ -137,6 +146,12 @@ export default {
       }
       this.inputVisible = false;
       this.inputValue = "";
+    },
+    getCollectPaper() {
+      var data = { username: "123" };
+      Axios.post(host + "/listcollection", JSON.stringify(data)).then(res => {
+        console.log(res);
+      });
     }
   }
 };
@@ -153,7 +168,7 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
 }
-.input-new-tag00{
+.input-new-tag00 {
   width: 10px;
   margin-left: 10px;
   vertical-align: bottom;

@@ -27,7 +27,7 @@
         <Message/>
       </el-tab-pane>
       <el-tab-pane label="我的信息" name="fourth">
-        <userform />
+        <userform :info="userInfo" />
       </el-tab-pane>
       <el-tab-pane label="我的论文" name="fifth">
         <el-col :span="22">
@@ -52,8 +52,8 @@ import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
 import Axios from "axios";
 
-//var host="http://154.8.237.76:8000";
-var host="";
+var host="http://154.8.237.76:8000";
+//var host="";
 
 export default {
   name: "user",
@@ -80,6 +80,12 @@ export default {
   },
   data: function() {
     return {
+      userInfo:{
+        signature: "我喜欢唱、跳、rap、篮球",
+        interests: "唱;跳;rap;篮球",
+        email:"123@163.com",
+        username:"123"
+      },
       chosen:"first",
       papernum: "您已发表了10篇论文",
       expertnum: "198",

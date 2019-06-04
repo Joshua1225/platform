@@ -89,8 +89,8 @@ import axios from "axios";
 import store from "@/store";
 import { constants } from 'crypto';
 
-//var host="http://154.8.237.76:8000";
-var host="";
+var host="http://154.8.237.76:8000";
+//var host="";
 
 export default {
   name: "Login",
