@@ -1,6 +1,6 @@
 <template>
   <div align="center" style="padding:10px">
-    <el-card shadow="always" body-style="text-align : left ; font-size : 13px ;">{{title}}</el-card>
+    <el-card shadow="always" body-style="text-align : left ; font-size : 13px ;">您关注了{{title}}位专家</el-card>
     <el-card shadow="hover" >
       <div class="expert"   v-for="expert in experts" :key="expert.title">
         <div class="name">
