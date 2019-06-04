@@ -27,9 +27,9 @@ export default {
 </script>
 <style scope>
 .user {
-  width: 40%;
   float: left;
   text-align: center;
+  padding:10px;
 }
 .name {
   font-size: 20px;

@@ -1,22 +1,23 @@
 <template>
     <div style="width:60%;margin: 0 auto;">
-      <el-input v-model="input" placeholder="请输入搜索内容">
+      <el-image style="width: 350px; height: 100px; margin-top: 70px" :src="url" fit="contain"></el-image>
+      <el-input  style="margin-top:70px" v-model="input" placeholder="请输入搜索内容">
         <el-popover
             placement="left"
             width="100%"
             v-model="visible"
             slot="append">
             <div class="showsearch">包含全部检索词我的:<el-input v-model="input1" placeholder="包含全部检索词" ></el-input></div>
-            <div>包含精确检索词:<el-input v-model="input2" placeholder="包含全部检索词" ></el-input></div>
-            <div>包含至少一个检索词:<el-input v-model="input3" placeholder="包含全部检索词" ></el-input></div>
-            <div>不包含检索词:<el-input v-model="input4" placeholder="包含全部检索词" ></el-input></div>
-            <div>出现检索词的位置<el-input v-model="input5" placeholder="包含全部检索词" ></el-input></div>
-            <div>作者<el-input v-model="input6" placeholder="包含全部检索词" ></el-input></div>
-            <div>出版物:<el-input v-model="input7" placeholder="包含全部检索词" ></el-input></div>
-            <div>发表时间<el-input v-model="input8" placeholder="包含全部检索词" ></el-input></div>
-            <div>语言检索范围<el-input v-model="input9" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">包含精确检索词:<el-input v-model="input2" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">包含至少一个检索词:<el-input v-model="input3" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">不包含检索词:<el-input v-model="input4" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">出现检索词的位置<el-input v-model="input5" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">作者<el-input v-model="input6" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">出版物:<el-input v-model="input7" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">发表时间<el-input v-model="input8" placeholder="包含全部检索词" ></el-input></div>
+            <div class="showsearch">语言检索范围<el-input v-model="input9" placeholder="包含全部检索词" ></el-input></div>
             <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                <el-button size="mini" type="text" @click="visible = false" style="margin-top:10px">取消</el-button>
                 <el-button type="primary" size="mini" @click="visible = false">搜索</el-button>
             </div>
             <el-button slot="reference" icon="el-icon-arrow-down" style="margin:0 width='5%'"></el-button>
@@ -30,7 +31,7 @@
     name: 'SearchBar',
     methods :{
        toSearch(){
-         this.$router.push('/searchRes')
+         this.$router.push('/Result')
        }
      },
     data() {
@@ -46,6 +47,7 @@
         input8 :'',
         input9 :'',
         visible: false,
+        url:require('@/assets/logo.jpg'),
       };
     }
   }
@@ -64,5 +66,6 @@ font-size: 12px;
 .showsearch {
 width: 750px;
 margin: 0 auto;
+text-align:left;
 }
 </style>

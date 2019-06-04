@@ -1,27 +1,58 @@
 <template>
-  <el-upload
-    class="upload-simple"
-    :multiple="false"
-    :show-file-list="false"
-    action="https://jsonplaceholder.typicode.com/posts/"
-    :on-change="handleChange"
-    :file-list="fileList"
-  >
-    <el-button size="small" type="primary">点击上传</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-  </el-upload>
+  <div class="Top">
+    <div v-if="!this.$store.state.isLog">
+      <el-button type="info" plain @click="goLogin()">鐧诲綍</el-button>
+      
+    </div>
+    <div v-else>
+      <el-row>
+        <el-col :span="6"><i class="el-icon-user" style="font-size:40px"></i></el-col>
+        <el-col :span="18"><div class="nick">鏅撲箣浣╂仼</div></el-col>
+      </el-row>
+      
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-    name:'uploadimg'
-}
-</script>
-<style>
-.upload-simple{
-  text-align: left;
-  width: 300px;
-  padding:10px;
-}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<script>
+import store from "@/store";
+import axios from "axios";
+export default {
+  name: "userstate",
+  data() {
+    return {
+    };
+  },
+  methods: {
+    goLogin() {
+      axios
+        .post(
+          "http://154.8.237.76:8000/platform/register?email=1&password=1&name=1"
+        )
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      console.log(123);
+    }
+  }
+};
+</script>
+
+<style scoped>
+.Top {
+  margin-top: 10px;
+  height: 100%;
+}
+.nick{
+  float: left;
+  margin-top: 7px;
+  height: 100%;
+  font: bolder;
+  font-size: 20px;
+}
 </style>

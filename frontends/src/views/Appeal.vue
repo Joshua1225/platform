@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="appeal">
     <appealForm :obj='obj'></appealForm>
   </div>
 </template>
@@ -20,3 +20,10 @@ export default {
   }
 };
 </script>
+<style>
+.appeal{
+  text-align: center;
+  width: 75%;
+}
+</style>
+
