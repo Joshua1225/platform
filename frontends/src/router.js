@@ -69,9 +69,9 @@ export default new Router({
     },
     
     {
-      path:'/papers',
-      name:'papers',
-      component:Papers
+      path:'/paper',
+      name:'paper',
+      component:Paper
     }
   ]
 })
