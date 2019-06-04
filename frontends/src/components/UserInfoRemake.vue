@@ -1,11 +1,11 @@
 <template>
   <div class="user">
     <el-card class="image">
-      <el-image class="icon" :src="this.url"></el-image>
-      <div class="name">我叫王佳奇</div>
+      <el-image class="icon" src="this.$store.state.userAvator"></el-image>
+      <div class="name">{{this.$store.state.userName}}</div>
     </el-card>
     <el-card class="info">
-      <div class="flag">大家好，我是练习时长两年半的蔡徐坤，喜欢唱跳rap，篮球</div>
+      <div class="flag">{{signature}}</div>
       <div class='interest' v-for="ins in interests">
           <i class="el-icon-paperclip"></i>&nbsp;
           {{ins}}</div>
@@ -16,13 +16,24 @@
 <script>
 export default {
   name: "userinfo",
-  data: function() {
-    return {
-      url:
-        "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3504306845,2989079885&fm=173&s=9BB8A009562376AE8C3185C30300F0B5&w=640&h=480&img.JPEG",
-      interests: ["唱", "跳", "rap", "篮球"]
-    };
+  props:{
+    signature:String,
+    interests:String
+  },
+  mounted() {
+    // 初始化页面数据
+    this.transfer();
+  },
+  methods: {
+    transfer: function() {
+      this.interests = this.interests.split(";");
+    }
   }
+  // data: function() {
+  //   return {
+  //     interests: ["唱", "跳", "rap", "篮球"]
+  //   };
+  // }
 };
 </script>
 <style scope>
