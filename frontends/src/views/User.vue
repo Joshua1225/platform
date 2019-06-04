@@ -27,7 +27,7 @@
         <Message/>
       </el-tab-pane>
       <el-tab-pane label="我的信息" name="fourth">
-        <userform/>
+        <userform />
       </el-tab-pane>
       <el-tab-pane label="我的论文" name="fifth">
         <el-col :span="22">
@@ -64,6 +64,7 @@ export default {
         that.interests=res["data"][0]["userinfo"][0]["fields"]["interest"];
       }
     );
+    that.transfer();
   },
   components: {
     userinforemake,
@@ -85,7 +86,10 @@ export default {
     }
   },
   methods: {
-    handleClick: function(res) {}
+    handleClick: function(res) {},
+    transfer: function() {
+      this.interests = this.interests.split(";");
+    }
   }
 };
 </script>

@@ -56,11 +56,10 @@ export default {
   name: "SearchBar",
   methods: {
     toSearch() {
+
       if (this.visible == true) {
         this.visible = false;
-        this.$router.push({
-          path: "/Result",
-          query: {
+        var searchData = {
             model1: 1,
             q: this.input1,
             q_not: this.input3,
@@ -72,7 +71,11 @@ export default {
             order: 0,
             page_size: 10,
             page_num: 1
-          }
+          };
+        this.$emit('',this.childData);
+        this.$router.push({
+          path: "/Result",
+          query: 
         });
         //复原
         this.input1 = "";
