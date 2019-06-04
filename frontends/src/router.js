@@ -17,6 +17,8 @@ import uploadImg from "./components/UploadImg.vue"
 
 import userinfoR from "./components/UserInfoRemake.vue"
 import expertInfo from "./views/Expert.vue"
+import userForm from "./components/UserForm.vue"
+import expertForm from "./components/ExpertForm.vue"
 
 Vue.use(Router)
 
@@ -28,7 +30,7 @@ export default new Router({
     {
       path: '/',
       name: 'appeal',
-      component: Appeal
+      component: userForm
     },
     {
       path: '/search',

@@ -1,7 +1,7 @@
 <template  >
-  <div class="aform" ref="form" label-width="80px">
-    <el-card body-style="text-align :left ; padding :40px ; ">
-      <el-form :disabled="true">
+  <div class="aform" ref="form">
+    <el-card body-style="text-align :left ; padding :40px ;">
+      <el-form :disabled="false" label-width="80px">
         <el-form-item :label="form.type">
           <el-select v-model="form.reasonValue" placeholder="请选择申诉原因">
             <el-option
@@ -15,12 +15,11 @@
 
         <el-form-item label="当前文章" v-model="form">{{obj}}</el-form-item>
 
-        <el-form-item label="问题描述" prop="desc">
+        <el-form-item label="问题描述">
           <el-input type="textarea" v-model="form.content"></el-input>
         </el-form-item>
 
-        <el-form-item>
-          <p>上传图片</p>
+        <el-form-item label="上传图片">
           <el-upload
             ref="upload"
             class="upload-demo"
@@ -42,18 +41,23 @@
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
-        
-          <el-button type="primary" @click="submit">提交</el-button>
-          <el-button>取消</el-button>
-        
       </el-form>
+      <div style="text-align : center ; margin-top : 10px">
+        <span v-if="con">
+            <el-button type="primary" @click="submit">提交</el-button>
+            <el-button>取消</el-button>
+        </span>
+        <span>
+            <el-button type="primary" @click="submit">修改</el-button>
+        </span>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AppealForm",
+  name: "appealform",
   props: {
     obj: String
   },
@@ -107,7 +111,7 @@ export default {
 </script>
 
 <style>
-.aform{
-    margin-left: 30%;
+.aform {
+  margin-left: 30%;
 }
 </style>
