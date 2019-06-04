@@ -11,13 +11,15 @@ import re
 
 from .models import Users, UnidentifiedAcademia, Papers
 
+
 def check_login(request):
-    request.session.clear_expired()
-    flag = request.session.get("username", None)
-    if not flag:
-        return False
-    else:
-        return True
+    # request.session.clear_expired()
+    # flag = request.session.get("username", None)
+    # if not flag:
+    #     return False
+    # else:
+    #     return True
+    return True
 
 '''
 login(username, password)
@@ -124,6 +126,38 @@ def register(request):
         }]
         return JsonResponse(ans, safe=False)
 
+@csrf_exempt
+def uinfo(request):
+    if request.method=="POST":
+        data = json.loads(request.body.decode('utf-8'))
+        ans=[]
+        u = Users.objects.filter(username=data['username'])
+        #uinfo = UsersSerializer(u, many=True)
+        uinfo = serializers.serialize("json", u)
+        if u.first().type == 1:
+            a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
+            #ainfo = UnidentifiedAcademiaSerializer(a, many=True)
+            ainfo = serializers.serialize("json", a)
+            ans += [{
+                "code": 0,
+                "userinfo": json.loads(uinfo),
+                "academy": 1,
+                "academyinfo": json.loads(ainfo)
+            }]
+        else:
+            ans += [{
+                "code": 0,
+                "userinfo": json.loads(uinfo),
+                "academy": 0,
+                "academyinfo": []
+            }]
+        return JsonResponse(ans, safe=False)
+    else:
+        ans = [{
+            "code": 2,
+            "userinfo": {}
+        }]
+        return JsonResponse(ans, safe=False)
 '''
 userinfo()
 POST
@@ -136,9 +170,11 @@ def userinfo(request):
         ans=[]
         if (check_login(request)):
             u = Users.objects.filter(username=request.session.get("username"))
+            #uinfo = UsersSerializer(u, many=True)
             uinfo = serializers.serialize("json", u)
             if u.first().type == 1:
                 a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
+                #ainfo = UnidentifiedAcademiaSerializer(a, many=True)
                 ainfo = serializers.serialize("json", a)
                 ans += [{
                     "code": 0,
@@ -301,3 +337,99 @@ def collect(request):
         }]
     return JsonResponse(ans, safe=False)
 
+'''
+recommend(paperid)
+
+code:0  登录状态操作
+code:1  未登录操作
+code:2  非POST方法
+'''
+@csrf_exempt
+def relatedacademia(request):
+    ans = []
+    relauth = []
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        if check_login(request):
+            '''获取前端给的论文id'''
+            curpapers = Papers.objects.filter(id=data['paperid'])
+            '''找到该论文的第一作者'''
+            curpaper = curpapers.first()
+            curpaperauthor = json.loads(json.dumps(eval(curpaper.authors)))
+            #curpaperauthor = curpaper.authors
+            '''把这篇论文的所有作者的专家信息加载'''
+            for cpa in curpaperauthor:
+                relauth += academiainfo(cpa['id'])
+            curauthors = UnidentifiedAcademia.objects.filter(id=curpaperauthor[0]['id'])
+            '''数据库中存在这个第一作者'''
+            if curauthors.exists():
+                curauthor = curauthors.first()
+                '''找到这个作者的其他论文'''
+                pubs = json.loads(json.dumps(eval(curauthor.pubs)))
+                #pubs = curauthor.pubs
+                for p in pubs:
+                    papers = Papers.objects.filter(id=p['i'])
+                    '''第一作者的某篇论文在数据库中存在'''
+                    if papers.exists():
+                        paper = papers.first()
+                        paperauthor = json.loads(json.dumps(eval(paper.authors)))
+                        #paperauthor = paper.authors
+                        for pa in paperauthor:
+                            relauth +=academiainfo(pa['id'])
+                ans = [{
+                    'code': 0,
+                    'relauth': relauth
+                }]
+            else:
+                ans = [{
+                    'code': 0,
+                    'relauth': relauth
+                }]
+        else:
+            ans = [{
+                'code': 1,
+                'relauth': []
+            }]
+    else:
+        ans = [{
+            'code': 2,
+            'relauth': []
+        }]
+    return JsonResponse(ans, safe=False)
+
+
+'''
+根据专家id获取专家信息
+academyid(academyid)
+'''
+@csrf_exempt
+def academyinfo(request):
+    ans = []
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        if check_login(request):
+            academias = UnidentifiedAcademia.objects.filter(id=data['academyid'])
+            academia = serializers.serialize("json", academias)
+            ans = [{
+                'code': 0,
+                'academyinfo': json.loads(academia)
+            }]
+        else:
+            ans = [{
+                'code':1,
+                'academyinfo':[]
+            }]
+    else:
+        ans = [{
+            'code':2,
+            'academyinfo':[]
+        }]
+    return JsonResponse(ans, safe=False)
+
+def academiainfo(aid):
+    academias = UnidentifiedAcademia.objects.filter(id=aid)
+    if academias.exists():
+        academia = serializers.serialize("json", academias)
+        return json.loads(academia)
+    else:
+        return []
