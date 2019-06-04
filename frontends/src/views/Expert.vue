@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="6">
         <el-card class="image">
-            <el-image class="icon" :src="this.url"></el-image>
+          <el-image class="icon" :src="url1"></el-image>
           <div class="name">{{name}}</div>
           <div class="experience">
             <div class="experienceItem" v-for="ins in experience">
@@ -13,8 +13,12 @@
             </div>
           </div>
           <el-row>
-            <el-button type="warning" plain>收藏</el-button>
-            <el-button type="info" plain @click="goAppeal">认证</el-button>
+            <el-col :span="6" offset="4">
+              <el-button type="warning" plain>收藏</el-button>
+            </el-col>
+            <el-col :span="6" offset="3">
+              <el-button type="info" plain @click="goAppeal">认证</el-button>
+            </el-col>
           </el-row>
         </el-card>
 
@@ -62,7 +66,8 @@ export default {
       interests: ["膜", "码"],
       contact: "wjq@buaa.edu.cn;;BUAA",
       work: "大家好，我是练习时长两年半的蔡徐坤;;喜欢唱跳rap，篮球",
-      Cooperation: "V-dark"
+      Cooperation: "V-dark",
+      url1: require("@/assets/avatar.png")
     };
   },
   mounted() {

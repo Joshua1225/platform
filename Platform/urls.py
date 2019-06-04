@@ -41,5 +41,6 @@ urlpatterns = [
     path('search', Search_views.MySearchView(form_class=MySearchForm),
          name='haystack_search'),
     path('academyinfo', user.academyinfo),
-    path('relatedacademia', user.relatedacademia)
+    path('relatedacademia', user.relatedacademia),
+    path('paperinfo', paperview.paperinfo)
 ]

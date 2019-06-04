@@ -1,7 +1,11 @@
 <template>
   <div class="user">
     <el-card class="image">
-      <el-image class="icon" src="this.$store.state.userAvator"></el-image>
+      <el-image class="icon" src="this.$store.state.userAvator">
+        <div slot="error" class="image-slot">
+        <el-image :src="url0" :fit="fits"></el-image>
+      </div>
+      </el-image>
       <div class="name">{{this.$store.state.userName}}</div>
     </el-card>
     <el-card class="info">
@@ -23,11 +27,6 @@ export default {
   methods: {
     
   }
-  // data: function() {
-  //   return {
-  //     interests: ["唱", "跳", "rap", "篮球"]
-  //   };
-  // }
 };
 </script>
 <style scope>
