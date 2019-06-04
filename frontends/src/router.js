@@ -26,11 +26,15 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    
     {
       path: '/',
-      name: 'appeal',
+      name: 'index',
       component: userForm
+    },
+    {
+      path: '/appeal',
+      name: 'appeal',
+      component: Appeal
     },
     {
       path: '/search',

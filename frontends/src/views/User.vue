@@ -10,7 +10,7 @@
 <template>
   <div class="userouter">
     <el-tabs v-model="chosen" type="card" @tab-click="handleClick">
-      <el-tab-pane label="我的信息" name="first">
+      <el-tab-pane label="我的主页" name="first">
         <el-col :span="6">
           <userinforemake/>
         </el-col>
@@ -28,12 +28,16 @@
         
         <Message/>
       </el-tab-pane>
-      <el-tab-pane label="我的论文" name="fourth">
+      <el-tab-pane label="我的信息" name="fourth">
+        <userform/>
+      </el-tab-pane>
+      <el-tab-pane label="我的论文" name="fifth">
         <el-col :span="22">
           <paperlist title="你有100篇论文"></paperlist>
         </el-col>
       
       </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
@@ -41,8 +45,10 @@
 import userinforemake from "@/components/UserInfoRemake.vue";
 import Message from "@/views/Message.vue";
 import paperlist from "@/components/PaperList.vue";
+import userform from "@/components/UserForm.vue";
 import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
+
 export default {
   name: "user",
   components: {
@@ -50,7 +56,8 @@ export default {
     paperlist,
     mypapers,
     expertspot,
-    Message
+    Message,
+  userform  
   },
   data: function() {
     return {
