@@ -7,7 +7,7 @@
       <el-row>
         <el-col :span="10" class="nick">
           <el-dropdown @command="handleCommand">
-            <el-image style="width: 60px; height: 40px; " :src="url" :fit="fits"></el-image>
+            <el-image style="width: 60px; height: 40px; " src=this.$store.state.userName :fit="fits"></el-image>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item  icon="el-icon-plus" command="toUserInfo">我的主页</el-dropdown-item>
               <el-dropdown-item icon="el-icon-circle-plus" command="logOff">注销</el-dropdown-item>
@@ -15,7 +15,7 @@
           </el-dropdown>
         </el-col>
         <el-col :span="14">
-          <div class="nick" style="margin-top: 7px">晓之佩恩</div>
+          <div class="nick" style="margin-top: 7px">{{this.$store.state.userName}}</div>
         </el-col>
       </el-row>
     </div>
@@ -51,7 +51,7 @@ export default {
       else if(command=="logOff")
       {
         console.log(1);
-        store.commit('changeisLog');
+        store.commit('setOffline');
         this.$router.push("/Login");
       }
     },
