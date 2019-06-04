@@ -16,7 +16,8 @@
           </el-row>
         </span>
         <span style="float:right">
-          <el-button type="warning" icon="el-icon-star-off" circle style="margin-top:10px "></el-button>
+          <el-button v-if="following===true" type="warning" icon="el-icon-star-off" circle style="margin-top:10px " ref="followbutton" @click="follow"></el-button>
+          <el-button v-else type="warning" icon="el-icon-star-on" circle style="margin-top:10px " ref="followbutton" @click="follow"></el-button>
           <el-button type="info" round style="margin-top:10px " @click="goAppeal">认证</el-button>
         </span>
       </e>
@@ -46,6 +47,9 @@
 <script>
 import Axios from "axios";
 export default {
+  props: { 
+    // paperid: String 
+    },
   name: "paperinfo",
   data() {
     return {
@@ -61,11 +65,38 @@ export default {
         cited: "555",
         year: "2019",
         origin: "BUAA",
-        paperid: "123"
+        paperid: "53e99784b7602d9701f3e132",
+        following: true
       }
     };
   },
+  created: function() {
+     var js={
+        id:this.paperid,
+        type: 0
+      }
+      Axios.post("http://154.8.237.76:8000/collect",JSON.stringify(js)).then(
+        function(res)
+        {
+          console.log(res);
+        }
+      )
+
+  },
   methods: {
+    follow()
+    {
+      var js={
+        id:this.paperid,
+        type: 0
+      }
+      Axios.post("http://154.8.237.76:8000/collect",JSON.stringify(js)).then(
+        function(res)
+        {
+          console.log(res);
+        }
+      )
+    },
     download_button() {
       var js = {
         //id: this.paperid
