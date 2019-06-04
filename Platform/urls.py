@@ -26,11 +26,11 @@ urlpatterns = [
     path('download_paper',paperview.download_paper),
 
     path('appeal',messageview.appeal),
-    path('recommend', user.recommend),
+
     path('editacademia',expertview.editacademia),
     path('follow', user.follow),
     path('collect', user.collect),
-    path('userinfo', user.userinfo),
+    path('userinfo', user.uinfo),
     path('login',user.login),
     path('logout',user.logout),
     path('register',user.register),
@@ -38,7 +38,8 @@ urlpatterns = [
     path('check_login',user.check_login),
     path('data', views.data),
     path('getkeyword', keywordview.getkeyword),
-    path('search/', Search_views.MySearchView(form_class=MySearchForm),
-         name='haystack_search')
-
+    path('search', Search_views.MySearchView(form_class=MySearchForm),
+         name='haystack_search'),
+    path('academyinfo', user.academyinfo),
+    path('relatedacademia', user.relatedacademia)
 ]
