@@ -96,6 +96,7 @@ export default {
       usernameinput: "",
       passwordinput: "",
       newusernameinput: "",
+      emailinput: "",
       newpasswordinput: "",
       newpasswordreinput: "",
       fits: "contain",
@@ -107,27 +108,35 @@ export default {
   },
   methods: {
     login() {
-      if (this.usernameinput === "" || this.passwordinput === "") {
-        alert("用户名或密码为空！");
-      } else {
-        var json = {
-          username: this.usernameinput,
-          password: this.passwordinput
-        };
-        axios
-          .post("http://154.8.237.76:8000/login", JSON.stringify(json))
-          .then(res => {
-            console.log(res);
-            console.log(store.state.isLog);
-            store.commit("changeisLog");
-            if (res[0]["code"] === 0) {
-              store.commit("changeisLog");
-            }
-          })
-          .catch(res => {
-            console.log(res);
-          });
+      if (
+        this.usernameinput === "" ||
+        this.passwordinput === ""
+      ) {
+        alert("用户名或密码为空！")
       }
+      else  { 
+       var json={
+          username : this.usernameinput,
+          password : this.passwordinput
+        }
+        axios.post('http://154.8.237.76:8000/login', JSON.stringify(json)).then((res) => {
+          console.log(res)
+          console.log(store.state.isLog)
+          store.commit('changeisLog')
+          if(res['data'][0]['code'] === 0){
+            store.commit('changeisLog')
+          }
+          else if(res['data'][0]['code'] === 2){
+            alert("账号不存在！")
+          }
+          else if(res['data'][0]['code'] === 3){
+            alert("密码错误！")
+          }
+        }).catch((res) => {
+          console.log(res)
+        })}
+       
+     
     },
     reg() {
       console.log("调用reg");
