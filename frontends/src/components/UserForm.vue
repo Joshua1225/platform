@@ -57,7 +57,9 @@
 
 <script>
 import Axios from "axios";
-//url = "http://154.8.237.76/upload_paper";
+
+//var host="http://154.8.237.76:8000";
+var host="";
 
 export default {
   name: "userform",
@@ -82,7 +84,7 @@ export default {
     };
   },
   methods: {
-    uploadImg: function(param) {
+    uploadImg(param) {
       const formData = new FormData();
       formData.append("file", param.file);
 

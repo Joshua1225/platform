@@ -52,12 +52,15 @@ import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
 import Axios from "axios";
 
+//var host="http://154.8.237.76:8000";
+var host="";
+
 export default {
   name: "user",
   created: function() {
     var data = { username: this.$store.state.userName };
     var that=this;
-    Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(data)).then(
+    Axios.post(host+"/userinfo", JSON.stringify(data)).then(
       res => {
         console.log(res);
         that.signature=res["data"][0]["userinfo"][0]["fields"]["signature"];
