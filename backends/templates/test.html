@@ -42,9 +42,9 @@
       data: function () {
           return {
               Json: {
-                  q: "Present",
+                  q: "the",
                   q_not: "",
-                  q_or:"",
+                  q_or:"Cerebral infarction feature",
                   start_year:2000,
                   end_year:2018,
                   language: '',
@@ -58,8 +58,9 @@
               fileList: []
           };
       },
+
     methods: {
-      handleRemove(file, fileList) {
+     /* handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePreview(file) {
@@ -80,12 +81,11 @@
         form.append("paperId", 123456);
 
         axios.post(this.fileUrl, form);
-      },
+      },*/
       uploadJson() {
         //TO DO 更改Url
         axios.post(this.dataUrl, JSON.stringify(this.Json)).then((res) => {
           console.log(res)
-
         }).catch((res) => {
           console.log(res)
         })

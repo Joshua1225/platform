@@ -1,18 +1,18 @@
 <template>
-  <div class="msgList" style="">
+  <el-card shadow="hover">
     <div class="msg" style shadow="hover" v-for="msg in msgs" :key="msg.time">
       <div class="title">{{msg.type}} &nbsp;{{msg.time}}</div>
       <div class="content">
         <el-row :gutter="20">
-          <el-col span='22'><div><router-link to="/">{{msg.content}}</router-link></div></el-col>
-          <el-col style="padding:10px" span="2"> <i class="el-icon-delete"></i></el-col>
+          <el-col :span="22"><div><router-link to="/">{{msg.content}}</router-link></div></el-col>
+          <el-col style="padding:10px" :span="2"> <i class="el-icon-delete"></i></el-col>
         </el-row>
         
         <!-- <i class="el-icon-delete"></i> -->
       </div>
     </div>
     <el-pagination background layout="prev, pager, next" :total="1"></el-pagination>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -33,8 +33,8 @@ export default {
   },
   methods: {
     getData: function(page) {
-      for (i = 0; i < 10; i++) {
-        this.papers.push(this.papers[0]);
+      for (var i = 0; i < 10; i++) {
+        
       }
     }
   },
@@ -47,15 +47,14 @@ export default {
 
 .msgList {
   padding: 40px;
-  width: 650px;
   text-align: center;
 }
 .msg {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
   margin-left: 10px;
   padding: 10px;
-  width: 600px;
+  width: 800px;
   text-align: left;
   border-bottom: 1px solid #efefef;
 }

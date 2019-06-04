@@ -2,6 +2,8 @@ from django.forms import ModelForm
 from django import forms
 from backends.models import UnidentifiedAcademia
 from haystack.forms import SearchForm
+from whoosh.analysis import StemmingAnalyzer
+from haystack.query import SearchQuerySet
 
 # 根据实际需求调整
 class AcademiaForm(ModelForm):
@@ -34,16 +36,21 @@ class MySearchForm(SearchForm):
             return self.no_query_found()
 
         sqs = self.searchqueryset.auto_query(self.cleaned_data['q']).auto_query(self.cleaned_data['q_not'])
-        # sqs1 = self.searchqueryset.auto_query('q_not')
-        # sqs = sqs & sqs1
+        str = self.cleaned_data['q_or']
+        print(str)
+        sqs_temp = SearchQuerySet()
+        tokenana = StemmingAnalyzer()
+        for token in tokenana(str):
+            sqs_temp = sqs_temp.__or__(self.searchqueryset.auto_query(token.text))
+        sqs = sqs.__and__(sqs_temp)
         if self.load_all:
             sqs = sqs.load_all()
         if self.cleaned_data['start_year']:
             sqs = sqs.filter(year__gte=self.cleaned_data['start_year'])
         if self.cleaned_data['end_year']:
             sqs = sqs.filter(year__lte=self.cleaned_data['end_year'])
-        if self.cleaned_data['author']:
-            sqs = sqs.filter(autohrs__contains=self.cleaned_data['author'])
+        # if self.cleaned_data['author']:
+        #         #     sqs = sqs.filter(autohrs__contains=self.cleaned_data['author'])
         if self.cleaned_data['language']:
             sqs = sqs.filter(language__content=self.cleaned_data['language'])
         if self.cleaned_data['order'] == 1:
