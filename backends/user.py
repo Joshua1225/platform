@@ -1,3 +1,4 @@
+from django.contrib.sessions.backends.db import SessionStore
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.sessions.models import Session
@@ -11,6 +12,7 @@ import re
 from .models import Users, UnidentifiedAcademia, Papers
 
 def check_login(request):
+    request.session.clear_expired()
     flag = request.session.get("username", None)
     if not flag:
         return False
@@ -33,8 +35,9 @@ def login(request):
         data = json.loads(request.body.decode('utf-8'))
         # data = request.POST
         print(data)
-        u = Users.objects.get(username=data['username'])
-        if (u):
+        uu = Users.objects.filter(username=data['username'])
+        if (uu.exists()):
+            u = uu.first()
             if (u.password == data['password']):
                 '''在当前session容器中加入此次登录者的信息'''
                 request.session['username'] = u.username
@@ -43,12 +46,10 @@ def login(request):
                 '''处理单点登录'''
                 session_key = request.session.session_key
                 session_data = Session.objects.get(session_key=session_key).session_data
-                temp_session = Session.objects.filter(session_data=session_data).exclude(session_key=session_key)
-                if temp_session:
-                    temp_session.delete()
-                # if same_session:
-                #     for s in same_session:
-                #         s.clear()
+                temp_sessions = Session.objects.filter(session_data=session_data).exclude(session_key=session_key)
+                if temp_sessions.exists():
+                    for ts in temp_sessions:
+                        SessionStore(ts.session_key).clear()
                 '''返回登录成功'''
                 ans = [{
                     'code': 0
@@ -76,7 +77,7 @@ http://154.8.237.76:8000/logout/
 '''
 @csrf_exempt
 def logout(request):
-    request.session.flush()
+    request.session.clear()
     ans = [{
         "code": 0
     }]
@@ -131,42 +132,41 @@ POST
 '''
 @csrf_exempt
 def userinfo(request):
-    #if request.method=="POST":
-        print()
+    if request.method=="POST":
+        ans=[]
         if (check_login(request)):
-
             u = Users.objects.filter(username=request.session.get("username"))
             uinfo = serializers.serialize("json", u)
             if u.first().type == 1:
                 a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
                 ainfo = serializers.serialize("json", a)
-                ans = [{
+                ans += [{
                     "code": 0,
                     "userinfo": json.loads(uinfo),
                     "academy": 1,
                     "academyinfo": json.loads(ainfo)
                 }]
             else:
-                ans = [{
+                ans += [{
                     "code": 0,
                     "userinfo": json.loads(uinfo),
                     "academy": 0,
                     "academyinfo": []
                 }]
         else:
-            ans = [{
+            ans += [{
                 "code": 1,
                 "userinfo": [],
                 "academy": 0,
                 "academyinfo": []
             }]
         return JsonResponse(ans, safe=False)
-    # else:
-    #     ans = [{
-    #         "code": 2,
-    #         "userinfo": {}
-    #     }]
-    #     return JsonResponse(ans, safe=False)
+    else:
+        ans = [{
+            "code": 2,
+            "userinfo": {}
+        }]
+        return JsonResponse(ans, safe=False)
 
 """
 [{"code":0}]  修改成功
