@@ -56,7 +56,6 @@ export default {
   name: "SearchBar",
   methods: {
     toSearch() {
-
       if (this.visible == true) {
         this.visible = false;
         var searchData = {
@@ -72,11 +71,11 @@ export default {
             page_size: 10,
             page_num: 1
           };
-        this.$emit('',this.childData);
-        this.$router.push({
-          path: "/Result",
-          query: 
-        });
+        this.$emit('search',searchData);
+        // this.$router.push({
+        //   path: "/Result",
+        //   query: 
+        // });
         //复原
         this.input1 = "";
         this.input3 = "";
