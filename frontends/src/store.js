@@ -9,7 +9,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setOnline() {
-      this.state.isLog = ture;
+      this.state.isLog = true;
     }, setOffline() {
       this.state.isLog = false;
     }

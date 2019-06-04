@@ -1,5 +1,5 @@
-<template  >
-  <div class="aform" ref="form">
+<template >
+  <div ref="form">
     <el-card body-style="text-align :left ; padding :40px ;">
       <el-form :disabled="false" label-width="80px">
         <el-form-item label="用户名" v-model="form">{{form.email}}</el-form-item>
@@ -99,9 +99,6 @@ export default {
 </script>
 
 <style>
-.aform {
-  margin-left: 30%;
-}
 
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
