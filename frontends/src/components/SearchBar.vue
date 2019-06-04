@@ -1,7 +1,7 @@
 <template>
     <div style="width:60%;margin: 0 auto;">
       <el-image style="width: 350px; height: 100px; margin-top: 70px" :src="url" fit="contain"></el-image>
-      <el-input  style="margin-top:70px" v-model="input" placeholder="请输入搜索内容">
+      <el-input  style="margin-top:70px;width:80%;" v-model="input" placeholder="请输入搜索内容">
         <el-popover
             placement="left"
             width="100%"
@@ -20,9 +20,10 @@
                 <el-button size="mini" type="text" @click="visible = false" style="margin-top:10px">取消</el-button>
                 <el-button type="primary" size="mini" @click="visible = false">搜索</el-button>
             </div>
-            <el-button slot="reference" icon="el-icon-arrow-down" style="margin:0 width='5%'"></el-button>
+            <el-button slot="reference" icon="el-icon-arrow-down" style="margin:8px 10px 8px 10px;padding:0px;width='3%'">
+            </el-button>
         </el-popover>
-        <el-button slot="append" type="primary" icon="el-icon-search" @click="toSearch">搜索</el-button>
+        <el-button slot="append" type="primary" icon="el-icon-search" style="margin:2px 10px 2px 2px;padding:0px;width='3%'" @click="toSearch">搜索</el-button>
     </el-input>
     </div>
 </template>
