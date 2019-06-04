@@ -17,7 +17,7 @@
         </span>
         <span style="float:right">
           <el-button type="warning" icon="el-icon-star-off" circle style="margin-top:10px "></el-button>
-          <el-button type="info" round style="margin-top:10px ">认证</el-button>
+          <el-button type="info" round style="margin-top:10px " @click="goAppeal">认证</el-button>
         </span>
       </e>
       <el-row style="height : 290px">
@@ -75,6 +75,9 @@ export default {
           console.log(res);
         }
       );
+    },
+    goAppeal(){
+      this.$router.push("/appeal");
     }
   }
 };
