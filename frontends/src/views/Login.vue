@@ -124,7 +124,7 @@ export default {
             store.commit("setOffline");
             if (res["data"][0]["code"] === 0) {
               store.commit("setOnline");
-              this.$router.push("/");
+              this.$router.go(-1);
               // axios
               // .post("http://154.8.237.76:8000/userinfo")
               // .then(res => {
