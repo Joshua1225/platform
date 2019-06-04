@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  name: "paperList",
+  name: "collectionlist",
   props: { 
     title: String ,
     papers: []
@@ -72,52 +72,3 @@ export default {
   }
 };
 </script>
-<style scope>
-.paperList {
-  padding: 40px;
-  width: 750px;
-  text-align: center;
-}
-.paper {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  padding: 10px;
-  width: 600px;
-  text-align: left;
-  border-bottom: 1px solid #efefef;
-}
-.title {
-  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", 微软雅黑;
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 6px;
-  color: #06c;
-}
-
-.abstract {
-  font-size: 15px;
-  margin-top: 10px;
-  color: #666;
-}
-.year {
-  color: #999;
-}
-.info {
-  font-size: 13px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  font: 100;
-  color: #333;
-}
-
-a {
-  color: #333;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-  color: #999;
-}
-</style>
-
