@@ -2,6 +2,7 @@ import json,os
 
 from django.http import JsonResponse, FileResponse
 from django.shortcuts import render
+from django.core import serializers
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
@@ -77,3 +78,27 @@ def download_paper(request):
     else:
         ans += [{'code': 2}]
         return JsonResponse(ans, safe=False)
+
+@csrf_exempt
+def paperinfo(request):
+    ans = []
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        if check_login(request):
+            papers = Papers.objects.filter(id=data['paperid'])
+            paper = serializers.serialize("json", papers)
+            ans = [{
+                'code': 0,
+                'paperinfo': json.loads(paper)
+            }]
+        else:
+            ans = [{
+                'code':1,
+                'paperinfo':[]
+            }]
+    else:
+        ans = [{
+            'code':2,
+            'paperinfo':[]
+        }]
+    return JsonResponse(ans, safe=False)

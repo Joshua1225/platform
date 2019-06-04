@@ -27,11 +27,16 @@
         <Message/>
       </el-tab-pane>
       <el-tab-pane label="我的信息" name="fourth">
-        <userform/>
+        <userform />
       </el-tab-pane>
       <el-tab-pane label="我的论文" name="fifth">
         <el-col :span="22">
           <paperlist :title="papernum"></paperlist>
+        </el-col>
+      </el-tab-pane>
+      <el-tab-pane label="我的收藏" name="sixth">
+        <el-col :span="22">
+          <collectionlist :title="collectionnum"></collectionlist>
         </el-col>
       </el-tab-pane>
     </el-tabs>
@@ -41,23 +46,28 @@
 import userinforemake from "@/components/UserInfoRemake.vue";
 import Message from "@/views/Message.vue";
 import paperlist from "@/components/PaperList.vue";
+import collectionlist from "@/components/collectionlist.vue";
 import userform from "@/components/UserForm.vue";
 import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
 import Axios from "axios";
+
+//var host="http://154.8.237.76:8000";
+var host="";
 
 export default {
   name: "user",
   created: function() {
     var data = { username: this.$store.state.userName };
     var that=this;
-    Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(data)).then(
+    Axios.post(host+"/userinfo", JSON.stringify(data)).then(
       res => {
         console.log(res);
         that.signature=res["data"][0]["userinfo"][0]["fields"]["signature"];
         that.interests=res["data"][0]["userinfo"][0]["fields"]["interest"];
       }
     );
+    that.transfer();
   },
   components: {
     userinforemake,
@@ -65,7 +75,8 @@ export default {
     mypapers,
     expertspot,
     Message,
-    userform
+    userform,
+    collectionlist
   },
   data: function() {
     return {
@@ -73,11 +84,15 @@ export default {
       papernum: "您已发表了10篇论文",
       expertnum: "198",
       signature: "我喜欢唱、跳、rap、篮球",
-      interests: "唱;跳;rap;篮球"
+      interests: "唱;跳;rap;篮球",
+      collectionnum :"您已收藏了10篇论文",
     }
   },
   methods: {
-    handleClick: function(res) {}
+    handleClick: function(res) {},
+    transfer: function() {
+      this.interests = this.interests.split(";");
+    }
   }
 };
 </script>

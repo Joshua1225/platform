@@ -45,6 +45,10 @@
 
 <script>
 import Axios from "axios";
+
+//var host="http://154.8.237.76:8000";
+var host = "";
+
 export default {
   name: "paperinfo",
   data() {
@@ -70,13 +74,11 @@ export default {
       var js = {
         //id: this.paperid
       };
-      Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(js)).then(
-        function(res) {
-          console.log(res);
-        }
-      );
+      Axios.post(host + "/userinfo", JSON.stringify(js)).then(function(res) {
+        console.log(res);
+      });
     },
-    goAppeal(){
+    goAppeal() {
       this.$router.push("/appeal");
     }
   }
