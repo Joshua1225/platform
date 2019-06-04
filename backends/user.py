@@ -133,21 +133,29 @@ def uinfo(request):
         ans=[]
         u = Users.objects.filter(username=data['username'])
         #uinfo = UsersSerializer(u, many=True)
-        uinfo = serializers.serialize("json", u)
-        if u.first().type == 1:
-            a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
-            #ainfo = UnidentifiedAcademiaSerializer(a, many=True)
-            ainfo = serializers.serialize("json", a)
-            ans += [{
-                "code": 0,
-                "userinfo": json.loads(uinfo),
-                "academy": 1,
-                "academyinfo": json.loads(ainfo)
-            }]
+        if u.exists():
+            uinfo = serializers.serialize("json", u)
+            if u.first().type == 1:
+                a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
+                # ainfo = UnidentifiedAcademiaSerializer(a, many=True)
+                ainfo = serializers.serialize("json", a)
+                ans += [{
+                    "code": 0,
+                    "userinfo": json.loads(uinfo),
+                    "academy": 1,
+                    "academyinfo": json.loads(ainfo)
+                }]
+            else:
+                ans += [{
+                    "code": 0,
+                    "userinfo": json.loads(uinfo),
+                    "academy": 0,
+                    "academyinfo": []
+                }]
         else:
             ans += [{
-                "code": 0,
-                "userinfo": json.loads(uinfo),
+                "code": 1,
+                "userinfo": [],
                 "academy": 0,
                 "academyinfo": []
             }]
@@ -170,22 +178,29 @@ def userinfo(request):
         ans=[]
         if (check_login(request)):
             u = Users.objects.filter(username=request.session.get("username"))
-            #uinfo = UsersSerializer(u, many=True)
-            uinfo = serializers.serialize("json", u)
-            if u.first().type == 1:
-                a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
-                #ainfo = UnidentifiedAcademiaSerializer(a, many=True)
-                ainfo = serializers.serialize("json", a)
-                ans += [{
-                    "code": 0,
-                    "userinfo": json.loads(uinfo),
-                    "academy": 1,
-                    "academyinfo": json.loads(ainfo)
-                }]
+            if u.exists():
+                uinfo = serializers.serialize("json", u)
+                if u.first().type == 1:
+                    a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
+                    # ainfo = UnidentifiedAcademiaSerializer(a, many=True)
+                    ainfo = serializers.serialize("json", a)
+                    ans += [{
+                        "code": 0,
+                        "userinfo": json.loads(uinfo),
+                        "academy": 1,
+                        "academyinfo": json.loads(ainfo)
+                    }]
+                else:
+                    ans += [{
+                        "code": 0,
+                        "userinfo": json.loads(uinfo),
+                        "academy": 0,
+                        "academyinfo": []
+                    }]
             else:
                 ans += [{
-                    "code": 0,
-                    "userinfo": json.loads(uinfo),
+                    "code": 1,
+                    "userinfo": [],
                     "academy": 0,
                     "academyinfo": []
                 }]
