@@ -27,7 +27,7 @@ export default new Router({
   routes: [
     
     {
-      path: '/',
+      path: '/appeal',
       name: 'appeal',
       component: Appeal
     },

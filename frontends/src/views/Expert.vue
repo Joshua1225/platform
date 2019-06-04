@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="6">
         <el-card class="image">
-          <el-image class="icon" :src="this.url"></el-image>
+          <div @click="goAppeal"><el-image class="icon" :src="this.url" ></el-image></div>
           <div class="name">{{name}}</div>
           <div class="experience">
             <div class="experienceItem" v-for="ins in experience">
@@ -66,6 +66,10 @@ export default {
     transfer: function() {
       this.experience = this.experience.split(";;");
       this.work = this.work.split(";;");
+    },
+    goAppeal(){
+      console.log(555555)
+      this.$router.push("/appeal");
     }
   }
 };
