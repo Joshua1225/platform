@@ -68,7 +68,7 @@ export default {
   methods: {
     download_button() {
       var js = {
-        id: this.paperid
+        //id: this.paperid
       };
       Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(js)).then(
         function(res) {

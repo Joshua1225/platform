@@ -120,25 +120,24 @@ export default {
           .then(res => {
             console.log(res);
             console.log(store.state.isLog);
-            store.commit("changeisLog");
-            if (res["data"][0]["code"] === 0) {
-              store.commit("changeisLog");
-              axios
-              .post("http://154.8.237.76:8000/userinfo")
-              .then(res => {
-                  console.log(res);
+            // if (res["data"][0]["code"] === 0) {
+            //   store.commit("changeisLog");
+            //   axios
+            //   .post("http://154.8.237.76:8000/userinfo")
+            //   .then(res => {
+            //       console.log(res);
 
-              })
-              .catch(res => {
-                console.log(res);
-              });
+            //   })
+            //   .catch(res => {
+            //     console.log(res);
+            //   });
 
 
-            } else if (res["data"][0]["code"] === 2) {
-              alert("账号不存在！");
-            } else if (res["data"][0]["code"] === 3) {
-              alert("密码错误！");
-            }
+            // } else if (res["data"][0]["code"] === 2) {
+            //   alert("账号不存在！");
+            // } else if (res["data"][0]["code"] === 3) {
+            //   alert("密码错误！");
+            // }
           })
           .catch(res => {
             console.log(res);
