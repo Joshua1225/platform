@@ -36,8 +36,8 @@
           </div>
 
           <div v-show="isReg">
-            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fits2"></el-image>
-            <el-row style="margin-top: 8%">
+            <el-image style="width: 350px; height: 40px; margin-top: 5%" :src="url2" :fit="fits2"></el-image>
+            <el-row style="margin-top: 5%">
               <el-col :span="6">
                 <div class="tips">用户名：</div>
               </el-col>
@@ -45,7 +45,15 @@
                 <el-input v-model="newusernameinput" placeholder="请输入用户名"></el-input>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 8%">
+            <el-row style="margin-top: 5%">
+              <el-col :span="6">
+                <div class="tips">电子邮箱：</div>
+              </el-col>
+              <el-col :span="18">
+                <el-input v-model="emailinput" placeholder="请输入电子邮箱地址" show-password></el-input>
+              </el-col>
+            </el-row>
+            <el-row style="margin-top: 5%">
               <el-col :span="6">
                 <div class="tips">密码：</div>
               </el-col>
@@ -53,7 +61,7 @@
                 <el-input v-model="newpasswordinput" placeholder="请输入密码" show-password></el-input>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 8%">
+            <el-row style="margin-top: 5%">
               <el-col :span="6">
                 <div class="tips">再次输入：</div>
               </el-col>
@@ -61,12 +69,12 @@
                 <el-input v-model="newpasswordreinput" placeholder="请再次输入密码" show-password></el-input>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 8%">
+            <el-row style="margin-top: 5%">
               <el-col :span="6" :offset="4">
-              <el-button type="primary" plain @click="addUesr()">确定</el-button>
+                <el-button type="primary" plain @click="addUesr()">确定</el-button>
               </el-col>
               <el-col :span="14">
-              <el-button plain @click="cancel()">取消</el-button>
+                <el-button plain @click="cancel()">取消</el-button>
               </el-col>
             </el-row>
           </div>
@@ -77,8 +85,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import store from '@/store'
+import axios from "axios";
+import store from "@/store";
 export default {
   name: "Login",
   store,
@@ -87,7 +95,8 @@ export default {
       isReg: false,
       usernameinput: "",
       passwordinput: "",
-      newusernameinput :"",
+      newusernameinput: "",
+      emailinput: "",
       newpasswordinput: "",
       newpasswordreinput: "",
       fits: "contain",
@@ -103,7 +112,7 @@ export default {
         this.usernameinput === "" ||
         this.passwordinput === ""
       ) {
-        alert("用户名或密码为空！");
+        alert("用户名或密码为空！")
       }
       else  { 
        var json={
@@ -114,8 +123,14 @@ export default {
           console.log(res)
           console.log(store.state.isLog)
           store.commit('changeisLog')
-          if(res[0]['code'] === 0){
+          if(res['data'][0]['code'] === 0){
             store.commit('changeisLog')
+          }
+          else if(res['data'][0]['code'] === 2){
+            alert("账号不存在！")
+          }
+          else if(res['data'][0]['code'] === 3){
+            alert("密码错误！")
           }
         }).catch((res) => {
           console.log(res)
