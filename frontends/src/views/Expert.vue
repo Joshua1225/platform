@@ -14,7 +14,8 @@
           </div>
           <el-row>
             <el-col :span="6" offset="4">
-              <el-button type="warning" plain>收藏</el-button>
+              <el-button type="warning" plain @click="setFollow" v-show="this.isFollow">关注</el-button>
+              <el-button type="warning" plain @click="offFollow" v-show="!this.isFollow">取关</el-button>
             </el-col>
             <el-col :span="6" offset="3">
               <el-button type="info" plain @click="goAppeal">认证</el-button>
@@ -55,6 +56,7 @@
 
 <script>
 import axios from "axios";
+import store from "@/store";
 export default {
   name: "expert",
   props: {
@@ -70,6 +72,7 @@ export default {
       experience: "膜法师;;程序员",
       education:"",
       tendency:"",
+      isFollow:true,
       interests: ["膜", "码"],
       contact: "wjq@buaa.edu.cn;;BUAA",
       work: "大家好，我是练习时长两年半的蔡徐坤;;喜欢唱跳rap，篮球",
@@ -107,7 +110,52 @@ export default {
     },
     goAppeal() {
       this.$router.push("/appeal");
-    }
+    },
+    setFollow(){
+      var data={
+        id:"53f43d89dabfaedce5565d9a",
+        type:0,
+        username:"123"
+        // username:this.$store.state.userName
+      }
+      var that=this;
+       axios
+      .post("http://154.8.237.76:8000/follow", JSON.stringify(data))
+      .then(res => {
+        console.log(res);
+        if(res["data"][0]["code"]===0){
+          that.isFollow=false;
+        }
+        else if(res["data"][0]["code"]===2){
+         alert("请登录！")
+        }
+      })
+      .catch(res => {
+        console.log(res);
+      });
+    },
+    offFollow(){
+      var data={
+        id:"53f43d89dabfaedce5565d9a",
+        type:1,
+        username:"123"
+      }
+      var that=this;
+       axios
+      .post("http://154.8.237.76:8000/follow", JSON.stringify(data))
+      .then(res => {
+        console.log(res);
+        if(res["data"][0]["code"]===0){
+          that.isFollow=true;
+        }
+        else if(res["data"][0]["code"]===2){
+         alert("请登录！")
+        }
+      })
+      .catch(res => {
+        console.log(res);
+      });
+    },
   }
 };
 </script>
