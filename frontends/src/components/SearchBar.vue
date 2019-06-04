@@ -20,12 +20,10 @@
                 <el-button size="mini" type="text" @click="visible = false" style="margin-top:10px">取消</el-button>
                 <el-button type="primary" size="mini" @click="visible = false">搜索</el-button>
             </div>
-            <el-button slot="reference" icon="el-icon-arrow-down" style="margin:0 width='5%'"></el-button>
+            <el-button slot="reference" icon="el-icon-arrow-down" style="margin:0px ;width='5%'"></el-button>
         </el-popover>
-        <el-button slot="append" type="primary" icon="el-icon-search" @click="toSearch">搜索</el-button>
+        <el-button slot="append" style="margin:0px" type="primary" icon="el-icon-search" @click="toSearch">搜索</el-button>
     </el-input>
-
-    
     </div>
 </template>
 <script>
