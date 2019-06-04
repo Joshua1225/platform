@@ -48,6 +48,9 @@
 <script>
 export default {
   name: "expert",
+  created:function(){
+    this.name=this.$route.query.id;
+  },
   data: function() {
     return {
       name: "XiaoZHIPEIEN",

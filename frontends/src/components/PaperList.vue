@@ -15,7 +15,7 @@
       </el-dropdown>
       <div class="paper" style shadow="hover" v-for="paper in papers" :key="paper.title">
         <div class="title">
-          <router-link class="title" to="/">{{paper.title}}</router-link>
+          <router-link class="title" :to="{path:'paper',query:{id:paper.id}}">{{paper.title}}</router-link>
         </div>
         <div class="abstract">{{paper.abstract}}</div>
         <div class="info">
@@ -40,6 +40,7 @@ export default {
     return {
       papers: [
         {
+          id: "53e9ab9eb7602d970354a97e",
           title: "基于深度学习的水文1",
           abstract:
             "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
@@ -52,96 +53,8 @@ export default {
           origin: "BUAA"
         },
         {
+          id: "53e9ab9eb7602d970354a97e",
           title: "基于深度学习的水文2",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文3",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文4",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文5",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文6",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文7",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文8",
-          abstract:
-            "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文9",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          title: "基于深度学习的水文10",
           abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
           authors: [
             { name: "作者1", authorid: "12345" },
@@ -157,7 +70,6 @@ export default {
 };
 </script>
 <style>
-
 .paperList {
   padding: 40px;
   width: 750px;
@@ -202,7 +114,7 @@ a {
 }
 a:hover {
   text-decoration: underline;
-  color:#999;
+  color: #999;
 }
 </style>
 

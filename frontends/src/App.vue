@@ -12,7 +12,6 @@
           <bottom/>
         </el-footer>
       </el-container>
-    
     </div>
   </div>
 </template>
