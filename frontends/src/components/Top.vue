@@ -11,7 +11,7 @@
       <el-col :span="6" :offset="2" style="float:left">
         <div style="cursor : pointer" @click="goSearch">
           <el-image
-            style=" width: 210px; height: 60px;  display: flex; justify-content: center; align-items: center; border-radius: 10px ;"
+            style=" width: 210px; height: 60px;  display: flex; justify-content: center; align-items: center; "
             :src="url"
             :fit="fit"
           ></el-image>

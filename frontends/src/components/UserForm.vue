@@ -1,5 +1,5 @@
 <template>
-  <div class="aform" ref="form">
+  <div class="aform0" ref="form">
     <el-card body-style="text-align :left ; padding :40px ;">
       <el-form :disabled="false" label-width="80px">
         <el-form-item label="用户名" v-model="form">{{form.email}}</el-form-item>
@@ -13,7 +13,7 @@
             :on-success="handleSuccess"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>g
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
 
@@ -21,6 +21,29 @@
           <el-input type="textarea" v-model="form.content"></el-input>
         </el-form-item>
       </el-form>
+      <el-row>
+        <el-col :span="2" class="interests-title">兴趣领域</el-col>
+        <el-col :span="22">
+          <el-tag
+            :key="tag"
+            v-for="tag in dynamicTags"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)"
+          >{{tag}}</el-tag>
+          <el-input
+            class="input-new-tag00"
+            v-if="inputVisible"
+            v-model="inputValue"
+            ref="saveTagInput"
+            size="small"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+          ></el-input>
+          <el-button v-else class="button-new-tag00" size="small" @click="showInput">+ New Tag</el-button>
+        </el-col>
+      </el-row>
+
       <div style="text-align : center ; margin-top : 10px">
         <span v-if="con">
           <el-button type="primary" @click="submitForm">提交</el-button>
@@ -35,7 +58,7 @@
 </template>
 
 <script>
-import Axios from 'axios';
+import Axios from "axios";
 //url = "http://154.8.237.76/upload_paper";
 
 export default {
@@ -54,7 +77,10 @@ export default {
       },
       uploadUrl: "",
       file: "",
-      fileList: []
+      fileList: [],
+      dynamicTags: ["守望先锋", "刺客信条", "英雄联盟"],
+      inputVisible: false,
+      inputValue: ""
     };
   },
   methods: {
@@ -68,7 +94,6 @@ export default {
         })
         .catch(response => {
           console.log("图片上传失败");
-          
         });
     },
     handleRemove(file, fileList) {
@@ -93,18 +118,49 @@ export default {
     handleError: function(response, file, fileList) {
       this.$message.warning("上传失败，请检查网络环境_(:з)∠)_");
     },
-    submitForm: function()
-    {
-
+    submitForm: function() {},
+    handleClose(tag) {
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
-    
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.inputValue;
+      if (inputValue) {
+        this.dynamicTags.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
+    }
   }
 };
 </script>
 
 <style>
-.aform {
-  margin-left: 5%;
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag00 {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0; 
+}
+.input-new-tag00 {
+  width: 10px;
+  margin-left: 10px;
+  vertical-align: bottom; 
+}
+
+.aform0 {
+  margin-left: 10%;
 }
 
 .avatar-uploader .el-upload {
@@ -129,6 +185,11 @@ export default {
   width: 178px;
   height: 178px;
   display: block;
+}
+.interests-title {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 7px;
 }
 </style>
 

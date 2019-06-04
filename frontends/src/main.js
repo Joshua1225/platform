@@ -10,7 +10,6 @@ import top from '@/components/Top.vue'
 import echarts from 'echarts'
 
 
-
 Vue.prototype.$echarts = echarts
 require('echarts-wordcloud')
 
