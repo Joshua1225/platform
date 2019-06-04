@@ -9,9 +9,6 @@ import top from '@/components/Top.vue'
 
 import echarts from 'echarts'
 
-axios.defaults.withCredentials=true
-axios.defaults.crossDomain = true
-
 Vue.prototype.$echarts = echarts
 require('echarts-wordcloud')
 
@@ -30,6 +27,4 @@ new Vue({
 }).$mount('#app')
 
 router.push("/user")
-
-router.push("/User")
 
