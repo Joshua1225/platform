@@ -7,7 +7,7 @@
         <el-form-item label="头像">
           <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com"
+            action=""
             :http-request="uploadImg"
             :show-file-list="false"
             :on-success="handleSuccess"
@@ -64,7 +64,8 @@ import Axios from "axios";
 export default {
   name: "userform",
   props: {
-    obj: String
+    obj: String,
+    dynamicTags:[]
   },
   data: function() {
     return {
@@ -78,7 +79,6 @@ export default {
       uploadUrl: "",
       file: "",
       fileList: [],
-      dynamicTags: ["守望先锋", "刺客信条", "英雄联盟"],
       inputVisible: false,
       inputValue: ""
     };
@@ -151,12 +151,12 @@ export default {
   height: 32px;
   line-height: 30px;
   padding-top: 0;
-  padding-bottom: 0; 
+  padding-bottom: 0;
 }
 .input-new-tag00 {
   width: 10px;
   margin-left: 10px;
-  vertical-align: bottom; 
+  vertical-align: bottom;
 }
 
 .aform0 {
