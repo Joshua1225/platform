@@ -14,7 +14,7 @@
         <el-col :span="6">
           <userinforemake/>
         </el-col>
-        <el-col :span='16' :offset="1">
+        <el-col :span="16" :offset="1">
           <paperlist title="根据您的兴趣，为您推荐了高质量的论文。"></paperlist>
         </el-col>
       </el-tab-pane>
@@ -22,10 +22,8 @@
         <el-col>
           <expertspot :title="expertnum"></expertspot>
         </el-col>
-        
       </el-tab-pane>
       <el-tab-pane label="我的消息" name="third">
-        
         <Message/>
       </el-tab-pane>
       <el-tab-pane label="我的信息" name="fourth">
@@ -35,9 +33,7 @@
         <el-col :span="22">
           <paperlist :title="papernum"></paperlist>
         </el-col>
-      
       </el-tab-pane>
-
     </el-tabs>
   </div>
 </template>
@@ -48,16 +44,25 @@ import paperlist from "@/components/PaperList.vue";
 import userform from "@/components/UserForm.vue";
 import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
+import Axios from "axios";
 
 export default {
   name: "user",
+  created: function() {
+    var data = { username: "123" };
+    Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(data)).then(
+      res => {
+        console.log(res);
+      }
+    );
+  },
   components: {
     userinforemake,
     paperlist,
     mypapers,
     expertspot,
     Message,
-  userform  
+    userform
   },
   data: function() {
     return {
@@ -67,10 +72,8 @@ export default {
       
     }
   },
-  methods:{
-    handleClick:function(res){
-
-    }
+  methods: {
+    handleClick: function(res) {}
   }
 };
 </script>

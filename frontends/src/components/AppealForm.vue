@@ -46,6 +46,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   name: "appealform",
   props: {
@@ -67,7 +68,7 @@ export default {
       selectType: "认证原因",
       form: {
         type: "认证原因",
-        objId: "",
+        objId: "53e99784b7602d9701f3e465",
         content: ""
       },
       uploadUrl: "",
@@ -84,22 +85,20 @@ export default {
         console.log(res);
         this.$refs.upload.submit();
       });
+      //this.$refs.upload.submit();
     },
     uploadImg(param) {
-      var url = "http://154.8.237.76:8000/userinfo";
+      
+      var uploadUrl = "http://154.8.237.76:8000/upload_paper";
+      var fileObj = param.file;
+      console.log("upload");
+      var form = new FormData();
+      form.append("file", fileObj);
+      form.append("id", "53e99784b7602d9701f3e465");
 
-      axios.post(url).then(res => {
+      axios.post(uploadUrl, form).then(res => {
         console.log(res);
       });
-      // var uploadUrl = "http://154.8.237.76:8000/upload_paper";
-      // var fileObj = param.file;
-      // console.log("upload");
-      // var form = new FormData();
-      // form.append("file", fileObj);
-      // form.append("id", this.objId);
-      // axios.post(uploadUrl, form).then(res => {
-      //   console.log(res);
-      // });
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);

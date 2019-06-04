@@ -9,7 +9,7 @@
 <template>
   <div style="padding :10px">
     
-    <expertList :title="title"></expertList>
+    <expertList flag="true" :title="title"></expertList>
   </div>
 </template>
 
