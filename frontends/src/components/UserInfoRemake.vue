@@ -18,16 +18,10 @@ export default {
   name: "userinfo",
   props:{
     signature:String,
-    interests:String
-  },
-  mounted() {
-    // 初始化页面数据
-    this.transfer();
+    interests:[]
   },
   methods: {
-    transfer: function() {
-      this.interests = this.interests.split(";");
-    }
+    
   }
   // data: function() {
   //   return {

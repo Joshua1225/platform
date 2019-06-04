@@ -56,6 +56,8 @@ export default {
         console.log(res);
         that.signature=res["data"][0]["userinfo"][0]["fields"]["signature"];
         that.interests=res["data"][0]["userinfo"][0]["fields"]["interest"];
+        that.transfer();
+        
       }
     );
   },
@@ -77,7 +79,10 @@ export default {
     }
   },
   methods: {
-    handleClick: function(res) {}
+    handleClick: function(res) {},
+    transfer: function() {
+      this.interests = this.interests.split(";");
+    }
   }
 };
 </script>
