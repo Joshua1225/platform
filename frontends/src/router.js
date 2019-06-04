@@ -28,9 +28,9 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/appeal',
-      name: 'appeal',
-      component: Appeal
+      path: '/',
+      name: 'index',
+      component: Search
     },
     {
       path: '/search',

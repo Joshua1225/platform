@@ -26,7 +26,7 @@ urlpatterns = [
     path('download_paper',paperview.download_paper),
 
     path('appeal',messageview.appeal),
-
+    path('recommend', user.recommend),
     path('editacademia',expertview.editacademia),
     path('follow', user.follow),
     path('collect', user.collect),
