@@ -39,17 +39,26 @@
 
   new Vue({
     el: '#app',
-    data() {
-      return {
-        Json: {
-          username: "dmf",
-          password: "13131313"
-        },
-        dataUrl: "/userinfo",
-        fileUrl: "/file",
-        fileList: []
-      };
-    },
+      data: function () {
+          return {
+              Json: {
+                  q: "the",
+                  q_not: "",
+                  q_or:"Cerebral infarction feature",
+                  start_year:2010,
+                  end_year:2018,
+                  language: '',
+                  author: '',
+                  order: 0,
+                  page_size:10,
+                  page_num:1
+              },
+              dataUrl: "search/",
+              fileUrl: "/file",
+              fileList: []
+          };
+      },
+
     methods: {
      /* handleRemove(file, fileList) {
         console.log(file, fileList);

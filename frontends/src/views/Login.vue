@@ -8,7 +8,7 @@
       <el-col :span="8">
         <el-card class="box-card-login">
           <div class="login-inner" v-show="!isReg">
-            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fit2"></el-image>
+            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fits2"></el-image>
             <el-row style="margin-top: 12%">
               <el-col :span="6">
                 <div class="tips">用户名：</div>
@@ -26,7 +26,7 @@
               </el-col>
             </el-row>
             <el-row style="margin-top: 12%">
-              <el-col :span="6" offset="4">
+              <el-col :span="6" :offset="4">
                 <el-button type="primary" plain @click="login()">登陆</el-button>
               </el-col>
               <el-col :span="14">
@@ -36,8 +36,8 @@
           </div>
 
           <div v-show="isReg">
-            <el-image style="width: 350px; height: 40px; margin-top: 10%" :src="url2" :fit="fit2"></el-image>
-            <el-row style="margin-top: 8%">
+            <el-image style="width: 350px; height: 40px; margin-top: 5%" :src="url2" :fit="fits2"></el-image>
+            <el-row style="margin-top: 5%">
               <el-col :span="6">
                 <div class="tips">用户名：</div>
               </el-col>
@@ -45,7 +45,15 @@
                 <el-input v-model="newusernameinput" placeholder="请输入用户名"></el-input>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 8%">
+            <el-row style="margin-top: 5%">
+              <el-col :span="6">
+                <div class="tips">电子邮箱：</div>
+              </el-col>
+              <el-col :span="18">
+                <el-input v-model="emailinput" placeholder="请输入电子邮箱地址" show-password></el-input>
+              </el-col>
+            </el-row>
+            <el-row style="margin-top: 5%">
               <el-col :span="6">
                 <div class="tips">密码：</div>
               </el-col>
@@ -53,7 +61,7 @@
                 <el-input v-model="newpasswordinput" placeholder="请输入密码" show-password></el-input>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 8%">
+            <el-row style="margin-top: 5%">
               <el-col :span="6">
                 <div class="tips">再次输入：</div>
               </el-col>
@@ -61,12 +69,12 @@
                 <el-input v-model="newpasswordreinput" placeholder="请再次输入密码" show-password></el-input>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 8%">
+            <el-row style="margin-top: 5%">
               <el-col :span="6" :offset="4">
-              <el-button type="primary" plain @click="addUesr()">确定</el-button>
+                <el-button type="primary" plain @click="addUesr()">确定</el-button>
               </el-col>
               <el-col :span="14">
-              <el-button plain @click="cancel()">取消</el-button>
+                <el-button plain @click="cancel()">取消</el-button>
               </el-col>
             </el-row>
           </div>
@@ -77,17 +85,18 @@
 </template>
 
 <script>
+import axios from "axios";
+import store from "@/store";
 export default {
   name: "Login",
+  store,
   data() {
     return {
       isReg: false,
-      name: "",
-      password: "",
-      repeat: "",
       usernameinput: "",
       passwordinput: "",
-      newusernameinput :"",
+      newusernameinput: "",
+      emailinput: "",
       newpasswordinput: "",
       newpasswordreinput: "",
       fits: "contain",
@@ -99,17 +108,41 @@ export default {
   },
   methods: {
     login() {
-      if (
-        this.name === localStorage.getItem("name") &&
-        this.password === localStorage.getItem("password")
-      ) {
-        this.name = "";
-        this.password = "";
-        alert("登陆成功");
-        this.$router.push("/");
+      if (this.usernameinput === "" || this.passwordinput === "") {
+        alert("用户名或密码为空！");
       } else {
-        alert("登陆失败");
-        this.password = "";
+        var json = {
+          username: this.usernameinput,
+          password: this.passwordinput
+        };
+        axios
+          .post("http://154.8.237.76:8000/login", JSON.stringify(json))
+          .then(res => {
+            console.log(res);
+            console.log(store.state.isLog);
+            store.commit("changeisLog");
+            if (res["data"][0]["code"] === 0) {
+              store.commit("changeisLog");
+              axios
+              .post("http://154.8.237.76:8000/userinfo")
+              .then(res => {
+                  console.log(res);
+
+              })
+              .catch(res => {
+                console.log(res);
+              });
+
+
+            } else if (res["data"][0]["code"] === 2) {
+              alert("账号不存在！");
+            } else if (res["data"][0]["code"] === 3) {
+              alert("密码错误！");
+            }
+          })
+          .catch(res => {
+            console.log(res);
+          });
       }
     },
     reg() {
@@ -118,23 +151,39 @@ export default {
     },
     cancel() {
       console.log("调用cancel");
-      this.name = "";
-      this.password = "";
-      this.repeat = "";
+      this.newusernameinput = "";
+      this.newpasswordinput = "";
+      this.newpasswordreinput = "";
+      this.emailinput = "";
       this.isReg = false;
     },
     addUesr() {
-      if (this.password === this.repeat) {
-        localStorage.setItem("name", this.name);
-        localStorage.setItem("password", this.password);
-        alert("注册成功");
-        this.name = "";
-        this.isReg = false;
+      if (
+        this.newusernameinput === "" ||
+        this.newpasswordinput === "" ||
+        this.newpasswordreinput === "" ||
+        this.emailinput === ""
+      ) {
+        alert("请补全信息！");
       } else {
-        alert("两次输入的密码不同");
-        this.password = "";
-        this.repeat = "";
+        if (this.newpasswordinput === this.newpasswordreinput) {
+          var json = {
+            username :this.newusernameinput,
+            password: this.newpasswordinput
+          };
+        }
       }
+      // if (this.password === this.repeat) {
+      //   localStorage.setItem("name", this.name);
+      //   localStorage.setItem("password", this.password);
+      //   alert("注册成功");
+      //   this.name = "";
+      //   this.isReg = false;
+      // } else {
+      //   alert("两次输入的密码不同");
+      //   this.password = "";
+      //   this.repeat = "";
+      // }
     }
   }
 };

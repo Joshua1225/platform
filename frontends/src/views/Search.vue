@@ -4,7 +4,8 @@
   <div>
     <!-- Logo-->
     <searchBar/>
-    <echarts/>
+    <div style="height:20px"></div>
+    <div style="width:60%;margin: 0 auto;"><echarts/></div>
   </div>
 </template>
 <script>

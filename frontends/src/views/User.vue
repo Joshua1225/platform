@@ -10,7 +10,7 @@
 <template>
   <div class="userouter">
     <el-tabs v-model="chosen" type="card" @tab-click="handleClick">
-      <el-tab-pane label="我的信息" name="first">
+      <el-tab-pane label="我的主页" name="first">
         <el-col :span="6">
           <userinforemake/>
         </el-col>
