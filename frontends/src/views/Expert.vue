@@ -54,8 +54,12 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "expert",
+  props: {
+    academyId: String
+  },
   created: function() {
     this.name = this.$route.query.id;
   },
@@ -73,6 +77,23 @@ export default {
   mounted() {
     // 初始化页面数据
     this.transfer();
+    var data={
+      academyid: "53f43d89dabfaedce5565d9a"
+    }
+    console.log(555555)
+    axios
+      .post("http://154.8.237.76:8000/academyinfo", JSON.stringify(data))
+      .then(res => {
+        console.log(res);
+        console.log(2500);
+        // that.$store.state.userName =
+        //   res["data"][0]["userinfo"][0]["fields"]["name"];
+        // that.$store.state.userAvator =
+        //   res["data"][0]["userinfo"][0]["fields"]["avator"];
+      })
+      .catch(res => {
+        console.log(res);
+      });
   },
   methods: {
     transfer: function() {
