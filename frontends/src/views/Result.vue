@@ -2,11 +2,12 @@
 <template>
   <div>
     <!-- Logo-->
-    <div><searchBar/></div>
+    <div><searchBar style="margin-top:10px"/></div>
+    <br />
+    <br />
     <el-row>
-      <el-col :span="4"><div><selector/></div></el-col>
-      <el-col :span="1" :offset="1"><div class="grid-content"></div></el-col>
-      <el-col :span="12"><div><paperList/></div></el-col>
+      <el-col :span="6"><div class="grid-content"></div></el-col>
+      <el-col :span="12"><div><paperList title="搜索结果" /></div></el-col>
     </el-row>
     
   </div>
