@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       fit: "fill",
-      url: require("@/assets/logo.jpg")
+      url: require("@/assets/logo0.jpg")
     };
   },
   components: {
