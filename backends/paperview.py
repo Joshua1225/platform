@@ -30,8 +30,8 @@ def upload_paper(request):
                 ans += [{'code': 3}]
                 return JsonResponse(ans, safe=False)
             else:
-                #fpath = os.path.join('papers', pid)
-                fpath = 'papers'
+                fpath = os.path.join('static', 'papers', pid)
+
                 handle_uploaded_file(pfile,fpath)
                 paper.update(pdf=fpath)
                 ans += [{'code':0}]
@@ -65,7 +65,7 @@ def download_paper(request):
     if check_login(request):
         if request.method == 'POST':
             pid = request.POST.get('id')
-            path = os.path.join('papers', pid)  #文件保存目录
+            path = os.path.join('static','papers', pid)  #文件保存目录
             file = open(path,'rb')
             response = FileResponse(file)
             response['Content-Type'] = 'application/octet-stream'    #可以下载任意格式的文件
