@@ -78,8 +78,10 @@
 
 <script>
 import axios from 'axios'
+import store from '@/store'
 export default {
   name: "Login",
+  store,
   data() {
     return {
       isReg: false,
@@ -110,6 +112,11 @@ export default {
         }
         axios.post('http://154.8.237.76:8000/login', JSON.stringify(json)).then((res) => {
           console.log(res)
+          console.log(store.state.isLog)
+          store.commit('changeisLog')
+          if(res[0]['code'] === 0){
+            store.commit('changeisLog')
+          }
         }).catch((res) => {
           console.log(res)
         })}
