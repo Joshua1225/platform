@@ -9,6 +9,7 @@ import top from '@/components/Top.vue'
 
 import echarts from 'echarts'
 
+
 Vue.prototype.$echarts = echarts
 require('echarts-wordcloud')
 
@@ -25,6 +26,3 @@ new Vue({
   },
   render: h => h(App)
 }).$mount('#app')
-
-router.push("/Search")
-

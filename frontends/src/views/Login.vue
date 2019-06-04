@@ -116,23 +116,27 @@ export default {
           username: this.usernameinput,
           password: this.passwordinput
         };
+        var that=this;
         axios
           .post("http://154.8.237.76:8000/login", JSON.stringify(json))
           .then(res => {
             console.log(res);
-            console.log(store.state.isLog);
+            
             store.commit("setOffline");
             if (res["data"][0]["code"] === 0) {
               store.commit("setOnline");
-              this.$router.push("/");
-              // axios
-              // .post("http://154.8.237.76:8000/userinfo")
-              // .then(res => {
-              //     console.log(res);
-              // })
-              // .catch(res => {
-              //   console.log(res);
-              // });
+              var data={username:this.usernameinput}
+              axios
+              .post("http://154.8.237.76:8000/userinfo",JSON.stringify(data))
+              .then(res => {
+                  console.log(res);
+                  that.$store.state.userName=res["data"][0]["userinfo"][0]["fields"]["name"];
+                  that.$store.state.userAvator=res["data"][0]["userinfo"][0]["fields"]["avator"];
+              })
+              .catch(res => {
+                console.log(res);
+              });
+              this.$router.go(-1);
             } else if (res["data"][0]["code"] === 2) {
               alert("账号不存在！");
             } else if (res["data"][0]["code"] === 3) {

@@ -4,10 +4,10 @@
       <el-button type="info" plain @click="goLogin()">登录</el-button>
     </div>
     <div v-else>
-      <el-row>
+      <el-row style="cursor : pointer " >
         <el-col :span="10" class="nick">
-          <el-dropdown @command="handleCommand">
-            <el-image style="width: 60px; height: 40px; " :src="url" :fit="fits"></el-image>
+          <el-dropdown style="cursor : pointer" @command="handleCommand">
+            <el-image style="width: 60px; height: 40px; border-radius: 100px " src=this.$store.state.userName :fit="fits"  @click="goUser" ></el-image>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item  icon="el-icon-plus" command="toUserInfo">我的主页</el-dropdown-item>
               <el-dropdown-item icon="el-icon-circle-plus" command="logOff">注销</el-dropdown-item>
@@ -15,7 +15,7 @@
           </el-dropdown>
         </el-col>
         <el-col :span="14">
-          <div class="nick" style="margin-top: 7px">晓之佩恩</div>
+          <div class="nick" style="margin-top: 7px ; "  @click="goUser">{{this.$store.state.userName}}</div>
         </el-col>
       </el-row>
     </div>
@@ -39,19 +39,22 @@ export default {
   },
   methods: {
     goLogin() {
-      console.log(1);
-      this.$router.push("/Login");
+
+      this.$router.push("/login");
+    },
+    goUser:function(){
+      this.$router.push("/user");
     },
     handleCommand(command) {
       if(command=="toUserInfo")
       {
         console.log(1);
-        this.$router.push("/User");
+        this.$router.push("/user");
       }
       else if(command=="logOff")
       {
         console.log(1);
-        store.commit('changeisLog');
+        store.commit('setOffline');
         this.$router.push("/Login");
       }
     },

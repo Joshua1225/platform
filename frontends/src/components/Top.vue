@@ -9,11 +9,13 @@
   <div class="head">
     <el-row align="middle">
       <el-col :span="6" :offset="2" style="float:left">
-        <el-image
-          style="width: 210px; height: 60px;  display: flex; justify-content: center; align-items: center;"
-          :src="url"
-          :fit="fit"
-        ></el-image>
+        <div style="cursor : pointer" @click="goSearch">
+          <el-image
+            style=" width: 210px; height: 60px;  display: flex; justify-content: center; align-items: center; "
+            :src="url"
+            :fit="fit"
+          ></el-image>
+        </div>
       </el-col>
       <el-col :span="4" :offset="11">
         <userstate/>
@@ -37,6 +39,11 @@ export default {
   },
   components: {
     userstate
+  },
+  methods:{
+    goSearch(){
+      this.$router.push("/search");
+    }
   }
 };
 </script>
