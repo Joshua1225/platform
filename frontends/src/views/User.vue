@@ -56,10 +56,9 @@ export default {
         console.log(res);
         that.signature=res["data"][0]["userinfo"][0]["fields"]["signature"];
         that.interests=res["data"][0]["userinfo"][0]["fields"]["interest"];
-        that.transfer();
-        
       }
     );
+    that.transfer();
   },
   components: {
     userinforemake,
