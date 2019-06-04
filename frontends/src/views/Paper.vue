@@ -18,7 +18,7 @@ import paperinfo from '@/components/PaperInfo.vue'
 import paperlist from '@/components/PaperList.vue'
 import expertlist from '@/components/ExpertList.vue'
 export default {
-  name: "papers",
+  name: "paper",
   components: {
     paperinfo,
     paperlist,
