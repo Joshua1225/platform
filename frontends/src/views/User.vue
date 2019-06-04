@@ -34,6 +34,11 @@
           <paperlist :title="papernum"></paperlist>
         </el-col>
       </el-tab-pane>
+      <el-tab-pane label="我的收藏" name="sixth">
+        <el-col :span="22">
+          <collectionlist :title="collectionnum"></collectionlist>
+        </el-col>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -41,6 +46,7 @@
 import userinforemake from "@/components/UserInfoRemake.vue";
 import Message from "@/views/Message.vue";
 import paperlist from "@/components/PaperList.vue";
+import collectionlist from "@/components/collectionlist.vue";
 import userform from "@/components/UserForm.vue";
 import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
@@ -65,7 +71,8 @@ export default {
     mypapers,
     expertspot,
     Message,
-    userform
+    userform,
+    collectionlist
   },
   data: function() {
     return {
@@ -73,7 +80,8 @@ export default {
       papernum: "您已发表了10篇论文",
       expertnum: "198",
       signature: "我喜欢唱、跳、rap、篮球",
-      interests: "唱;跳;rap;篮球"
+      interests: "唱;跳;rap;篮球",
+      collectionnum :"您已收藏了10篇论文",
     }
   },
   methods: {
