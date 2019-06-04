@@ -70,9 +70,10 @@ export default {
     return {
       con: true,
       imageUrl: "",
+      email:"",
       form: {
-        email: "daiyue@buaa.edu.cn",
-        content: "我叫王佳奇"
+        interest: "",
+        signature: ""
       },
 
       dynamicTags: ["123"],
@@ -113,7 +114,11 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    submitForm: function() {},
+    submitForm: function() {
+      var info={
+          signature:
+      }
+    },
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
