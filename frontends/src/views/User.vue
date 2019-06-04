@@ -33,7 +33,7 @@
       </el-tab-pane>
       <el-tab-pane label="我的论文" name="fifth">
         <el-col :span="22">
-          <paperlist title="papernum"></paperlist>
+          <paperlist :title="papernum"></paperlist>
         </el-col>
       
       </el-tab-pane>
@@ -62,6 +62,8 @@ export default {
   data: function() {
     return {
       chosen:"first",
+      papernum: 100,
+      
     }
   },
   methods:{

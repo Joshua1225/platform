@@ -31,5 +31,5 @@ new Vue({
 
 router.push("/Search")
 
-router.push("/Paper")
+router.push("/User")
 

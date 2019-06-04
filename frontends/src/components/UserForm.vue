@@ -10,11 +10,10 @@
             action="https://jsonplaceholder.typicode.com"
             :http-request="uploadImg"
             :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
+            :on-success="handleSuccess"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>g
           </el-upload>
         </el-form-item>
 
@@ -93,7 +92,12 @@ export default {
     },
     handleError: function(response, file, fileList) {
       this.$message.warning("上传失败，请检查网络环境_(:з)∠)_");
-    }
+    },
+    submitForm: function()
+    {
+
+    },
+    
   }
 };
 </script>
