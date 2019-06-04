@@ -5,13 +5,13 @@
         <span style="float:left ;font-size:20px;width:75%">
           <el-row>
             <el-col>
-              <router-link class="title" to="/">{{paper.title}}</router-link>
+              <div class="title" to="/">{{paper.title}}</div>
             </el-col>
           </el-row>
           <el-row>
             <span class="author" style=" float : left ; color : #999 ">作者：</span>
             <span style="float:left" v-for="author in paper.authors" :key="author.authorid">
-              <router-link class="author" to="/">{{author.name}}</router-link>&nbsp;&nbsp;
+              <router-link class="author" :to="{path:'/expert',id:author.authorid}">{{author.name}}</router-link>&nbsp;&nbsp;
             </span>
           </el-row>
         </span>
