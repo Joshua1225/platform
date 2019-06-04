@@ -348,38 +348,48 @@ code:2  非POST方法
 def relatedacademia(request):
     ans = []
     relauth = []
+    '''首先随机获取6个专家信息'''
+    relauth += json.loads(serializers.serialize('json', UnidentifiedAcademia.objects.order_by('?')[:6]))
+
     if request.method == "POST":
+        '''按照相应规则寻找正确的相关专家'''
         data = json.loads(request.body.decode('utf-8'))
         if check_login(request):
             '''获取前端给的论文id'''
             curpapers = Papers.objects.filter(id=data['paperid'])
-            '''找到该论文的第一作者'''
-            curpaper = curpapers.first()
-            curpaperauthor = json.loads(json.dumps(eval(curpaper.authors)))
-            #curpaperauthor = curpaper.authors
-            '''把这篇论文的所有作者的专家信息加载'''
-            for cpa in curpaperauthor:
-                relauth += academiainfo(cpa['id'])
-            curauthors = UnidentifiedAcademia.objects.filter(id=curpaperauthor[0]['id'])
-            '''数据库中存在这个第一作者'''
-            if curauthors.exists():
-                curauthor = curauthors.first()
-                '''找到这个作者的其他论文'''
-                pubs = json.loads(json.dumps(eval(curauthor.pubs)))
-                #pubs = curauthor.pubs
-                for p in pubs:
-                    papers = Papers.objects.filter(id=p['i'])
-                    '''第一作者的某篇论文在数据库中存在'''
-                    if papers.exists():
-                        paper = papers.first()
-                        paperauthor = json.loads(json.dumps(eval(paper.authors)))
-                        #paperauthor = paper.authors
-                        for pa in paperauthor:
-                            relauth +=academiainfo(pa['id'])
-                ans = [{
-                    'code': 0,
-                    'relauth': relauth
-                }]
+            if curpapers.exists():
+                '''找到该论文的第一作者'''
+                curpaper = curpapers.first()
+                curpaperauthor = json.loads(json.dumps(eval(curpaper.authors)))
+                # curpaperauthor = curpaper.authors
+                '''把这篇论文的所有作者的专家信息加载'''
+                for cpa in curpaperauthor:
+                    relauth += academiainfo(cpa['id'])
+                curauthors = UnidentifiedAcademia.objects.filter(id=curpaperauthor[0]['id'])
+                '''数据库中存在这个第一作者'''
+                if curauthors.exists():
+                    curauthor = curauthors.first()
+                    '''找到这个作者的其他论文'''
+                    pubs = json.loads(json.dumps(eval(curauthor.pubs)))
+                    # pubs = curauthor.pubs
+                    for p in pubs:
+                        papers = Papers.objects.filter(id=p['i'])
+                        '''第一作者的某篇论文在数据库中存在'''
+                        if papers.exists():
+                            paper = papers.first()
+                            paperauthor = json.loads(json.dumps(eval(paper.authors)))
+                            # paperauthor = paper.authors
+                            for pa in paperauthor:
+                                relauth += academiainfo(pa['id'])
+                    ans = [{
+                        'code': 0,
+                        'relauth': relauth
+                    }]
+                else:
+                    ans = [{
+                        'code': 0,
+                        'relauth': relauth
+                    }]
             else:
                 ans = [{
                     'code': 0,
@@ -388,15 +398,22 @@ def relatedacademia(request):
         else:
             ans = [{
                 'code': 1,
-                'relauth': []
+                'relauth': relauth
             }]
     else:
         ans = [{
             'code': 2,
-            'relauth': []
+            'relauth': relauth
         }]
     return JsonResponse(ans, safe=False)
 
+def academiainfo(aid):
+    academias = UnidentifiedAcademia.objects.filter(id=aid)
+    if academias.exists():
+        academia = serializers.serialize("json", academias)
+        return json.loads(academia)
+    else:
+        return []
 
 '''
 根据专家id获取专家信息
@@ -426,10 +443,3 @@ def academyinfo(request):
         }]
     return JsonResponse(ans, safe=False)
 
-def academiainfo(aid):
-    academias = UnidentifiedAcademia.objects.filter(id=aid)
-    if academias.exists():
-        academia = serializers.serialize("json", academias)
-        return json.loads(academia)
-    else:
-        return []
