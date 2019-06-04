@@ -1,6 +1,6 @@
 <template>
   <div class="appeal">
-    <appealForm :obj='obj'></appealForm>
+    <appealForm :id="id" :title="title"></appealForm>
   </div>
 </template>
 
@@ -9,10 +9,15 @@ import AppealForm from "@/components/AppealForm.vue";
 
 export default {
   name: "appeal",
+  created: function() {
+    this.id = this.$route.query.id;
+    this.title=this.$route.query.title;
+
+  },
   data: function() {
     return {
-      obj: "father",
-      type: "认证"
+      title: "",
+      id:""
     };
   },
   components: {
@@ -21,7 +26,7 @@ export default {
 };
 </script>
 <style>
-.appeal{
+.appeal {
   text-align: center;
   width: 75%;
 }

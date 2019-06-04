@@ -13,8 +13,6 @@ class MySearchView(SearchView):
 
         if len(self.request.body):
             data = json.loads(self.request.body)
-            print(data)
-            print(kwargs)
         if self.searchqueryset is not None:
             kwargs['searchqueryset'] = self.searchqueryset
 
@@ -38,8 +36,11 @@ class MySearchView(SearchView):
             else:
                 b = 10
             s = (a-1)*b
-            data = self.results.values("title", "author", "keywords", "year", "n_citation", "language")[s:s+b]
-            resp = json.dumps(list(data))
+            data = self.results.values("title", "author", "keywords", "year", "n_citation", "search_num")[s:s+b]
+            # for gg in data:
+            #     gg["num"] = self.results.__len__()
+            data.append(self.results.__len__())
+            resp = json.dumps(data)
             return HttpResponse(resp)
 
 

@@ -4,9 +4,9 @@
     <el-card shadow="hover" >
       <div class="expert"   v-for="expert in experts" :key="expert.title">
         <div class="name">
-          <router-link class="name" to="/">{{expert.name}}</router-link>
+          <router-link class="name" to="/expert">{{expert.name}}</router-link>
         </div>
-        <el-button type="danger" icon="el-icon-delete" circle style="float : right"></el-button>
+        <el-button type="danger" icon="el-icon-delete" circle style="float : right" v-show="flag==='true'"></el-button>
         <div class="organization">{{expert.organization}}</div>
         <div class="info">
           <span>研究领域：{{expert.field}}</span>
@@ -21,7 +21,8 @@
 <script>
 export default {
   name: "expertList",
-  props: { title: String },
+  props: { title: String ,
+  flag: String},
   data: function() {
     return {
       experts: [

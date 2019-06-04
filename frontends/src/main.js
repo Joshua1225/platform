@@ -6,8 +6,12 @@ import ElementUI from 'element-ui'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import top from '@/components/Top.vue'
-//词云
+
 import echarts from 'echarts'
+
+axios.defaults.withCredentials=true
+axios.defaults.crossDomain = true
+
 Vue.prototype.$echarts = echarts
 require('echarts-wordcloud')
 
@@ -25,5 +29,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-router.push("/expert")
+router.push("/user")
+
+router.push("/User")
 
