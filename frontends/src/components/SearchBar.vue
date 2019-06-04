@@ -73,10 +73,10 @@ export default {
             page_num: 1
           };
         this.$emit('',this.childData);
-        this.$router.push({
-          path: "/Result",
-          query: 
-        });
+        // this.$router.push({
+        //   path: "/Result",
+        //   query: 
+        // });
         //复原
         this.input1 = "";
         this.input3 = "";
