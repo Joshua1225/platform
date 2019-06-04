@@ -67,7 +67,7 @@ export default {
   data: function() {
     return {
       chosen: "first",
-      papernum: 100
+      papernum: "100"
     };
   },
   methods: {
