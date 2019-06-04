@@ -21,10 +21,10 @@
         </span>
       </e>
       <el-row style="height : 290px">
-        <el-col span="0.5">
+        <el-col :span="0.5">
           <div class="author" style=" float : left ; color : #999 ">摘要：</div>
         </el-col>
-        <el-col span="20" class="text item abstract">
+        <el-col :span="20" class="text item abstract">
           <div style=" float : left ; line-height:26px">&nbsp;&nbsp;&nbsp;&nbsp;{{paper.abstract}}</div>
         </el-col>
       </el-row>
@@ -68,7 +68,7 @@ export default {
   methods: {
     download_button() {
       var js = {
-        id: this.paperid
+        //id: this.paperid
       };
       Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(js)).then(
         function(res) {

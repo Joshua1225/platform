@@ -49,7 +49,7 @@ class MySearchForm(SearchForm):
         if self.cleaned_data['end_year']:
             sqs = sqs.filter(year__lte=self.cleaned_data['end_year'])
         if self.cleaned_data['author']:
-            str=self.cleaned_data['author']
+            str = self.cleaned_data['author']
             tokenana = StemmingAnalyzer()
             for token in tokenana(str):
                 sqs = sqs.filter(author__icontains=token.text)

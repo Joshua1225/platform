@@ -1,4 +1,4 @@
-<template  >
+<template>
   <div class="aform" ref="form">
     <el-card body-style="text-align :left ; padding :40px ;">
       <el-form :disabled="false" label-width="80px">
@@ -10,11 +10,10 @@
             action="https://jsonplaceholder.typicode.com"
             :http-request="uploadImg"
             :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
+            :on-success="handleSuccess"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>g
           </el-upload>
         </el-form-item>
 
@@ -93,14 +92,19 @@ export default {
     },
     handleError: function(response, file, fileList) {
       this.$message.warning("上传失败，请检查网络环境_(:з)∠)_");
-    }
+    },
+    submitForm: function()
+    {
+
+    },
+    
   }
 };
 </script>
 
 <style>
 .aform {
-  margin-left: 30%;
+  margin-left: 5%;
 }
 
 .avatar-uploader .el-upload {

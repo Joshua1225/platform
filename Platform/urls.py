@@ -38,7 +38,7 @@ urlpatterns = [
     path('check_login',user.check_login),
     path('data', views.data),
     path('getkeyword', keywordview.getkeyword),
-    path('search', Search_views.MySearchView(form_class=MySearchForm),
+    path('search/', Search_views.MySearchView(form_class=MySearchForm),
          name='haystack_search')
 
 ]
