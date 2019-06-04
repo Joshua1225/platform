@@ -8,8 +8,10 @@ export default new Vuex.Store({
     isLog: false,
   },
   mutations: {
-    changeisLog(){
-      this.state.isLog=!this.state.isLog
+    setOnline() {
+      this.state.isLog = ture;
+    }, setOffline() {
+      this.state.isLog = false;
     }
   },
   actions: {
