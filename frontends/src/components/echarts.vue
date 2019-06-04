@@ -10,7 +10,10 @@ import "echarts-wordcloud";
 import echarts from "echarts";
 import { throws } from "assert";
 import axios from "axios";
-import Axios from "axios";
+
+//var host="http://154.8.237.76:8000";
+var host="";
+
 export default {
   name: "excharts",
   //loadPath : this,
@@ -48,7 +51,7 @@ export default {
       // 绘制图表
       maskImage.onload = function() {
         axios
-          .post("http://154.8.237.76:8000/getkeyword")
+          .post(host+"/getkeyword")
           .then(res => {
             //console.log("res", res);
             this.data1 = res['data'];

@@ -19,6 +19,11 @@
 <script>
 import store from "@/store";
 import axios from "axios";
+
+
+//var host="http://154.8.237.76:8000";
+var host="";
+
 export default {
   name: "userstate",
   data() {
@@ -29,7 +34,7 @@ export default {
     goLogin() {
       axios
         .post(
-          "http://154.8.237.76:8000/platform/register?email=1&password=1&name=1"
+          "/platform/register?email=1&password=1&name=1"
         )
         .then(function(response) {
           console.log(response);
