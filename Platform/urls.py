@@ -42,5 +42,6 @@ urlpatterns = [
          name='haystack_search'),
     path('academyinfo', user.academyinfo),
     path('relatedacademia', user.relatedacademia),
-    path('paperinfo', paperview.paperinfo)
+    path('paperinfo', paperview.paperinfo),
+    path('listfollow', user.listfollow)
 ]
