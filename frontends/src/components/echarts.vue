@@ -21,11 +21,10 @@ export default {
     };
   },
   mounted() {
-    this.getkey();
+    console.log(123)
     this.drawLine();
   },
   methods: {
-    getkey() {},
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       var that = this;

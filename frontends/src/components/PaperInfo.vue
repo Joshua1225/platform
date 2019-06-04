@@ -5,26 +5,26 @@
         <span style="float:left ;font-size:20px;width:75%">
           <el-row>
             <el-col>
-              <router-link class="title" to="/">{{paper.title}}</router-link>
+              <div class="title" to="/">{{paper.title}}</div>
             </el-col>
           </el-row>
           <el-row>
             <span class="author" style=" float : left ; color : #999 ">作者：</span>
             <span style="float:left" v-for="author in paper.authors" :key="author.authorid">
-              <router-link class="author" to="/">{{author.name}}</router-link>&nbsp;&nbsp;
+              <router-link class="author" :to="{path:'/expert',id:author.authorid}">{{author.name}}</router-link>&nbsp;&nbsp;
             </span>
           </el-row>
         </span>
         <span style="float:right">
           <el-button type="warning" icon="el-icon-star-off" circle style="margin-top:10px "></el-button>
-          <el-button type="info" round style="margin-top:10px ">认证</el-button>
+          <el-button type="info" round style="margin-top:10px " @click="goAppeal">认证</el-button>
         </span>
       </e>
       <el-row style="height : 290px">
-        <el-col span="0.5">
+        <el-col :span="0.5">
           <div class="author" style=" float : left ; color : #999 ">摘要：</div>
         </el-col>
-        <el-col span="20" class="text item abstract">
+        <el-col :span="20" class="text item abstract">
           <div style=" float : left ; line-height:26px">&nbsp;&nbsp;&nbsp;&nbsp;{{paper.abstract}}</div>
         </el-col>
       </el-row>
@@ -68,13 +68,16 @@ export default {
   methods: {
     download_button() {
       var js = {
-        id: this.paperid
+        //id: this.paperid
       };
       Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(js)).then(
         function(res) {
           console.log(res);
         }
       );
+    },
+    goAppeal(){
+      this.$router.push("/appeal");
     }
   }
 };

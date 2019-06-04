@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="6">
         <el-card class="image">
-          <el-image class="icon" :src="this.url"></el-image>
+            <el-image class="icon" :src="this.url"></el-image>
           <div class="name">{{name}}</div>
           <div class="experience">
             <div class="experienceItem" v-for="ins in experience">
@@ -12,6 +12,10 @@
               {{ins}}
             </div>
           </div>
+          <el-row>
+            <el-button type="warning" plain>收藏</el-button>
+            <el-button type="info" plain @click="goAppeal">认证</el-button>
+          </el-row>
         </el-card>
 
         <el-card class="info">
@@ -48,6 +52,9 @@
 <script>
 export default {
   name: "expert",
+  created: function() {
+    this.name = this.$route.query.id;
+  },
   data: function() {
     return {
       name: "XiaoZHIPEIEN",
@@ -66,6 +73,9 @@ export default {
     transfer: function() {
       this.experience = this.experience.split(";;");
       this.work = this.work.split(";;");
+    },
+    goAppeal() {
+      this.$router.push("/appeal");
     }
   }
 };

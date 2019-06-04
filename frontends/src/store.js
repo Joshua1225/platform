@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isLog: false
+    isLog: false,
+    userName:"",
+    userAvator:""
   },
   mutations: {
-    changeisLog(){
-      this.state.isLog=!this.state.isLog
+    setOnline() {
+      this.state.isLog = true;
+    }, setOffline() {
+      this.state.isLog = false;
     }
   },
   actions: {

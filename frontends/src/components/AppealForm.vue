@@ -1,26 +1,16 @@
 <template  >
-  <div class="aform" ref="form" label-width="80px">
-    <el-card body-style="text-align :left ; padding :40px ; ">
-      <el-form :disabled="true">
-        <el-form-item :label="form.type">
-          <el-select v-model="form.reasonValue" placeholder="请选择申诉原因">
-            <el-option
-              v-for="item in reasons"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+  <div class="aform" ref="form">
+    <el-card body-style="text-align :left ; padding :40px ;">
+      <el-form :disabled="false" label-width="80px">
+        <el-form-item :label="selectType">{{title}}</el-form-item>
 
-        <el-form-item label="当前文章" v-model="form">{{obj}}</el-form-item>
+        <el-form-item label="当前文章" v-model="form">{{form.objId}}</el-form-item>
 
-        <el-form-item label="问题描述" prop="desc">
+        <el-form-item label="问题描述">
           <el-input type="textarea" v-model="form.content"></el-input>
         </el-form-item>
 
-        <el-form-item>
-          <p>上传图片</p>
+        <el-form-item label="上传文件">
           <el-upload
             ref="upload"
             class="upload-demo"
@@ -31,6 +21,7 @@
             :auto-upload="false"
             :multiple="false"
             list-type="picture-card"
+            :http-request="uploadImg"
             :limit="1"
             :data="form"
             :on-exceed="handleExceed"
@@ -39,35 +30,46 @@
             :file-list="fileList"
           >
             <i class="el-icon-plus"></i>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
-        
-          <el-button type="primary" @click="submit">提交</el-button>
-          <el-button>取消</el-button>
-        
       </el-form>
+      <div style="text-align : center ; margin-top : 30px">
+        <span>
+          <el-button type="primary" @click="submit">提交</el-button>
+        
+          <el-button @click="back">取消</el-button>
+        </span>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "AppealForm",
+  name: "appealform",
   props: {
-    obj: String
+    title: String
+  },
+  created: function() {
+    if ((this.title = "upload")) {
+      this.title = "论文上传";
+    } else if ((this.title = "expert")) {
+      this.title = "专家认证";
+    } else if ((this.title = "change")) {
+      this.title = "论文申诉";
+    } else {
+      this.title = "其他";
+    }
   },
   data: function() {
     return {
-      reasons: [
-        { label: "作者错误", value: 0 },
-        { label: "内容错误", value: 1 }
-      ],
+      selectType: "认证原因",
       form: {
-        type: "申诉原因",
-        obj: 12345678,
-        resonValue: "",
-        content: "我叫王佳奇"
+        type: "认证原因",
+        objId: "53e99784b7602d9701f3e465",
+        content: ""
       },
       uploadUrl: "",
       file: "",
@@ -75,10 +77,28 @@ export default {
     };
   },
   methods: {
-    submit: function() {
-      this.uploadUrl = "www.baidu.com";
-      this.$refs.upload.submit();
-      console.log(this.$refs.upload.data);
+    submit: function(e) {
+      var loginUrl = "http://154.8.237.76:8000/login";
+      var loginData = { username: "123", password: "123" };
+
+      axios.post(loginUrl, JSON.stringify(loginData)).then(res => {
+        console.log(res);
+        this.$refs.upload.submit();
+      });
+      //this.$refs.upload.submit();
+    },
+    uploadImg(param) {
+      
+      var uploadUrl = "http://154.8.237.76:8000/upload_paper";
+      var fileObj = param.file;
+      console.log("upload");
+      var form = new FormData();
+      form.append("file", fileObj);
+      form.append("id", "53e99784b7602d9701f3e465");
+
+      axios.post(uploadUrl, form).then(res => {
+        console.log(res);
+      });
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -101,13 +121,16 @@ export default {
     },
     handleError: function(response, file, fileList) {
       this.$message.warning("上传失败，请检查网络环境_(:з)∠)_");
+    },
+    back: function() {
+      this.$router.go(-1);
     }
   }
 };
 </script>
 
 <style>
-.aform{
-    margin-left: 30%;
+.aform {
+  margin-left: 30%;
 }
 </style>

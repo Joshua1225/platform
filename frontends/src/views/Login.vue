@@ -87,6 +87,7 @@
 <script>
 import axios from "axios";
 import store from "@/store";
+import { constants } from 'crypto';
 export default {
   name: "Login",
   store,
@@ -115,25 +116,27 @@ export default {
           username: this.usernameinput,
           password: this.passwordinput
         };
+        var that=this;
         axios
           .post("http://154.8.237.76:8000/login", JSON.stringify(json))
           .then(res => {
             console.log(res);
-            console.log(store.state.isLog);
-            store.commit("changeisLog");
+            
+            store.commit("setOffline");
             if (res["data"][0]["code"] === 0) {
-              store.commit("changeisLog");
+              store.commit("setOnline");
+              var data={username:this.usernameinput}
               axios
-              .post("http://154.8.237.76:8000/userinfo")
+              .post("http://154.8.237.76:8000/userinfo",JSON.stringify(data))
               .then(res => {
                   console.log(res);
-
+                  that.$store.state.userName=res["data"][0]["userinfo"][0]["fields"]["name"];
+                  that.$store.state.userAvator=res["data"][0]["userinfo"][0]["fields"]["avator"];
               })
               .catch(res => {
                 console.log(res);
               });
-
-
+              this.$router.go(-1);
             } else if (res["data"][0]["code"] === 2) {
               alert("账号不存在！");
             } else if (res["data"][0]["code"] === 3) {
@@ -146,11 +149,11 @@ export default {
       }
     },
     reg() {
-      console.log("调用reg");
+      console.log("reg页面");
       this.isReg = true;
     },
     cancel() {
-      console.log("调用cancel");
+      console.log("返回login");
       this.newusernameinput = "";
       this.newpasswordinput = "";
       this.newpasswordreinput = "";
@@ -167,23 +170,22 @@ export default {
         alert("请补全信息！");
       } else {
         if (this.newpasswordinput === this.newpasswordreinput) {
-          var json = {
-            username :this.newusernameinput,
+          var reg = {
+            username: this.newusernameinput,
             password: this.newpasswordinput
           };
+          axios
+            .post("http://154.8.237.76:8000/register", JSON.stringify(reg))
+            .then(response => {
+              console.log(response);
+            })
+            .catch(response => {
+              console.log(response);
+            });
+        } else {
+          alert("两次输入的密码不一致！");
         }
       }
-      // if (this.password === this.repeat) {
-      //   localStorage.setItem("name", this.name);
-      //   localStorage.setItem("password", this.password);
-      //   alert("注册成功");
-      //   this.name = "";
-      //   this.isReg = false;
-      // } else {
-      //   alert("两次输入的密码不同");
-      //   this.password = "";
-      //   this.repeat = "";
-      // }
     }
   }
 };

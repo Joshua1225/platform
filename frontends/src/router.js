@@ -9,7 +9,7 @@ import User from './views/User.vue'
 import Expert from './views/Expert.vue'
 import PaperList from "./components/PaperList.vue"
 import MessageList from "./components/MessageList.vue"
-import Papers from './views/Papers.vue'
+import Paper from './views/Paper.vue'
 
 //import userinfo from "./components/userinfo.vue"
 import UserState from "./components/UserState.vue"
@@ -18,6 +18,8 @@ import uploadImg from "./components/UploadImg.vue"
 
 import userinfoR from "./components/UserInfoRemake.vue"
 import expertInfo from "./views/Expert.vue"
+import userForm from "./components/UserForm.vue"
+import expertForm from "./components/ExpertForm.vue"
 
 Vue.use(Router)
 
@@ -25,16 +27,25 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    
     {
       path: '/',
-      name: 'appeal',
-      component: Appeal
+      name: 'index',
+      component: Search
     },
     {
       path: '/search',
       name: 'search',
-      component:Search
+      component: Search
+    },
+    {
+      path: '/appeal',
+      name: 'appeal',
+      component: Appeal
+    },
+    {
+      path: '/paper',
+      name: 'paper',
+      component:Paper
     },
     {
       path: '/expert',
@@ -58,9 +69,9 @@ export default new Router({
     },
     
     {
-      path:'/papers',
-      name:'papers',
-      component:Papers
+      path:'/paper',
+      name:'paper',
+      component:Paper
     }
   ]
 })

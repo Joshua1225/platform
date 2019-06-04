@@ -1,7 +1,3 @@
-
-
-
-
 <template>
   <div class="infoouter">
     <el-row>

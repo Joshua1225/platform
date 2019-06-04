@@ -6,4 +6,3 @@ from .models import Users, Papers, UnidentifiedAcademia
 
 
 
-

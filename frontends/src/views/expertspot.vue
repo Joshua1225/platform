@@ -8,17 +8,16 @@
 
 <template>
   <div style="padding :10px">
-      <el-card shadow="always" body-style="{padding-top : 5px ; text-align : left ; font-size : 13px ;}">
-        您关注了{{papernums}}名学者，被{{quotenums}}人关注
-      </el-card>
     
-    <expertList />
+    <expertList flag="true" :title="title"></expertList>
   </div>
 </template>
 
 <script>
+
 import expertList from '@/components/ExpertList.vue'
 export default {
+  props: { title: String },
   name: "expertspot",
   components: {
     expertList
@@ -27,7 +26,7 @@ export default {
   {
     return {
         papernums:100,
-        quotenums:999
+        quotenums:999,
     }
   }
 };
