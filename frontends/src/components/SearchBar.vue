@@ -4,43 +4,35 @@
       <el-popover placement="left" width="100%" v-model="visible" slot="append">
         <div class="showsearch">
           包含全部检索词:
-          <el-input v-model="input1" placeholder=""></el-input>
-        </div>
-        <div class="showsearch">
-          包含精确检索词:
-          <el-input v-model="input2" placeholder="多个检索词以逗号，分隔"></el-input>
+          <el-input v-model="input1" placeholder></el-input>
         </div>
         <div class="showsearch">
           包含至少一个检索词:
-          <el-input v-model="input3" placeholder="包含全部检索词"></el-input>
+          <el-input v-model="input2" placeholder="多个检索词以-号分隔"></el-input>
         </div>
         <div class="showsearch">
           不包含检索词:
-          <el-input v-model="input4" placeholder="包含全部检索词"></el-input>
-        </div>
-        <div class="showsearch">
-          出现检索词的位置
-          <el-input v-model="input5" placeholder="包含全部检索词"></el-input>
+          <el-input v-model="input3" placeholder="多个检索词以-号分隔"></el-input>
         </div>
         <div class="showsearch">
           作者
+          <el-input v-model="input4" placeholder="请输入作者名字"></el-input>
+        </div>
+        <div class="showsearch">
+          最早发布年份
+          <el-input v-model="input5" placeholder="包含全部检索词"></el-input>
+        </div>
+        <div class="showsearch">
+          最晚发布年份
           <el-input v-model="input6" placeholder="包含全部检索词"></el-input>
         </div>
         <div class="showsearch">
-          出版物:
-          <el-input v-model="input7" placeholder="包含全部检索词"></el-input>
-        </div>
-        <div class="showsearch">
-          发表时间
-          <el-input v-model="input8" placeholder="包含全部检索词"></el-input>
-        </div>
-        <div class="showsearch">
           语言检索范围(中文zh或者英文en)
-          <el-input v-model="input9" placeholder="包含全部检索词"></el-input>
+          <el-input v-model="input7" placeholder="包含全部检索词"></el-input>
         </div>
         <div style="text-align: right; margin: 0">
           <el-button size="mini" type="text" @click="visible = false" style="margin-top:10px">取消</el-button>
-          <el-button type="primary" size="mini" @click="visible = false">搜索</el-button>
+          <el-button type="primary" size="mini" @click="toSearch">搜索</el-button>
         </div>
         <el-button
           slot="reference"
@@ -56,7 +48,7 @@
         @click="toSearch"
       >搜索</el-button>
     </el-input>
-    </div>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -64,35 +56,43 @@ export default {
   name: "SearchBar",
   methods: {
     toSearch() {
-      if (visible == false) {
-        var json = {
-          q: this.input
-        };
-        axios
-          .post("http://154.8.237.76:8000/search", JSON.stringify(json))
-          .then(res => {
-            this.$router.push({
-              path : "/Result",
-              params: {
-              searRes: res
-              }}
-            );
-          });
-      }
-      else {
-        var json = {
-          q: this.input
-        };
-        axios
-          .post("http://154.8.237.76:8000/search", JSON.stringify(json))
-          .then(res => {
-            this.$router.push({
-              path : "/Result",
-              params: {
-              searRes: res
-              }}
-            );
-          });
+      if (this.visible == true) {
+        this.visible = false;
+        this.$router.push({
+          path: "/Result",
+          query: {
+            model1: 1,
+            q: this.input1,
+            q_not: this.input3,
+            q_or: this.input2,
+            start_year: this.input5,
+            end_year: this.input6,
+            language: this.input7,
+            author: this.input4,
+            order: 0,
+            page_size: 10,
+            page_num: 1
+          }
+        });
+        //复原
+        this.input1 = "";
+        this.input3 = "";
+        this.input2 = "";
+        this.input5 = "";
+        this.input6 = "";
+        this.input7 = "";
+        this.input4 = "";
+      } else {
+        this.$router.push({
+          path: "/Result",
+          query: {
+            model1: 0,
+            q: this.input,
+            order: 0,
+            page_size: 10,
+            page_num: 1
+          }
+        });
       }
     }
   },
@@ -106,8 +106,6 @@ export default {
       input5: "",
       input6: "",
       input7: "",
-      input8: "",
-      input9: "",
       visible: false
     };
   }

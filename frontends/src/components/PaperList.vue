@@ -35,7 +35,10 @@
 <script>
 export default {
   name: "paperList",
-  props: { title: String },
+  props: { 
+    title: String ,
+    papers: []
+    },
   data: function() {
     return {
       papers: [
