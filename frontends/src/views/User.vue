@@ -20,7 +20,7 @@
       </el-tab-pane>
       <el-tab-pane label="我的关注" name="second">
         <el-col>
-          <expertspot/>
+          <expertspot :title="expertnum"></expertspot>
         </el-col>
         
       </el-tab-pane>
@@ -62,7 +62,8 @@ export default {
   data: function() {
     return {
       chosen:"first",
-      papernum: 100,
+      papernum: "您已发表了10篇论文",
+      expertnum: "198"
       
     }
   },
