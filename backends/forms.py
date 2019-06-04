@@ -2,6 +2,8 @@ from django.forms import ModelForm
 from django import forms
 from backends.models import UnidentifiedAcademia
 from haystack.forms import SearchForm
+from whoosh.analysis import StemmingAnalyzer
+from haystack.query import SearchQuerySet
 
 # 根据实际需求调整
 class AcademiaForm(ModelForm):
@@ -24,6 +26,8 @@ class MySearchForm(SearchForm):
     start_year = forms.IntegerField(required=False)
     end_year = forms.IntegerField(required=False)
     order = forms.IntegerField(required=True)
+    page_size = forms.IntegerField(required=True)
+    page_num = forms.IntegerField(required=True)
 
     def search(self):
         if not self.is_valid():
@@ -31,7 +35,13 @@ class MySearchForm(SearchForm):
         if not self.cleaned_data.get('q'):
             return self.no_query_found()
 
-        sqs = self.searchqueryset.auto_query(self.cleaned_data['q'])
+        sqs = self.searchqueryset.auto_query(self.cleaned_data['q']).auto_query(self.cleaned_data['q_not'])
+        str = self.cleaned_data['q_or']
+        sqs_temp = SearchQuerySet()
+        tokenana = StemmingAnalyzer()
+        for token in tokenana(str):
+            sqs_temp = sqs_temp.__or__(self.searchqueryset.auto_query(token.text))
+        sqs = sqs.__and__(sqs_temp)
         if self.load_all:
             sqs = sqs.load_all()
         if self.cleaned_data['start_year']:
@@ -39,13 +49,16 @@ class MySearchForm(SearchForm):
         if self.cleaned_data['end_year']:
             sqs = sqs.filter(year__lte=self.cleaned_data['end_year'])
         if self.cleaned_data['author']:
-            sqs = sqs.filter(autohr__contains=self.cleaned_data['author'])
+            str=self.cleaned_data['author']
+            tokenana = StemmingAnalyzer()
+            for token in tokenana(str):
+                sqs = sqs.filter(author__icontains=token.text)
         if self.cleaned_data['language']:
             sqs = sqs.filter(language__content=self.cleaned_data['language'])
         if self.cleaned_data['order'] == 1:
             sqs = sqs.order_by('-year')
         if self.cleaned_data['order'] == 0:
-            sqs = sqs.order_by('n_citation')
+            sqs = sqs.order_by('-n_citation')
         return sqs
 
 

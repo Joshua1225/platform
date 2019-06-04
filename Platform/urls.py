@@ -23,21 +23,22 @@ urlpatterns = [
 
     path('', views.test ),
     path('upload_paper',paperview.upload_paper),
-    path('down_paper',paperview.download_paper),
+    path('download_paper',paperview.download_paper),
 
-    path('apeal',messageview.appeal),
+    path('appeal',messageview.appeal),
 
     path('editacademia',expertview.editacademia),
-
+    path('follow', user.follow),
+    path('collect', user.collect),
+    path('userinfo', user.userinfo),
     path('login',user.login),
     path('logout',user.logout),
     path('register',user.register),
     path('change_info',user.change_info),
     path('check_login',user.check_login),
-
     path('data', views.data),
     path('getkeyword', keywordview.getkeyword),
-    path('search/', Search_views.MySearchView(form_class=MySearchForm),
+    path('search', Search_views.MySearchView(form_class=MySearchForm),
          name='haystack_search')
 
 ]
