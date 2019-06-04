@@ -24,13 +24,23 @@ class MySearchView(SearchView):
         """
         Generates the actual HttpResponse to send back to the user.
         """
-        data = json.loads(self.request.body)
-        a = data['page_num']
-        b = data['page_size']
-        s = (a-1)*b
-        data = self.results.values("title", "author", "keywords", "year", "n_citation", "language")[s:s+b]
-        resp = json.dumps(list(data))
-        return HttpResponse(resp)
+        if self.results.__len__() == 0:
+            resp = [{'code': 0}]
+            return HttpResponse(resp)
+        else:
+            data = json.loads(self.request.body)
+            if data['page_num']:
+                a = data['page_num']
+            else:
+                a = 1
+            if data['page_size']:
+                b = data['page_size']
+            else:
+                b = 10
+            s = (a-1)*b
+            data = self.results.values("title", "author", "keywords", "year", "n_citation", "language")[s:s+b]
+            resp = json.dumps(list(data))
+            return HttpResponse(resp)
 
 
 
