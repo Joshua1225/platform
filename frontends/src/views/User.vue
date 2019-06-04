@@ -27,7 +27,7 @@
         <Message/>
       </el-tab-pane>
       <el-tab-pane label="我的信息" name="fourth">
-        <userform/>
+        <userform />
       </el-tab-pane>
       <el-tab-pane label="我的论文" name="fifth">
         <el-col :span="22">
@@ -52,7 +52,7 @@ export default {
     var data = { username: "123" };
     Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(data)).then(
       res => {
-        console.log(res);
+        console.log(res.data);
       }
     );
   },

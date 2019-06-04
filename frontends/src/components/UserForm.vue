@@ -11,6 +11,7 @@
             :http-request="uploadImg"
             :show-file-list="false"
             :on-success="handleSuccess"
+            :on-error="handleError"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -101,16 +102,6 @@ export default {
     },
     handlePreview(file) {
       console.log(file);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 1 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      );
-    },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`);
     },
     handleSuccess: function(response, file, fileList) {
       this.$message.warning("上传成功！");
