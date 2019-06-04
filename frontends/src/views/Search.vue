@@ -3,10 +3,9 @@
 <template>
   <div>
     <!-- Logo-->
-    <el-image style="width: 500px; height: 200px; margin-top: 70px" :src="url" fit="contain"></el-image>
-    <searchBar style="margin-top: 70px"/>
-    <div style="height:20px"></div>
-    <div style="width:60%;margin: 0 auto;"><echarts/></div>
+    <el-image style="width: 500px; height: 200px; margin-top: 0px" :src="url" fit="contain"></el-image>
+    <searchBar />
+    <div style="width:100%;margin: 0 auto; margin-top: 0px"><echarts/></div>
   </div>
 </template>
 <script>
