@@ -18,19 +18,20 @@ from backends.forms import MySearchForm
 
 from django.urls import path,include
 from backends import views,keywordview,paperview,messageview,user,expertview
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
-
-    path('', views.test ),
+    path('', TemplateView.as_view(template_name="index.html")),
+    # path('', views.test ),
     path('upload_paper',paperview.upload_paper),
     path('download_paper',paperview.download_paper),
-
     path('appeal',messageview.appeal),
-
+    path('listcollection',user.listcollection),
+    path('listfollow',user.listfollow),
     path('editacademia',expertview.editacademia),
     path('follow', user.follow),
     path('collect', user.collect),
-    path('userinfo', user.uinfo),
+    path('userinfo', user.userinfo),
     path('login',user.login),
     path('logout',user.logout),
     path('register',user.register),

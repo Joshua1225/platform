@@ -13,13 +13,12 @@ from .models import Users, UnidentifiedAcademia, Papers
 
 
 def check_login(request):
-    # request.session.clear_expired()
-    # flag = request.session.get("username", None)
-    # if not flag:
-    #     return False
-    # else:
-    #     return True
-    return True
+    request.session.clear_expired()
+    flag = request.session.get("username", None)
+    if not flag:
+        return False
+    else:
+        return True
 
 '''
 login(username, password)
@@ -132,12 +131,46 @@ def uinfo(request):
         data = json.loads(request.body.decode('utf-8'))
         ans=[]
         u = Users.objects.filter(username=data['username'])
-        #uinfo = UsersSerializer(u, many=True)
-        if u.exists():
+        uinfo = serializers.serialize("json", u)
+        if u.first().type == 1:
+            a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
+            #ainfo = UnidentifiedAcademiaSerializer(a, many=True)
+            ainfo = serializers.serialize("json", a)
+            ans += [{
+                "code": 0,
+                "userinfo": json.loads(uinfo),
+                "academy": 1,
+                "academyinfo": json.loads(ainfo)
+            }]
+        else:
+            ans += [{
+                "code": 0,
+                "userinfo": json.loads(uinfo),
+                "academy": 0,
+                "academyinfo": []
+            }]
+        return JsonResponse(ans, safe=False)
+    else:
+        ans = [{
+            "code": 2,
+            "userinfo": {}
+        }]
+        return JsonResponse(ans, safe=False)
+'''
+userinfo()
+POST
+
+返回的是一个JsonArray，内部一个JsonObject
+'''
+@csrf_exempt
+def userinfo(request):
+    if request.method=="POST":
+        ans=[]
+        if (check_login(request)):
+            u = Users.objects.filter(username=request.session.get("username"))
             uinfo = serializers.serialize("json", u)
             if u.first().type == 1:
                 a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
-                # ainfo = UnidentifiedAcademiaSerializer(a, many=True)
                 ainfo = serializers.serialize("json", a)
                 ans += [{
                     "code": 0,
@@ -166,93 +199,61 @@ def uinfo(request):
             "userinfo": {}
         }]
         return JsonResponse(ans, safe=False)
-'''
-userinfo()
-POST
 
-返回的是一个JsonArray，内部一个JsonObject
-'''
-@csrf_exempt
-def userinfo(request):
-    if request.method=="POST":
-        ans=[]
-        if (check_login(request)):
-            u = Users.objects.filter(username=request.session.get("username"))
-            if u.exists():
-                uinfo = serializers.serialize("json", u)
-                if u.first().type == 1:
-                    a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
-                    # ainfo = UnidentifiedAcademiaSerializer(a, many=True)
-                    ainfo = serializers.serialize("json", a)
-                    ans += [{
-                        "code": 0,
-                        "userinfo": json.loads(uinfo),
-                        "academy": 1,
-                        "academyinfo": json.loads(ainfo)
-                    }]
-                else:
-                    ans += [{
-                        "code": 0,
-                        "userinfo": json.loads(uinfo),
-                        "academy": 0,
-                        "academyinfo": []
-                    }]
-            else:
-                ans += [{
-                    "code": 1,
-                    "userinfo": [],
-                    "academy": 0,
-                    "academyinfo": []
-                }]
-        else:
-            ans += [{
-                "code": 1,
-                "userinfo": [],
-                "academy": 0,
-                "academyinfo": []
-            }]
-        return JsonResponse(ans, safe=False)
-    else:
-        ans = [{
-            "code": 2,
-            "userinfo": {}
-        }]
-        return JsonResponse(ans, safe=False)
 
 """
 [{"code":0}]  修改成功
 [{"code":1}]  拒绝使用GET方法
 [{"code":2}]  用户未登录
-[{"code":3}]  信息不合法
+[{"code":3}]  参数不合法
 [{"code":4}]  邮箱已被占用
 [{"code":5}]  密码最少8位，最长21位
 """
 @csrf_exempt
 def change_info(request):
     ans = []
+    mark = False
     print(request.session.session_key)
     if request.method == "POST":
         if check_login(request):
             data = json.loads(request.body.decode("utf-8"))
-            user = Users.objects.get(username=request.session.get('username'))
+            user = Users.objects.filter(username=request.session.get('username'))
             ans += [{
                 'code': 0
             }]
-            if data.get('password') is not None:
-                if 8 <= len(data.get('password')) <= 21:
+            if data.get('password', None) is not None:
+                mark = True
+                if 8 <= len(data.get('password', None)) <= 21:
                     user.update(password=data.get('password'))
                 else:
                     ans[0]['code'] = 5
-            elif data.get('interest') is not None:
-                user.update(interest=data.get('interest'))
-            elif data.get('signature') is not None:
+            if data.get('interest', None) is not None:
+                user.update(interest = data.get('interest'))
+                mark = True
+            if data.get('signature', None) is not None:
                 user.update(signature=data.get('signature'))
-            elif data.get('email') is not None and re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", data.get('email')):
-                if not Users.objects.filter(email=data.get('email')):
+                mark = True
+            if data.get('email', None) is not None and re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", data.get('email')):
+                mark = True
+                if Users.objects.filter(email=data.get('email')):
                     ans[0]['code'] = 4
                 else:
                     user.update(email=data.get('email'))
-            else:
+            if user.first().type == 1:
+                academia = UnidentifiedAcademia.objects.filter(id=user.first().academia_id)
+                if data.get('position', None) is not None:
+                    academia.update(position=data.get('position'))
+                    mark = True
+                if data.get('education', None) is not None:
+                    academia.update(education=data.get('education'))
+                    mark = True
+                if data.get('tendency', None) is not None:
+                    academia.update(tendency=data.get('tendency'))
+                    mark = True
+                if data.get('experience', None) is not None:
+                    academia.update(experience=data.get('experience'))
+                    mark = True
+            if not mark:
                 ans[0]['code'] = 3
         else:
             ans += [{
@@ -275,13 +276,13 @@ def change_info(request):
 @csrf_exempt
 def follow(request):
     ans = []
-    data = json.loads(request.body)
+    data = json.loads(request.body.decode("utf-8"))
     if request.method == "POST":
         if check_login(request):
-            cur_user = Users.objects.filter(username=request.session['username'])
+            cur_user = Users.objects.filter(username=request.session['username']).first()
             academia = UnidentifiedAcademia.objects.filter(id=data.get('id'))
-            if not academia:
-                if not data.get('type'):
+            if academia:
+                if data.get('type'):
                     if data.get('type') == 0:
                         cur_user.follow.add(academia)
                     else:
@@ -318,19 +319,18 @@ def follow(request):
 @csrf_exempt
 def collect(request):
     ans = []
-    data = request.POST
-    # data = json.loads(request.body)
+    data = json.loads(request.body.decode("utf-8"))
     if request.method == "POST":
         if check_login(request):
-            cur_user = Users.objects.filter(username=data['username'])
-            # cur_user = Users.objects.filter(username=request.Username)
-            paper = Papers.objects.filter(id=data.get('id'))
-            if not paper:
-                if not data.get('type'):
+            cur_user = Users.objects.filter(username=data.get('username')).first()
+            paper = Papers.objects.get(id=data.get('id'))
+            print(paper)
+            if paper:
+                if data.get('type') is not None:
                     if data.get('type') == 0:
-                        cur_user.follow.add(paper)
+                        cur_user.collect.add(paper)
                     else:
-                        cur_user.follow.remove(paper)
+                        cur_user.collect.remove(paper)
                     ans += [{
                        "code": 0
                     }]
@@ -353,7 +353,7 @@ def collect(request):
     return JsonResponse(ans, safe=False)
 
 '''
-relatedacademia(paperid)
+recommend(paperid)
 
 code:0  登录状态操作
 code:1  未登录操作
@@ -458,6 +458,37 @@ def academyinfo(request):
         }]
     return JsonResponse(ans, safe=False)
 
+
+
+'''
+listcollection()
+'''
+@csrf_exempt
+def listcollection(request):
+    ans = []
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        if check_login(request):
+            unow = Users.objects.filter(username=request.session['username'])
+            # unow = Users.objects.filter(username=data['username']).first().collect.all()
+            collected = serializers.serialize('json', unow)
+            ans +=[{
+                'code':0,
+                'followed':json.loads(collected)
+            }]
+        else:
+            ans += [{
+                'code': 1,
+                'followed': []
+            }]
+    else:
+        ans += [{
+            'code': 2,
+            'followed': []
+        }]
+    return JsonResponse(ans, safe=False)
+
+
 '''
 listfollow()
 '''
@@ -467,8 +498,8 @@ def listfollow(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
         if check_login(request):
-            #unow = Users.objects.filter(username=request.session['username'])
-            unow = Users.objects.filter(username=data['username']).first().follow.all()
+            unow = Users.objects.filter(username=request.session['username'])
+            # unow = Users.objects.filter(username=data['username']).first().follow.all()
             followed = serializers.serialize('json', unow)
             ans +=[{
                 'code':0,
@@ -476,7 +507,7 @@ def listfollow(request):
             }]
         else:
             ans += [{
-                'code': 2,
+                'code': 1,
                 'followed': []
             }]
     else:
