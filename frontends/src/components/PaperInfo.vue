@@ -16,8 +16,24 @@
           </el-row>
         </span>
         <span style="float:right">
-          <el-button v-if="following===false" type="warning" icon="el-icon-star-off" circle style="margin-top:10px " ref="followbutton" @click="follow"></el-button>
-          <el-button v-else type="warning" icon="el-icon-star-on" circle style="margin-top:10px" ref="followbutton" @click="follow"></el-button>
+          <el-button
+            v-if="following===false"
+            type="warning"
+            icon="el-icon-star-off"
+            circle
+            style="margin-top:10px "
+            ref="followbutton"
+            @click="follow"
+          ></el-button>
+          <el-button
+            v-else
+            type="warning"
+            icon="el-icon-star-on"
+            circle
+            style="margin-top:10px"
+            ref="followbutton"
+            @click="follow"
+          ></el-button>
           <el-button type="info" round style="margin-top:10px " @click="goAppeal">认证</el-button>
         </span>
       </e>
@@ -52,7 +68,7 @@ var host = "";
 
 export default {
   props: { 
-    // paperid: String 
+    paperid: String 
     },
   name: "paperinfo",
   data() {
@@ -69,7 +85,6 @@ export default {
         cited: "555",
         year: "2019",
         origin: "BUAA",
-        paperid: "",
         
       },
       following: false //初始值设定为是否关注
@@ -97,22 +112,27 @@ export default {
         username: 123
       }
       console.log(this.following)
-      this.following = !this.following
+      that=this
       Axios.post("http://154.8.237.76:8000/collect",JSON.stringify(js)).then(
         function(res)
         {
           console.log(res);
-          
+          that.following = !that.following
         }
       )
     },
     download_button() {
-      var js = {
-        //id: this.paperid
-      };
-      Axios.post(host + "/userinfo", JSON.stringify(js)).then(function(res) {
-        console.log(res);
-      });
+      var js={
+        id : this.paperid
+      }
+      Axios.post("http://154.8.237.76:8000/download_paper",JSON.stringify(js)).then(
+        function(res)
+        {
+          console.log(res);
+          window.open(res["data"][0]['response']);
+
+        }
+      )
     },
     goAppeal() {
       this.$router.push("/appeal");
