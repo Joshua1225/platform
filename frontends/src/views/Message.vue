@@ -11,7 +11,7 @@
       <el-card
         shadow="always"
         body-style="{padding-top : 5px ; text-align : left ; font-size : 13px ;}"
-      >您有{{messagenum}}条未读通知</el-card>
+      >您有{{message.length}}条未读通知</el-card>
   
     <MessageList :message="message" />
   </div>
@@ -29,7 +29,7 @@ export default {
   },
   data: function() {
     return {
-      messagenum: this.message.length
+      
     };
   }
 };
