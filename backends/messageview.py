@@ -12,6 +12,7 @@ from backends.models import Messages,Users
 from backends.paperview import  handle_uploaded_file
 from django.contrib.sessions.models import Session
 from django.core import serializers
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 '''
 appeal(type, content,username,file,object_id)  用户提交申诉,需要用表单上传数据
 http://154.8.237.76:8000/platform/appeal/
@@ -32,7 +33,7 @@ def appeal(request):
             content =  request.POST.get('content')
             time = datetime.now()
             username =  request.session.get('username')
-            file =  request.POST.get('file')
+            file =  request.body
             objectid =  request.POST.get('objectid')
 
             if type == '1' or type == '3':           #上传论文/论文申诉，需要身份为专家
@@ -43,9 +44,9 @@ def appeal(request):
                         return JsonResponse(ans, safe=False)
                     else:
                         if type == '1':
-                            fpath = os.path.join('documentations','上传论文',username )    #目前将id和申诉类型作为路径
+                            fpath = os.path.join(BASE_DIR,'documentations','upload_papers',username )    #目前将id和申诉类型作为路径
                         else:
-                            fpath = os.path.join('documentations', '论文申诉', username)
+                            fpath = os.path.join(BASE_DIR,'documentations', 'appeal_papers', username)
                         handle_uploaded_file(file,fpath)
                         Messages.objects.create(type=type,content=content,time=time,userid=username,file=fpath,objectid=objectid)
                         ans = [{'code': 0}]
@@ -59,7 +60,7 @@ def appeal(request):
                     ans = [{'code': 3}]
                     return JsonResponse(ans, safe=False)
                 else:
-                    fpath = os.path.join('documentations', '身份认证', username)
+                    fpath = os.path.join(BASE_DIR,'documentations', 'acknowledges', username)
                     handle_uploaded_file(file, fpath)
                     Messages.objects.create(type=type, content=content, time=time, userid=username, file=fpath,
                                             objectid=objectid)
@@ -102,11 +103,13 @@ def getmessage(request):
             return JsonResponse(ans, safe=False)
         else:
             ans += [{
-                "code": 2
+                "code": 2,
+                "messageinfo":[]
             }]
             return JsonResponse(ans, safe=False)
     else:
         ans += [{
-            "code": 1
+            "code": 1,
+            "messageinfo": []
         }]
         return JsonResponse(ans, safe=False)
