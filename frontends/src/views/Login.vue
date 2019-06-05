@@ -184,16 +184,16 @@ export default {
             .post(host+"/register", JSON.stringify(reg))
             .then(response => {
               console.log(response);
-              if(res["data"][0]["code"] === 0)
+              if(response["data"][0]["code"] === 0)
               {
                 alert("注册成功！");
                 that.isReg=false;
               }
-              else if(res["data"][0]["code"] === 2)
+              else if(response["data"][0]["code"] === 2)
               {
                 alert("用户已存在！");
               }
-              else if(res["data"][0]["code"] === 3)
+              else if(response["data"][0]["code"] === 3)
               {
                 alert("请补全信息！");
               }
