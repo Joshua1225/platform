@@ -18,17 +18,12 @@
 <script>
 export default {
   name: "MessageList",
+  props:{
+    message : []
+  },
   data: function() {
     return {
-      msgs: [
-        {
-          type: "申诉消息",
-          time: "2019-6-3 2:43",
-          content:
-            "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          status: 0
-        }
-      ]
+      msgs: this.message
     };
   },
   methods: {

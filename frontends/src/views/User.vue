@@ -27,7 +27,7 @@
         </el-col>
       </el-tab-pane>
       <el-tab-pane label="我的消息" name="third">
-        <Message/>
+        <Message :message="message"/>
       </el-tab-pane>
       <el-tab-pane label="我的信息" name="fourth">
         <userform :info="this.userInfo" @up="updateInfo"/>
@@ -63,6 +63,8 @@ export default {
   created: function() {
     var data = { username: this.$store.state.userName };
     this.updateInfo();
+    this.getmessage();
+    this.getexperts();
   },
   components: {
     userinforemake,
@@ -84,19 +86,32 @@ export default {
       chosen: "first",
       papernum: "您已发表了10篇论文",
       expertnum: "198",
-      collectionnum: "您已收藏了10篇论文"
+      collectionnum: "您已收藏了10篇论文",
+      message:[],
+      experts:[]
     };
   },
   methods: {
     handleClick: function(res) {},
-
+    getmessage: function() {
+      Axios.post(host + "/getmessage").then(res => {
+        console.log("message:",res);
+        this.message = res;
+      });
+    },
+    getexperts: function() {
+      Axios.post(host + "/listfolllow", JSON.stringify({username:123})).then(res => {
+        console.log("experts:",res);
+        this.experts = res["data"][0]["fields"];
+      });
+    },
     updateInfo: function() {
     
       Axios.post(host + "/userinfo", JSON.stringify({username:123})).then(res => {
-        console.log(res);
-        that.userInfo.signature =
+        console.log("userinfo:",res);
+        this.userInfo.signature =
           res["data"][0]["userinfo"][0]["fields"]["signature"];
-        that.userInfo.interests =
+        this.userInfo.interests =
           res["data"][0]["userinfo"][0]["fields"]["interest"];
       });
     }

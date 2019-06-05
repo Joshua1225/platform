@@ -13,7 +13,6 @@
           &nbsp;&nbsp;
         </div>
       </div>
-      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
     </el-card>
   </div>
 </template>

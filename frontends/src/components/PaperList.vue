@@ -38,8 +38,8 @@ export default {
   props: {
     title: String,
     papers: [],
-    page_no: int,
-    page_total: int
+    page_no: Int32Array,
+    page_total: Int32Array
   },
   data: function() {
     return {
