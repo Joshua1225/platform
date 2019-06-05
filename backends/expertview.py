@@ -20,8 +20,9 @@ editacademia() 修改专家信息
 @csrf_exempt
 def editacademia(request):
     ans = []
-    if check_login(request):
-        if request.method == "POST":
+
+    if request.method == "POST":
+        if check_login(request):
             obj = json.loads(request.body)
             ac = UnidentifiedAcademia.objects.get(username=request.session.get('username'))
 
@@ -41,8 +42,8 @@ def editacademia(request):
                 ans += [{'code': 0}]
                 return JsonResponse(ans, safe=False)
         else:
-            ans += [{'code': 1}]
+            ans += [{'code': 2}]
             return JsonResponse(ans, safe=False)
     else:
-        ans += [{'code': 2}]
+        ans += [{'code': 1}]
         return JsonResponse(ans, safe=False)

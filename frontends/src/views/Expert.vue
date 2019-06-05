@@ -6,15 +6,16 @@
           <el-image class="icon" :src="url1"></el-image>
           <div class="name">{{name}}</div>
           <div class="experience">
-            <div class="experienceItem" v-for="ins in experience">
+            <div class="experienceItem" >
               <i class="el-icon-paperclip"></i>
               &nbsp;
-              {{ins}}
+              {{position}}
             </div>
           </div>
           <el-row>
             <el-col :span="6" offset="4">
-              <el-button type="warning" plain>收藏</el-button>
+              <el-button type="warning" plain @click="setFollow" v-show="this.isFollow">关注</el-button>
+              <el-button type="warning" plain @click="offFollow" v-show="!this.isFollow">取关</el-button>
             </el-col>
             <el-col :span="6" offset="3">
               <el-button type="info" plain @click="goAppeal">认证</el-button>
@@ -23,29 +24,29 @@
         </el-card>
 
         <el-card class="info">
-          <div class="flag">大家好，我是练习时长两年半的蔡徐坤，喜欢唱跳rap，篮球</div>
-          <div class="interest" v-for="ins in work">
+          <div class="flag">经历</div>
+          <div class="interest" >
             <i class="el-icon-paperclip"></i>
             &nbsp;
-            {{ins}}
+            {{experience}}
           </div>
         </el-card>
       </el-col>
       <el-col :span="16" offset="1">
         <el-card class="info">
-          <div class="flag">大家好，我是练习时长两年半的蔡徐坤，喜欢唱跳rap，篮球</div>
-          <div class="interest" v-for="ins in work">
+          <div class="flag">教育背景</div>
+          <div class="interest" >
             <i class="el-icon-paperclip"></i>
             &nbsp;
-            {{ins}}
+            {{education}}
           </div>
         </el-card>
         <el-card class="info">
-          <div class="flag">大家好，我是练习时长两年半的蔡徐坤，喜欢唱跳rap，篮球</div>
-          <div class="interest" v-for="ins in work">
+          <div class="flag">意向</div>
+          <div class="interest" >
             <i class="el-icon-paperclip"></i>
             &nbsp;
-            {{ins}}
+            {{tendency}}
           </div>
         </el-card>
       </el-col>
@@ -54,15 +55,24 @@
 </template>
 
 <script>
+import axios from "axios";
+import store from "@/store";
 export default {
   name: "expert",
-  created: function() {
-    this.name = this.$route.query.id;
+  props: {
+    academyId: String
   },
+  // created: function() {
+  //   this.name = this.$route.query.id;
+  // },
   data: function() {
     return {
-      name: "XiaoZHIPEIEN",
+      name: "",
+      position:"",
       experience: "膜法师;;程序员",
+      education:"",
+      tendency:"",
+      isFollow:true,
       interests: ["膜", "码"],
       contact: "wjq@buaa.edu.cn;;BUAA",
       work: "大家好，我是练习时长两年半的蔡徐坤;;喜欢唱跳rap，篮球",
@@ -73,6 +83,25 @@ export default {
   mounted() {
     // 初始化页面数据
     this.transfer();
+    var data={
+      academyid: "53f43d89dabfaedce5565d9a",
+    }
+    var that=this;
+    console.log(555555)
+    axios
+      .post("http://154.8.237.76:8000/academyinfo", JSON.stringify(data))
+      .then(res => {
+        console.log(res);
+        console.log(2500);
+        that.name = res["data"][0]["academyinfo"][0]["fields"]["name"];
+        that.position = res["data"][0]["academyinfo"][0]["fields"]["position"];
+        that.experience = res["data"][0]["academyinfo"][0]["fields"]["experience"];
+        that.education = res["data"][0]["academyinfo"][0]["fields"]["education"];
+        that.tendency = res["data"][0]["academyinfo"][0]["fields"]["tendency"];
+      })
+      .catch(res => {
+        console.log(res);
+      });
   },
   methods: {
     transfer: function() {
@@ -81,7 +110,52 @@ export default {
     },
     goAppeal() {
       this.$router.push("/appeal");
-    }
+    },
+    setFollow(){
+      var data={
+        id:"53f43d89dabfaedce5565d9a",
+        type:0,
+        username:"123"
+        // username:this.$store.state.userName
+      }
+      var that=this;
+       axios
+      .post("http://154.8.237.76:8000/follow", JSON.stringify(data))
+      .then(res => {
+        console.log(res);
+        if(res["data"][0]["code"]===0){
+          that.isFollow=false;
+        }
+        else if(res["data"][0]["code"]===2){
+         alert("请登录！")
+        }
+      })
+      .catch(res => {
+        console.log(res);
+      });
+    },
+    offFollow(){
+      var data={
+        id:"53f43d89dabfaedce5565d9a",
+        type:1,
+        username:"123"
+      }
+      var that=this;
+       axios
+      .post("http://154.8.237.76:8000/follow", JSON.stringify(data))
+      .then(res => {
+        console.log(res);
+        if(res["data"][0]["code"]===0){
+          that.isFollow=true;
+        }
+        else if(res["data"][0]["code"]===2){
+         alert("请登录！")
+        }
+      })
+      .catch(res => {
+        console.log(res);
+      });
+    },
   }
 };
 </script>

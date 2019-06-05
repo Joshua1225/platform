@@ -125,9 +125,8 @@ keyword_value = [
 ]
 @csrf_exempt
 def getkeyword(request):
-    i = random.randint(0,3)
+    random.shuffle(keyword_value)
     keywordlist = []
-    for j in range(29):
-            keywordlist.append(keyword_value[i*29+j])
-
+    for j in range(50):
+        keywordlist.append(keyword_value[j])
     return JsonResponse(keywordlist, safe=False)

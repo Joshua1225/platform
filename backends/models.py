@@ -61,38 +61,6 @@ class UnidentifiedAcademia(models.Model):
                                           tags=str(dic.get('tags')), pubs=str(dic.get('pubs'))).save()
 
 
-class Users(models.Model):
-    """用户"""
-    username = models.CharField(primary_key=True, max_length=21, verbose_name="登录用户名")
-    password = models.CharField(max_length=21, verbose_name="用户密码")
-    name = models.CharField(max_length=21, verbose_name="用户名")
-    credit = models.IntegerField(default=0, verbose_name="积分")
-    interest = models.CharField(max_length=255, null=True, verbose_name="兴趣领域")
-    email = models.EmailField(verbose_name="邮箱", unique=True, null=True)
-    avator = models.ImageField(verbose_name="头像", null=True, upload_to=upload_avator_to)     # 这里有两个可选参数规定图片显示大长和宽，根据前端页面需要定，还需要一个default
-    signature = models.TextField(null=True, verbose_name="个性签名")
-    type = models.IntegerField(default=0, choices=((0, u"普通用户"), (1, u"专家")), verbose_name="用户类型")
-    academia_id = models.ForeignKey(UnidentifiedAcademia, null=True, on_delete=models.PROTECT)
-    follow = models.ManyToManyField(UnidentifiedAcademia, related_name='follow')
-    collect = models.ManyToManyField(UnidentifiedAcademia, related_name='collect')
-
-    class Meta:
-        db_table = 'User'
-        verbose_name = '用户'
-        verbose_name_plural = verbose_name
-
-
-class Administrators(models.Model):
-    """管理员"""
-    admin_id = models.CharField(max_length=21, primary_key=True, db_index=True, verbose_name="管理员ID")
-    password = models.CharField(max_length=21, verbose_name="密码")
-
-    class Meta:
-        db_table = 'Administrator'
-        verbose_name = '管理员'
-        verbose_name_plural = verbose_name
-
-
 class Papers(models.Model):
     """论文"""
     id = models.CharField(max_length=255, primary_key=True, db_index=True, verbose_name="论文ID")
@@ -128,15 +96,49 @@ class Papers(models.Model):
     @staticmethod
     def data_import():
         import json
-        with open('aminer_papers_0.txt') as f:
+        with open('aminer_papers_1.txt') as f:
             for line in f:
                 dic = json.loads(line)
                 if dic.get('abstract') is not None and str(dic.get('title')).isdigit() is False:
-                    Papers(id=dic.get('id'), title=str(dic.get('title')), authors=str(dic.get('authors')), year=dic.get('year'),
+                    Papers(id=dic.get('id'), title=str(dic.get('title')), authors=str(dic.get('authors')),
+                           year=dic.get('year'),
                            keywords=dic.get('keywords'), n_citation=dic.get('n_citation'), doc_type=dic.get('doc_type'),
                            lang=dic.get('lang'), issn=dic.get('issn'), isbn=dic.get('isbn'),
-                           doi=dic.get('doi') , url=str(dic.get('url')), abstract=dic.get('abstract'),
+                           doi=dic.get('doi'), url=str(dic.get('url')), abstract=dic.get('abstract'),
                            references=dic.get('references')).save()
+
+
+class Users(models.Model):
+    """用户"""
+    username = models.CharField(primary_key=True, max_length=21, verbose_name="登录用户名")
+    password = models.CharField(max_length=21, verbose_name="用户密码")
+    name = models.CharField(max_length=21, verbose_name="用户名")
+    credit = models.IntegerField(default=0, verbose_name="积分")
+    interest = models.CharField(max_length=255, null=True, verbose_name="兴趣领域")
+    email = models.EmailField(verbose_name="邮箱", unique=True, null=True)
+    avator = models.ImageField(verbose_name="头像", null=True, upload_to=upload_avator_to)     # 这里有两个可选参数规定图片显示大长和宽，根据前端页面需要定，还需要一个default
+    signature = models.TextField(null=True, verbose_name="个性签名")
+    type = models.IntegerField(default=0, choices=((0, u"普通用户"), (1, u"专家")), verbose_name="用户类型")
+    academia_id = models.ForeignKey(UnidentifiedAcademia, null=True, on_delete=models.PROTECT)
+    follow = models.ManyToManyField(UnidentifiedAcademia, related_name='follow')
+    collect = models.ManyToManyField(Papers, related_name='collect')
+
+    class Meta:
+        db_table = 'User'
+        verbose_name = '用户'
+        verbose_name_plural = verbose_name
+
+
+class Administrators(models.Model):
+    """管理员"""
+    admin_id = models.CharField(max_length=21, primary_key=True, db_index=True, verbose_name="管理员ID")
+    password = models.CharField(max_length=21, verbose_name="密码")
+
+    class Meta:
+        db_table = 'Administrator'
+        verbose_name = '管理员'
+        verbose_name_plural = verbose_name
+
 
 
 class Trades(models.Model):

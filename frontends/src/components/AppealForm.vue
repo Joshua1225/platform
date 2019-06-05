@@ -47,6 +47,9 @@
 <script>
 import axios from "axios";
 
+//var host="http://154.8.237.76:8000";
+var host="";
+
 export default {
   name: "appealform",
   props: {
@@ -78,7 +81,7 @@ export default {
   },
   methods: {
     submit: function(e) {
-      var loginUrl = "http://154.8.237.76:8000/login";
+      var loginUrl = host+"/login";
       var loginData = { username: "123", password: "123" };
 
       axios.post(loginUrl, JSON.stringify(loginData)).then(res => {
@@ -89,7 +92,7 @@ export default {
     },
     uploadImg(param) {
       
-      var uploadUrl = "http://154.8.237.76:8000/upload_paper";
+      var uploadUrl = host+"/upload_paper";
       var fileObj = param.file;
       console.log("upload");
       var form = new FormData();

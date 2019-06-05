@@ -27,7 +27,7 @@
             </el-row>
             <el-row style="margin-top: 12%">
               <el-col :span="6" :offset="4">
-                <el-button type="primary" plain @click="login()">登陆</el-button>
+                <el-button type="primary" plain @click="login()">登录</el-button>
               </el-col>
               <el-col :span="14">
                 <el-button plain @click="reg()">注册</el-button>
@@ -88,6 +88,10 @@
 import axios from "axios";
 import store from "@/store";
 import { constants } from 'crypto';
+
+var host="http://154.8.237.76:8000";
+//var host="";
+
 export default {
   name: "Login",
   store,
@@ -118,7 +122,7 @@ export default {
         };
         var that=this;
         axios
-          .post("http://154.8.237.76:8000/login", JSON.stringify(json))
+          .post(host+"/login", JSON.stringify(json))
           .then(res => {
             console.log(res);
             
@@ -127,7 +131,7 @@ export default {
               store.commit("setOnline");
               var data={username:this.usernameinput}
               axios
-              .post("http://154.8.237.76:8000/userinfo",JSON.stringify(data))
+              .post(host+"/userinfo",JSON.stringify(data))
               .then(res => {
                   console.log(res);
                   that.$store.state.userName=res["data"][0]["userinfo"][0]["fields"]["name"];
@@ -174,8 +178,9 @@ export default {
             username: this.newusernameinput,
             password: this.newpasswordinput
           };
+          
           axios
-            .post("http://154.8.237.76:8000/register", JSON.stringify(reg))
+            .post(host+"/register", JSON.stringify(reg))
             .then(response => {
               console.log(response);
             })

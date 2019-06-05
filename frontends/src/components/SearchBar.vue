@@ -32,7 +32,7 @@
         </div>
         <div style="text-align: right; margin: 0">
           <el-button size="mini" type="text" @click="visible = false" style="margin-top:10px">取消</el-button>
-          <el-button type="primary" size="mini" @click="toSearch">搜索</el-button>
+          <el-button type="primary" size="mini" @click="toSearch" @keyup.enter="toSearch">搜索</el-button>
         </div>
         <el-button
           slot="reference"
@@ -58,22 +58,24 @@ export default {
     toSearch() {
       if (this.visible == true) {
         this.visible = false;
-        this.$router.push({
-          path: "/Result",
-          query: {
-            model1: 1,
-            q: this.input1,
-            q_not: this.input3,
-            q_or: this.input2,
-            start_year: this.input5,
-            end_year: this.input6,
-            language: this.input7,
-            author: this.input4,
-            order: 0,
-            page_size: 10,
-            page_num: 1
-          }
-        });
+        var searchData = {
+          q: this.input1,
+          q_not: this.input3,
+          q_or: this.input2,
+          start_year: this.input5,
+          end_year: this.input6,
+          language: this.input7,
+          author: this.input4,
+          order: 0,
+          page_size: 10,
+          page_num: 1
+        };
+        console.log("ok!")
+        this.$emit('searchclick', searchData);
+        // this.$router.push({
+        //   path: "/Result",
+        //   query:
+        // });
         //复原
         this.input1 = "";
         this.input3 = "";
@@ -83,22 +85,22 @@ export default {
         this.input7 = "";
         this.input4 = "";
       } else {
-        this.$router.push({
-          path: "/Result",
-          query: {
-            model1: 0,
-            q: this.input,
-            order: 0,
-            page_size: 10,
-            page_num: 1
-          }
-        });
+        var searchData = {
+          q: this.input,
+          order: 0,
+          page_size: 10,
+          page_num: 1
+        };
+        console.log("ok2!")
+        this.$emit('searchclick', searchData);
       }
     }
   },
+  props:{
+    input: ""
+  },
   data() {
     return {
-      input: "",
       input1: "",
       input2: "",
       input3: "",

@@ -67,12 +67,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Platform.urls'
-MEDIA_ROOT = os.path.join(BASE_DIR,'static')
+# MEDIA_ROOT = os.path.join(BASE_DIR,'static')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'template')]
+        # 'DIRS': [os.path.join(BASE_DIR, 'template')]
+        'DIRS': ['frontends/dist']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -85,6 +86,15 @@ TEMPLATES = [
         },
     },
 ]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "frontends/dist/static")
+]
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 WSGI_APPLICATION = 'Platform.wsgi.application'
 
@@ -182,7 +192,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
 SESSION__EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = True
