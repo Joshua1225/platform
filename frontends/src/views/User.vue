@@ -96,13 +96,13 @@ export default {
     getmessage: function() {
       Axios.post(host + "/getmessage").then(res => {
         console.log("message:",res);
-        this.message = res;
+        this.message = res["data"];
       });
     },
     getexperts: function() {
-      Axios.post(host + "/listfolllow", JSON.stringify({username:123})).then(res => {
+      Axios.post(host + "/listfollow", JSON.stringify({username:123})).then(res => {
         console.log("experts:",res);
-        this.experts = res["data"][0]["fields"];
+        this.experts = res["data"][0]["followed"];
       });
     },
     updateInfo: function() {
