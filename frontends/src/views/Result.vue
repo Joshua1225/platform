@@ -13,7 +13,7 @@
       </el-col>
       <el-col :span="12">
         <div>
-          <paperList :papers="parentPapers" title="搜索结果"/>
+          <paperList :papers="parentPapers" @nextpage="updatePage" title="搜索结果"/>
         </div>
       </el-col>
     </el-row>
@@ -59,41 +59,28 @@ export default {
   data() {
     return {
       q:'',
-      parentPapers: [
-        {
-          id: "53e9ab9eb7602d970354a97e",
-          title: "基于深度学习的水文114141",
-          abstract:
-            "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          id: "53e9ab9eb7602d970354a97e",
-          title: "基于深度学习的水文2",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        }
-      ]
+      parentSearch:'',
+      parentPapers: []
     };
   },
   methods: {
     goSearch(searchData) {
       console.log(searchData);
+      this.parentSearch=searchData;
+
       axios
-        .post(host+"/search/", JSON.stringify(searchData))
+        .post(host+"/search", JSON.stringify(searchData))
         .then(res => {
+          this.parentPapers=res.data
+          console.log(res);
+        });
+    },
+    updatePage(page){
+        this.parentSearch.page_num=page;
+        axios
+        .post(host+"/search", JSON.stringify(searchData))
+        .then(res => {
+          this.parentPapers=res.data
           console.log(res);
         });
     }
