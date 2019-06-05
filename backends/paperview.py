@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from backends.user import check_login
 from backends.models import Papers,upload_paper_to
 from django.contrib.sessions.models import Session
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 '''
 upload_paper() 上传论文
 
@@ -28,17 +28,19 @@ def upload_paper(request):
             pid = request.POST.get('id')
         #sta 需要
             pfile = request.POST.get('file')
+            print(request.POST)
             paper = Papers.objects.filter(id=pid)
-            if len(paper) == 0:       #论文不存在
-                ans += [{'code': 3}]
-                return JsonResponse(ans, safe=False)
-            else:
-                fpath = os.path.join('static', 'papers', pid)
+            # if len(paper) == 0:       #论文不存在
+            #     ans += [{'code': 3}]
+            #     return JsonResponse(ans, safe=False)
+            # else:
 
-                handle_uploaded_file(pfile,fpath)
-                paper.update(pdf=fpath)
-                ans += [{'code':0}]
-                return JsonResponse(ans, safe=False)
+            #fpath = os.path.join('static', 'papers',pid)
+            fpath = os.path.join(BASE_DIR, "static",pid)
+            handle_uploaded_file(pfile,fpath)
+            paper.update(pdf=fpath)
+            ans += [{'code':0}]
+            return JsonResponse(ans, safe=False)
         else:
             ans += [{'code':2}]
             return JsonResponse(ans, safe=False)
