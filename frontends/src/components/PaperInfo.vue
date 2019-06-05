@@ -16,8 +16,8 @@
           </el-row>
         </span>
         <span style="float:right">
-          <el-button v-if="following===true" type="warning" icon="el-icon-star-off" circle style="margin-top:10px " ref="followbutton" @click="follow"></el-button>
-          <el-button v-else type="warning" icon="el-icon-star-on" circle style="margin-top:10px " ref="followbutton" @click="follow"></el-button>
+          <el-button v-if="following===false" type="warning" icon="el-icon-star-off" circle style="margin-top:10px " ref="followbutton" @click="follow"></el-button>
+          <el-button v-else type="warning" icon="el-icon-star-on" circle style="margin-top:10px" ref="followbutton" @click="follow"></el-button>
           <el-button type="info" round style="margin-top:10px " @click="goAppeal">认证</el-button>
         </span>
       </e>
@@ -69,35 +69,40 @@ export default {
         cited: "555",
         year: "2019",
         origin: "BUAA",
-        paperid: "53e99784b7602d9701f3e132",
-        following: true
-      }
+        paperid: "",
+        
+      },
+      following: false //初始值设定为是否关注
     };
   },
   created: function() {
-     var js={
-        id:this.paperid,
-        type: 0
+    this.paperid="53e99784b7602d9701f3e132"
+    var js={
+        paperid: this.paperid
       }
-      Axios.post("http://154.8.237.76:8000/collect",JSON.stringify(js)).then(
+      Axios.post("http://154.8.237.76:8000/paperinfo",JSON.stringify(js)).then(
         function(res)
         {
           console.log(res);
+          
         }
       )
-
   },
   methods: {
     follow()
     {
       var js={
         id:this.paperid,
-        type: 0
+        type: this.following?1:0,
+        username: 123
       }
+      console.log(this.following)
+      this.following = !this.following
       Axios.post("http://154.8.237.76:8000/collect",JSON.stringify(js)).then(
         function(res)
         {
           console.log(res);
+          
         }
       )
     },
