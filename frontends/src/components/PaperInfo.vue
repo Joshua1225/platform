@@ -91,9 +91,10 @@ export default {
     };
   },
   created: function() {
-    this.paperid="53e99784b7602d9701f3e132"
+    //this.paperid="53e99784b7602d9701f3e132"
     var js={
-        paperid: this.paperid
+        paperid: "53e99784b7602d9701f3e132",
+        username: 123
       }
       Axios.post("http://154.8.237.76:8000/paperinfo",JSON.stringify(js)).then(
         function(res)
@@ -112,7 +113,7 @@ export default {
         username: 123
       }
       console.log(this.following)
-      that=this
+      var that=this
       Axios.post("http://154.8.237.76:8000/collect",JSON.stringify(js)).then(
         function(res)
         {
@@ -123,7 +124,8 @@ export default {
     },
     download_button() {
       var js={
-        id : this.paperid
+        id : this.paperid,
+        username: 123
       }
       Axios.post("http://154.8.237.76:8000/download_paper",JSON.stringify(js)).then(
         function(res)
