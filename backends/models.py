@@ -96,7 +96,7 @@ class Papers(models.Model):
     @staticmethod
     def data_import():
         import json
-        with open('aminer_papers_0.txt') as f:
+        with open('aminer_papers_1.txt') as f:
             for line in f:
                 dic = json.loads(line)
                 if dic.get('abstract') is not None and str(dic.get('title')).isdigit() is False:
