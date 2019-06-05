@@ -10,6 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from backends.user import check_login
 from backends.models import Messages,Users
 from backends.paperview import  handle_uploaded_file
+from django.contrib.sessions.models import Session
+from django.core import serializers
 '''
 appeal(type, content,username,file,object_id)  用户提交申诉,需要用表单上传数据
 http://154.8.237.76:8000/platform/appeal/
@@ -74,3 +76,37 @@ def appeal(request):
         ans = [{'code': 2}]
         return JsonResponse(ans, safe=False)
 
+'''
+message()  获取消息列表
+http://154.8.237.76:8000/platform/appeal/
+POST
+
+[{"code":0}]  获取成功
+[{"code":1}]  拒绝使用GET方法
+[{"code":2}]  用户未登录
+
+'''
+@csrf_exempt
+def getmessage(request):
+    ans = []
+    if request.method == "POST":
+
+        if check_login(request):
+
+            m = Messages.objects.filter(username = request.session.get("username") )
+            minfo = serializers.serialize("json",m)
+            ans +=[{
+                "code": 0,
+                "messageinfo":json.loads(minfo)
+            }]
+            return JsonResponse(ans, safe=False)
+        else:
+            ans += [{
+                "code": 2
+            }]
+            return JsonResponse(ans, safe=False)
+    else:
+        ans += [{
+            "code": 1
+        }]
+        return JsonResponse(ans, safe=False)

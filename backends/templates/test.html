@@ -42,21 +42,21 @@
       data: function () {
           return {
               Json: {
-                  id:"53e99784b7602d9701f3e132",
+                  id:"53e99784b7602d9701f3e496",
                   username:"123",
                   password:"123",
                   name:'123',
-                  email:"starkkyrie@123.com",
+                  email:"starkkyr",
                   type:0
               },
-              dataUrl: "/collect",
+              dataUrl: "/recommend",
               fileUrl: "/file",
               fileList: []
           };
       },
 
     methods: {
-     /* handleRemove(file, fileList) {
+      handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePreview(file) {
@@ -75,9 +75,9 @@
         var form = new FormData();
         form.append("file", fileObj);
         form.append("paperId", 123456);
-
+		console.log(form);
         axios.post(this.fileUrl, form);
-      },*/
+      },
       uploadJson() {
         //TO DO 更改Url
         axios.post(this.dataUrl, JSON.stringify(this.Json)).then((res) => {

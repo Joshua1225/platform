@@ -26,6 +26,7 @@ urlpatterns = [
     path('upload_paper',paperview.upload_paper),
     path('download_paper',paperview.download_paper),
     path('appeal',messageview.appeal),
+    path('getmessage', messageview.getmessage),
     path('listcollection',user.listcollection),
     path('listfollow',user.listfollow),
     path('editacademia',expertview.editacademia),
@@ -44,5 +45,9 @@ urlpatterns = [
     path('academyinfo', user.academyinfo),
     path('relatedacademia', user.relatedacademia),
     path('paperinfo', paperview.paperinfo),
-    path('listfollow', user.listfollow)
+    path('listfollow', user.listfollow),
+    path('upload_avator', user.upload_avator)
+    path('listfollow', user.listfollow),
+    path('relatedpaper', user.relatedpaper),
+    path('recommend', user.recommend)
 ]

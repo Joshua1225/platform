@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.sessions.backends.db import SessionStore
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -6,6 +8,7 @@ from django.core import serializers
 
 import json
 import re
+import random
 
 # Create your views here.
 
@@ -168,9 +171,11 @@ def userinfo(request):
         ans=[]
         if (check_login(request)):
             u = Users.objects.filter(username=request.session.get("username"))
+            #uinfo = UsersSerializer(u, many=True)
             uinfo = serializers.serialize("json", u)
             if u.first().type == 1:
                 a = UnidentifiedAcademia.objects.filter(id=u.first().academia_id)
+                #ainfo = UnidentifiedAcademiaSerializer(a, many=True)
                 ainfo = serializers.serialize("json", a)
                 ans += [{
                     "code": 0,
@@ -279,10 +284,11 @@ def follow(request):
     data = json.loads(request.body.decode("utf-8"))
     if request.method == "POST":
         if check_login(request):
-            cur_user = Users.objects.filter(username=request.session['username']).first()
-            academia = UnidentifiedAcademia.objects.filter(id=data.get('id'))
+            cur_user = Users.objects.filter(username=data.get('username')).first()
+            # cur_user = Users.objects.filter(username=request.session['username']).first()
+            academia = UnidentifiedAcademia.objects.get(id=data.get('id'))
             if academia:
-                if data.get('type'):
+                if data.get('type') is not None:
                     if data.get('type') == 0:
                         cur_user.follow.add(academia)
                     else:
@@ -322,6 +328,7 @@ def collect(request):
     data = json.loads(request.body.decode("utf-8"))
     if request.method == "POST":
         if check_login(request):
+            # cur_user = Users.objects.filter(username=request.session['username']).first()
             cur_user = Users.objects.filter(username=data.get('username')).first()
             paper = Papers.objects.get(id=data.get('id'))
             print(paper)
@@ -353,7 +360,7 @@ def collect(request):
     return JsonResponse(ans, safe=False)
 
 '''
-recommend(paperid)
+relatedacademia(paperid)
 
 code:0  登录状态操作
 code:1  未登录操作
@@ -516,3 +523,124 @@ def listfollow(request):
             'followed': []
         }]
     return JsonResponse(ans, safe=False)
+
+
+
+@csrf_exempt
+def recommend(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        if check_login(request):
+            paper_list = []
+            user = Users.objects.get(username=request.session['username'])
+            follow_list = user.follow.all()
+            collect_list = user.collect.all()
+            if follow_list.exists():
+                for follow in follow_list:
+                    papers_tmp = json.loads(json.dumps(eval(follow.pubs)))
+                    for paper_tmp in papers_tmp:
+                        tmp_paper_set = Papers.objects.filter(id=paper_tmp.get('i'))
+                        if len(tmp_paper_set) > 0:
+                            paper_list.append(tmp_paper_set.first())
+            if collect_list.exists():
+                for collect in collect_list:
+                    paper_list.extend(get_related_paper(collect.id, 0))
+            if len(paper_list) < 10:
+                paper_list.extend(Papers.objects.filter('?')[0:10])
+            paper_list_json = serializers.serialize("json", paper_list)
+            ans = [{
+                "code": 0,
+                "paper": paper_list_json
+            }]
+            return JsonResponse(ans, safe=False)
+        else:
+            ans += [{
+                "code": 2
+            }]
+            return JsonResponse(ans, safe=False)
+    else:
+        ans += [{
+            "code": 1
+        }]
+        return JsonResponse(ans, safe=False)
+
+
+@csrf_exempt
+def relatedpaper(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        if data.get('id', None):
+            if Papers.objects.filter(id=data.get('id')).exists():
+                paper_list = serializers.serialize("json", get_related_paper(data.get('id'), 10))
+                ans = [{
+                    "code": 0,
+                    "paper": paper_list
+                }]
+                return JsonResponse(ans, safe=False)
+            else:
+                """搜索的论文不存在"""
+                ans = [{
+                    'code': 3
+                }]
+        else:
+            """参数有误"""
+            ans = [{
+                "code": 2
+            }]
+    else:
+        ans = [{
+            "code": 1
+        }]
+    return JsonResponse(ans, safe=False)
+
+
+def get_related_paper(paperid, least=0):
+    related_paper_list = []
+    keyword_list = json.loads(json.dumps(eval(Papers.objects.get(id=paperid).keywords)))
+    if keyword_list is not None:
+        for keyword in keyword_list:
+            related_paper_list.extend(Papers.objects.filter(abstract__icontains=keyword))
+    if len(related_paper_list) < least:
+        related_paper_list.extend(Papers.objects.order_by('?')[:10])
+    return related_paper_list
+
+
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+'''
+upload_avator() 上传头像
+
+[{'code':0}]  上传成功
+[{'code':1}]  拒绝使用GET方法
+[{'code':2}]  用户未登录
+'''
+@csrf_exempt
+# 上传文件
+def upload_avator(request):
+    ans = []
+
+    if request.method == 'POST':
+        if check_login(request):
+
+            ufile = request.body
+            uid = request.session['username']
+            paper = Papers.objects.filter(id=uid)
+            fpath = os.path.join(BASE_DIR, 'static','avators',uid)
+            handle_uploaded_file(ufile,fpath)
+            paper.update(pdf=fpath)
+            ans += [{'code':0}]
+            return JsonResponse(ans, safe=False)
+        else:
+            ans += [{'code':2}]
+            return JsonResponse(ans, safe=False)
+    else:
+        ans += [{'code': 1}]
+        return JsonResponse(ans, safe=False)
+
+# 处理上传文件
+def handle_uploaded_file(f,fpath):
+    with open(fpath, 'wb+') as destination:     #需要修改为保存的位置
+        destination.write(f)
+    destination.close()

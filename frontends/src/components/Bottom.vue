@@ -61,6 +61,7 @@ export default {
 }
 .div-a {
   float: left;
+  margin-left:65px;
   width: 40%;
   height: 100%;
   text-align: left;

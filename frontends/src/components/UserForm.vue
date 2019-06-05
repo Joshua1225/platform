@@ -1,9 +1,9 @@
 <template>
-  <div class="aform0" ref="form">
+  <div class="aform0">
     <el-card body-style="text-align :left ; padding :40px ;">
-      <el-form :disabled="false" label-width="80px"  @submit.native.prevent>
-        <el-form-item label="用户名" v-model="form">{{form.email}}</el-form-item>
-        <el-form-item label="注册邮箱" v-model="form">{{form.email}}</el-form-item>
+      <el-form :disabled="false" label-width="80px" @submit.native.prevent>
+        <el-form-item label="用户名" >{{info.username}}</el-form-item>
+        <el-form-item label="注册邮箱">{{info.email}}</el-form-item>
         <el-form-item label="个人头像">
           <el-upload
             class="avatar-uploader"
@@ -19,7 +19,7 @@
         </el-form-item>
 
         <el-form-item label="个性签名">
-          <el-input type="textarea" v-model="form.content"></el-input>
+          <el-input type="textarea" v-model="signature"></el-input>
         </el-form-item>
         <el-form-item label="兴趣领域">
           <el-tag
@@ -45,10 +45,7 @@
       <div style="text-align : center ; margin-top : 10px">
         <span v-if="con">
           <el-button type="primary" @click="submitForm">提交</el-button>
-          <el-button>取消</el-button>
-        </span>
-        <span v-else>
-          <el-button type="primary" @click="submitForm">修改信息</el-button>
+          <el-button @click="recoverForm">取消</el-button>
         </span>
       </div>
     </el-card>
@@ -59,23 +56,30 @@
 import Axios from "axios";
 
 //var host="http://154.8.237.76:8000";
-var host="";
+var host = "";
 
 export default {
   name: "userform",
   props: {
-    obj: String
+    info: {}
+  },
+  created: function() {
+    console.log(this.info);
+    this.signature = this.info.signature;
+    this.email = this.info.email;
+    this.username = this.info.username;
+    var tmp=this.info.interests;
+    
+    this.dynamicTags =tmp.split(";");
+    console.log(tmp.split(";"));
+    console.log(this.dynamicTags);
   },
   data: function() {
     return {
       con: true,
       imageUrl: "",
-      form: {
-        email: "daiyue@buaa.edu.cn",
-        content: "我叫王佳奇"
-      },
-
-      dynamicTags: ["123"],
+      signature: "",
+      dynamicTags: [],
       uploadUrl: "",
       file: "",
       fileList: [],
@@ -113,7 +117,7 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    submitForm: function() {},
+
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -124,7 +128,6 @@ export default {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
-
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
@@ -132,6 +135,30 @@ export default {
       }
       this.inputVisible = false;
       this.inputValue = "";
+    },
+    getCollectPaper() {
+      var data = { username: "123" };
+      Axios.post(host + "/listcollection", JSON.stringify(data)).then(res => {
+        console.log(res);
+      });
+    },
+    submitForm: function() {
+      for (i in this.dynamicTags) {
+        this.interest = this.interest + ";" + i;
+      }
+      var info = {
+        username: "123",
+        signature: this.signature,
+        interest: this.interest
+      };
+      Axios.post(host + "/change_info", info).then(res => {
+        console.log(res);
+        this.$emit("up");
+      });
+    },
+    recoverForm:function(){
+      this.signature=info.signature;
+      this.dynamicTags=info.interests.spilit(';');
     }
   }
 };
@@ -148,7 +175,7 @@ export default {
   padding-top: 0;
   padding-bottom: 0;
 }
-.input-new-tag00{
+.input-new-tag00 {
   width: 10px;
   margin-left: 10px;
   vertical-align: bottom;

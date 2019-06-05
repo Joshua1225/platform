@@ -27,7 +27,7 @@
           <span class="year">-{{paper.year}}年</span>
         </div>
       </div>
-      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination background layout="prev, pager, next" :total="page_total"></el-pagination>
     </el-card>
   </div>
 </template>
@@ -35,39 +35,41 @@
 <script>
 export default {
   name: "paperList",
-  props: { 
-    title: String ,
-    papers: []
-    },
+  props: {
+    title: String,
+    papers: [],
+    page_no: Int32Array,
+    page_total: Int32Array
+  },
   data: function() {
     return {
-      papers: [
-        {
-          id: "53e9ab9eb7602d970354a97e",
-          title: "基于深度学习的水文1",
-          abstract:
-            "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        },
-        {
-          id: "53e9ab9eb7602d970354a97e",
-          title: "基于深度学习的水文2",
-          abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-          authors: [
-            { name: "作者1", authorid: "12345" },
-            { name: "作者2", authorid: "15345" }
-          ],
-          cited: "555",
-          year: "2019",
-          origin: "BUAA"
-        }
-      ]
+      // papers: [
+      //   {
+      //     id: "53e9ab9eb7602d970354a97e",
+      //     title: "基于深度学习的水文1",
+      //     abstract:
+      //       "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
+      //     authors: [
+      //       { name: "作者1", authorid: "12345" },
+      //       { name: "作者2", authorid: "15345" }
+      //     ],
+      //     cited: "555",
+      //     year: "2019",
+      //     origin: "BUAA"
+      //   },
+      //   {
+      //     id: "53e9ab9eb7602d970354a97e",
+      //     title: "基于深度学习的水文2",
+      //     abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
+      //     authors: [
+      //       { name: "作者1", authorid: "12345" },
+      //       { name: "作者2", authorid: "15345" }
+      //     ],
+      //     cited: "555",
+      //     year: "2019",
+      //     origin: "BUAA"
+      //   }
+      // ]
     };
   }
 };

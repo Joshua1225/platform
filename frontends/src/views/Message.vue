@@ -13,7 +13,7 @@
         body-style="{padding-top : 5px ; text-align : left ; font-size : 13px ;}"
       >您有{{messagenum}}条未读通知</el-card>
   
-    <MessageList/>
+    <MessageList :message="message" />
   </div>
 </template>
 
@@ -21,12 +21,15 @@
 import MessageList from "@/components/MessageList.vue";
 export default {
   name: "Message",
+  props:{
+    message:[]
+  },
   components: {
     MessageList
   },
   data: function() {
     return {
-      messagenum: 100
+      messagenum: this.message.length
     };
   }
 };

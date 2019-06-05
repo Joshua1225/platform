@@ -89,8 +89,8 @@ import axios from "axios";
 import store from "@/store";
 import { constants } from 'crypto';
 
-//var host="http://154.8.237.76:8000";
-var host="";
+var host="http://154.8.237.76:8000";
+//var host="";
 
 export default {
   name: "Login",
@@ -176,13 +176,27 @@ export default {
         if (this.newpasswordinput === this.newpasswordreinput) {
           var reg = {
             username: this.newusernameinput,
-            password: this.newpasswordinput
+            password: this.newpasswordinput,
+            email:this.emailinput
           };
-          
+          var that=this;
           axios
             .post(host+"/register", JSON.stringify(reg))
             .then(response => {
               console.log(response);
+              if(response["data"][0]["code"] === 0)
+              {
+                alert("注册成功！");
+                that.isReg=false;
+              }
+              else if(response["data"][0]["code"] === 2)
+              {
+                alert("用户已存在！");
+              }
+              else if(response["data"][0]["code"] === 3)
+              {
+                alert("请补全信息！");
+              }
             })
             .catch(response => {
               console.log(response);
