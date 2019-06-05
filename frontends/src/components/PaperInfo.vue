@@ -68,11 +68,12 @@ var host = "";
 
 export default {
   props: {
-    paperid: String
+    id: String
   },
   name: "paperinfo",
   data() {
     return {
+      paperid :"",
       paper: {
         title: "基于深度学习的水文1",
         abstract:
@@ -91,8 +92,9 @@ export default {
   },
   created: function() {
     //this.paperid="53e99784b7602d9701f3e132"
+    paperid=id
     var js = {
-      paperid: "53e99784b7602d9701f3e132",
+      paperid: paperid,
       username: 123
     };
     Axios.post("http://154.8.237.76:8000/paperinfo", JSON.stringify(js)).then(
