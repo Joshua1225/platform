@@ -12,7 +12,10 @@
     <el-tabs v-model="chosen" type="card" @tab-click="handleClick">
       <el-tab-pane label="我的主页" name="first">
         <el-col :span="6">
-          <userinforemake :signature="this.signature" :interests="this.interests"/>
+          <userinforemake
+            :signature="this.userInfo.signature"
+            :interests="this.userInfo.interests"
+          />
         </el-col>
         <el-col :span="16" :offset="1">
           <paperlist title="根据您的兴趣，为您推荐了高质量的论文。"></paperlist>
@@ -27,7 +30,7 @@
         <Message/>
       </el-tab-pane>
       <el-tab-pane label="我的信息" name="fourth">
-        <userform />
+        <userform :info="this.userInfo" @up="updateInfo"/>
       </el-tab-pane>
       <el-tab-pane label="我的论文" name="fifth">
         <el-col :span="22">
@@ -52,22 +55,14 @@ import mypapers from "@/views/mypapers";
 import expertspot from "@/views/expertspot.vue";
 import Axios from "axios";
 
-//var host="http://154.8.237.76:8000";
-var host="";
+var host = "http://154.8.237.76:8000";
+//var host="";
 
 export default {
   name: "user",
   created: function() {
     var data = { username: this.$store.state.userName };
-    var that=this;
-    Axios.post(host+"/userinfo", JSON.stringify(data)).then(
-      res => {
-        console.log(res);
-        that.signature=res["data"][0]["userinfo"][0]["fields"]["signature"];
-        that.interests=res["data"][0]["userinfo"][0]["fields"]["interest"];
-      }
-    );
-    that.transfer();
+    this.updateInfo();
   },
   components: {
     userinforemake,
@@ -80,18 +75,30 @@ export default {
   },
   data: function() {
     return {
-      chosen:"first",
+      userInfo: {
+        signature: "我喜欢唱、跳、rap、篮球",
+        interests: "唱;跳;rap;篮球",
+        email: "123@163.com",
+        username: "123"
+      },
+      chosen: "first",
       papernum: "您已发表了10篇论文",
       expertnum: "198",
-      signature: "我喜欢唱、跳、rap、篮球",
-      interests: "唱;跳;rap;篮球",
-      collectionnum :"您已收藏了10篇论文",
-    }
+      collectionnum: "您已收藏了10篇论文"
+    };
   },
   methods: {
     handleClick: function(res) {},
-    transfer: function() {
-      this.interests = this.interests.split(";");
+
+    updateInfo: function() {
+    
+      Axios.post(host + "/userinfo", JSON.stringify({username:123})).then(res => {
+        console.log(res);
+        that.userInfo.signature =
+          res["data"][0]["userinfo"][0]["fields"]["signature"];
+        that.userInfo.interests =
+          res["data"][0]["userinfo"][0]["fields"]["interest"];
+      });
     }
   }
 };

@@ -3,16 +3,18 @@
     <el-card class="image">
       <el-image class="icon" src="this.$store.state.userAvator">
         <div slot="error" class="image-slot">
-        <el-image :src="url0" :fit="fits"></el-image>
-      </div>
+          <el-image :src="url" fit="true"></el-image>
+        </div>
       </el-image>
       <div class="name">{{this.$store.state.userName}}</div>
     </el-card>
     <el-card class="info">
       <div class="flag">{{signature}}</div>
-      <div class='interest' v-for="ins in interests">
-          <i class="el-icon-paperclip"></i>&nbsp;
-          {{ins}}</div>
+      <div class="interest" v-for="ins in localInterests">
+        <i class="el-icon-paperclip"></i>
+        &nbsp;
+        {{ins}}
+      </div>
     </el-card>
   </div>
 </template>
@@ -20,12 +22,25 @@
 <script>
 export default {
   name: "userinfo",
-  props:{
-    signature:String,
-    interests:[]
+  props: {
+    signature: String,
+    interests: String
+  },
+  data() {
+    return {
+      localInterests: "",
+      url:""
+    };
+  },
+  created() {
+    this.transfer();
+    console.log(this.localInterests);
   },
   methods: {
-    
+    transfer: function() {
+        this.localInterests = this.interests.split(";");
+      
+    }
   }
 };
 </script>
@@ -33,7 +48,7 @@ export default {
 .user {
   float: left;
   text-align: center;
-  padding:10px;
+  padding: 10px;
 }
 .name {
   font-size: 20px;
@@ -55,9 +70,9 @@ export default {
   padding: 20px;
   color: #999;
 }
-.interest{
-    margin-left: 20px;
-    margin-top: 3px;
-    margin-bottom: 12px;
+.interest {
+  margin-left: 20px;
+  margin-top: 3px;
+  margin-bottom: 12px;
 }
 </style>

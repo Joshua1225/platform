@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.sessions.backends.db import SessionStore
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -14,13 +16,12 @@ from .models import Users, UnidentifiedAcademia, Papers
 
 
 def check_login(request):
-    # request.session.clear_expired()
-    # flag = request.session.get("username", None)
-    # if not flag:
-    #     return False
-    # else:
-    #     return True
-    return True
+    request.session.clear_expired()
+    flag = request.session.get("username", None)
+    if not flag:
+        return False
+    else:
+        return True
 
 '''
 login(username, password)
@@ -203,6 +204,7 @@ def userinfo(request):
             "userinfo": {}
         }]
         return JsonResponse(ans, safe=False)
+
 
 """
 [{"code":0}]  修改成功
@@ -605,3 +607,40 @@ def get_related_paper(paperid, least=0):
 
 
 
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+'''
+upload_avator() 上传头像
+
+[{'code':0}]  上传成功
+[{'code':1}]  拒绝使用GET方法
+[{'code':2}]  用户未登录
+'''
+@csrf_exempt
+# 上传文件
+def upload_avator(request):
+    ans = []
+
+    if request.method == 'POST':
+        if check_login(request):
+
+            ufile = request.body
+            uid = request.session['username']
+            paper = Papers.objects.filter(id=uid)
+            fpath = os.path.join(BASE_DIR, 'static','avators',uid)
+            handle_uploaded_file(ufile,fpath)
+            paper.update(pdf=fpath)
+            ans += [{'code':0}]
+            return JsonResponse(ans, safe=False)
+        else:
+            ans += [{'code':2}]
+            return JsonResponse(ans, safe=False)
+    else:
+        ans += [{'code': 1}]
+        return JsonResponse(ans, safe=False)
+
+# 处理上传文件
+def handle_uploaded_file(f,fpath):
+    with open(fpath, 'wb+') as destination:     #需要修改为保存的位置
+        destination.write(f)
+    destination.close()
