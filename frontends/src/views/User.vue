@@ -20,7 +20,7 @@
       </el-tab-pane>
       <el-tab-pane label="我的关注" name="second">
         <el-col>
-          <expertspot :title="expertnum"></expertspot>
+          <expertspot :experts1="experts"></expertspot>
         </el-col>
       </el-tab-pane>
       <el-tab-pane label="我的消息" name="third">
@@ -50,14 +50,15 @@ export default {
   name: "user",
   created: function() {
     var data = { username: this.$store.state.userName };
-    var that=this;
+    var that = this;
     Axios.post("http://154.8.237.76:8000/userinfo", JSON.stringify(data)).then(
       res => {
         console.log(res);
-        that.signature=res["data"][0]["userinfo"][0]["fields"]["signature"];
-        that.interests=res["data"][0]["userinfo"][0]["fields"]["interest"];
+        that.signature = res["data"][0]["userinfo"][0]["fields"]["signature"];
+        that.interests = res["data"][0]["userinfo"][0]["fields"]["interest"];
       }
     );
+    this.getexperts();
   },
   components: {
     userinforemake,
@@ -69,15 +70,27 @@ export default {
   },
   data: function() {
     return {
-      chosen:"first",
+      chosen: "first",
       papernum: "您已发表了10篇论文",
       expertnum: "198",
       signature: "我喜欢唱、跳、rap、篮球",
-      interests: "唱;跳;rap;篮球"
-    }
+      interests: "唱;跳;rap;篮球",
+      experts: []
+    };
   },
   methods: {
-    handleClick: function(res) {}
+    handleClick: function(res) {},
+    getexperts() {
+      var json = { paperid: "53e99784b7602d9701f3e132" };
+      Axios.post(
+      "http://154.8.237.76:8000/relatedacademia",
+      JSON.stringify(json)
+      ).then(res => {
+        console.log(res);
+        this.experts = res["data"][0]["relauth"];
+        console.log(this.experts);
+      });
+    }
   }
 };
 </script>

@@ -1,15 +1,15 @@
 <template>
   <div align="center" style="padding:10px">
-    <el-card shadow="always" body-style="text-align : left ; font-size : 13px ;">您关注了{{title}}位专家</el-card>
+    <el-card shadow="always" body-style="text-align : left ; font-size : 13px ;">您关注了{{experts2.length}}位专家</el-card>
     <el-card shadow="hover" >
-      <div class="expert"   v-for="expert in experts" :key="expert.title">
+      <div class="expert"   v-for="expert in experts2">
         <div class="name">
-          <router-link class="name" to="/expert">{{expert.name}}</router-link>
+          <router-link class="name" to="/expert">{{expert.fields.name}}</router-link>
         </div>
         <el-button type="danger" icon="el-icon-delete" circle style="float : right" v-show="flag==='true'"></el-button>
-        <div class="organization">{{expert.organization}}</div>
+        <div class="organization">{{expert.fields.orgs}}</div>
         <div class="info">
-          <span>研究领域：{{expert.field}}</span>
+          <span>研究领域：{{expert.field.tags}}</span>
           &nbsp;&nbsp;
         </div>
       </div>
@@ -19,46 +19,26 @@
 </template>
 
 <script>
+import axios from "axios"
+//import { METHODS } from 'http';
 export default {
   name: "expertList",
-  props: { title: String ,
-  flag: String},
+  props: { 
+    title: String ,
+    flag: String,
+    experts2: [],
+    },
   data: function() {
     return {
-      experts: [
-        {
-          name: "王佳奇",
-          organization: "河北胡同口大学",
-          field:"守望先锋"
-
-        },
-        {
-          name: "王佳奇",
-          organization: "河北胡同口大学",
-          field:"守望先锋"
-        },
-        {
-          name: "王佳奇",
-          organization: "河北胡同口大学",
-          field:"守望先锋"
-        },
-        {
-          name: "王佳奇",
-          organization: "河北胡同口大学",
-          field:"守望先锋"
-        },
-        {
-          name: "王佳奇",
-          organization: "河北胡同口大学",
-          field:"守望先锋"
-        },
-        {
-          name: "王佳奇",
-          organization: "河北胡同口大学",
-          field:"守望先锋"
-        }
-      ]
     };
+  },
+  created: function(){
+    for(expert in experts2){
+      if(!boolean(expert.field.tags)){
+        expert.field.tags="暂无"
+        console.log(暂无)
+      }
+    }
   }
 };
 </script>
