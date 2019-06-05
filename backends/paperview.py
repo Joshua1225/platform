@@ -21,8 +21,9 @@ upload_paper() 上传论文
 # 上传文件
 def upload_paper(request):
     ans = []
-    if check_login(request):
-        if request.method == 'POST':
+
+    if request.method == 'POST':
+        if check_login(request):
             pid = request.POST.get('id')
         #sta 需要
             pfile = request.POST.get('file')
@@ -38,10 +39,10 @@ def upload_paper(request):
                 ans += [{'code':0}]
                 return JsonResponse(ans, safe=False)
         else:
-            ans += [{'code':1}]
+            ans += [{'code':2}]
             return JsonResponse(ans, safe=False)
     else:
-        ans += [{'code': 2}]
+        ans += [{'code': 1}]
         return JsonResponse(ans, safe=False)
 
 # 处理上传论文文件
@@ -63,8 +64,9 @@ return response: 正常下载
 # 下载文件
 def download_paper(request):
     ans = []
-    if check_login(request):
-        if request.method == 'POST':
+
+    if request.method == 'POST':
+        if check_login(request):
             pid = request.POST.get('id')
             path = os.path.join('static','papers', pid)  #文件保存目录
             file = open(path,'rb')
@@ -73,10 +75,10 @@ def download_paper(request):
             response['Content-Disposition'] = 'attachment;filename=' + pid
             return response
         else:
-            ans += [{'code': 1}]
+            ans += [{'code': 2}]
             return JsonResponse(ans, safe=False)
     else:
-        ans += [{'code': 2}]
+        ans += [{'code': 1}]
         return JsonResponse(ans, safe=False)
 
 @csrf_exempt
