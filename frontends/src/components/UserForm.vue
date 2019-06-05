@@ -1,9 +1,9 @@
 <template>
-  <div class="aform0" ref="form">
+  <div class="aform0">
     <el-card body-style="text-align :left ; padding :40px ;">
       <el-form :disabled="false" label-width="80px" @submit.native.prevent>
-        <el-form-item label="用户名" v-model="form">{{form.email}}</el-form-item>
-        <el-form-item label="注册邮箱" v-model="form">{{form.email}}</el-form-item>
+        <el-form-item label="用户名" >{{info.username}}</el-form-item>
+        <el-form-item label="注册邮箱">{{info.email}}</el-form-item>
         <el-form-item label="个人头像">
           <el-upload
             class="avatar-uploader"
@@ -19,7 +19,7 @@
         </el-form-item>
 
         <el-form-item label="个性签名">
-          <el-input type="textarea" v-model="form.content"></el-input>
+          <el-input type="textarea" v-model="signature"></el-input>
         </el-form-item>
         <el-form-item label="兴趣领域">
           <el-tag
@@ -45,10 +45,7 @@
       <div style="text-align : center ; margin-top : 10px">
         <span v-if="con">
           <el-button type="primary" @click="submitForm">提交</el-button>
-          <el-button>取消</el-button>
-        </span>
-        <span v-else>
-          <el-button type="primary" @click="submitForm">修改信息</el-button>
+          <el-button @click="recoverForm">取消</el-button>
         </span>
       </div>
     </el-card>
@@ -57,7 +54,6 @@
 
 <script>
 import Axios from "axios";
-import { hostname } from "os";
 
 //var host="http://154.8.237.76:8000";
 var host = "";
@@ -65,20 +61,25 @@ var host = "";
 export default {
   name: "userform",
   props: {
-    obj: String
+    info: {}
   },
-  created: function() {},
+  created: function() {
+    console.log(this.info);
+    this.signature = this.info.signature;
+    this.email = this.info.email;
+    this.username = this.info.username;
+    var tmp=this.info.interests;
+    
+    this.dynamicTags =tmp.split(";");
+    console.log(tmp.split(";"));
+    console.log(this.dynamicTags);
+  },
   data: function() {
     return {
       con: true,
       imageUrl: "",
-      email: "",
-      form: {
-        interest: "",
-        signature: ""
-      },
-
-      dynamicTags: ["123"],
+      signature: "",
+      dynamicTags: [],
       uploadUrl: "",
       file: "",
       fileList: [],
@@ -116,19 +117,7 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    submitForm: function() {
-      for (i in this.dynamicTags) {
-        this.interest = this.interest + ";" + i;
-      }
-      var info = {
-        username:'123',
-        signature: this.signature,
-        interest: this.interest
-      };
-      Axios.post(host + "/change_info", info).then(res => {
-        console.log(res);
-      });
-    },
+
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
@@ -152,6 +141,24 @@ export default {
       Axios.post(host + "/listcollection", JSON.stringify(data)).then(res => {
         console.log(res);
       });
+    },
+    submitForm: function() {
+      for (i in this.dynamicTags) {
+        this.interest = this.interest + ";" + i;
+      }
+      var info = {
+        username: "123",
+        signature: this.signature,
+        interest: this.interest
+      };
+      Axios.post(host + "/change_info", info).then(res => {
+        console.log(res);
+        this.$emit("up");
+      });
+    },
+    recoverForm:function(){
+      this.signature=info.signature;
+      this.dynamicTags=info.interests.spilit(';');
     }
   }
 };
