@@ -45,5 +45,6 @@ urlpatterns = [
     path('academyinfo', user.academyinfo),
     path('relatedacademia', user.relatedacademia),
     path('paperinfo', paperview.paperinfo),
-    path('listfollow', user.listfollow)
+    path('listfollow', user.listfollow),
+    path('upload_avator', user.upload_avator)
 ]

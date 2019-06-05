@@ -25,22 +25,20 @@ def upload_paper(request):
 
     if request.method == 'POST':
         if check_login(request):
-            pid = request.POST.get('id')
-        #sta 需要
-            pfile = request.POST.get('file')
-            print(request.POST)
-            paper = Papers.objects.filter(id=pid)
-            # if len(paper) == 0:       #论文不存在
-            #     ans += [{'code': 3}]
-            #     return JsonResponse(ans, safe=False)
-            # else:
 
-            #fpath = os.path.join('static', 'papers',pid)
-            fpath = os.path.join(BASE_DIR, "static",pid)
-            handle_uploaded_file(pfile,fpath)
-            paper.update(pdf=fpath)
-            ans += [{'code':0}]
-            return JsonResponse(ans, safe=False)
+            pfile = request.body
+            pid = request.POST.get('id')
+            paper = Papers.objects.filter(id=pid)
+            if len(paper) == 0:       #论文不存在
+                ans += [{'code': 3}]
+                return JsonResponse(ans, safe=False)
+            else:
+                fpath = os.path.join('static', 'papers',pid)
+                fpath = os.path.join(BASE_DIR, 'static','papers',pid)
+                handle_uploaded_file(pfile,fpath)
+                paper.update(pdf=fpath)
+                ans += [{'code':0}]
+                return JsonResponse(ans, safe=False)
         else:
             ans += [{'code':2}]
             return JsonResponse(ans, safe=False)
@@ -51,8 +49,7 @@ def upload_paper(request):
 # 处理上传论文文件
 def handle_uploaded_file(f,fpath):
     with open(fpath, 'wb+') as destination:     #需要修改为保存的位置
-        for chunk in f.chunks():
-            destination.write(chunk)
+        destination.write(f)
     destination.close()
 
 
@@ -71,7 +68,7 @@ def download_paper(request):
     if request.method == 'POST':
         if check_login(request):
             pid = request.POST.get('id')
-            path = os.path.join('static','papers', pid)  #文件保存目录
+            path = os.path.join(BASE_DIR,'static','papers', pid)  #文件保存目录
             file = open(path,'rb')
             response = FileResponse(file)
             response['Content-Type'] = 'application/octet-stream'    #可以下载任意格式的文件
