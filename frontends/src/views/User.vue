@@ -106,7 +106,7 @@ export default {
       });
     },
     updateInfo: function() {
-    
+      var that=this;
       Axios.post(host + "/userinfo", JSON.stringify({username:123})).then(res => {
         console.log("userinfo:",res);
         this.userInfo.signature =
