@@ -91,7 +91,7 @@ export default {
     handleClick: function(res) {},
 
     updateInfo: function() {
-    
+      var that=this;
       Axios.post(host + "/userinfo", JSON.stringify({username:123})).then(res => {
         console.log(res);
         that.userInfo.signature =
