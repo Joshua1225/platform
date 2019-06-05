@@ -3,7 +3,7 @@
   <div>
     <!-- Logo-->
     <div>
-      <searchBar :input="q" ref="sb" style="margin-top:10px"  @searchclick="goSearch"/>
+      <searchBar :input="q" ref="sb" style="margin-top:10px" @searchclick="goSearch"/>
     </div>
     <br>
     <br>
@@ -13,7 +13,12 @@
       </el-col>
       <el-col :span="12">
         <div>
-          <paperList :papers="parentPapers" @nextpage="updatePage" title="搜索结果"/>
+          <paperList
+            :papers="parentPapers"
+            :page_total="page_To"
+            @pagechange="updatePage"
+            title="搜索结果"
+          />
         </div>
       </el-col>
     </el-row>
@@ -26,7 +31,7 @@ import PaperList from "@/components/PaperList.vue";
 import axios from "axios";
 
 //var host="http://154.8.237.76:8000";
-var host="";
+var host = "";
 export default {
   name: "result",
   created: function() {
@@ -42,14 +47,20 @@ export default {
       page_size: 10,
       page_num: 1
     };
-    this.q=this.$route.query.q;
-    console.log(this.$refs.SearchBar);
-    console.log(searchData);
-    axios
-      .post(host+"/search/", JSON.stringify(searchData))
-      .then(res => {
-        console.log(res);
-      });
+    this.q = this.$route.query.q;
+
+    axios.post(host + "/search", JSON.stringify(searchData)).then(res => {
+      this.parentPapers = res.data;
+      console.log(res.data);
+      if (res.data.code == 0) {
+        this.$message.warning("数据有限，建议加钱");
+        this.$router.push("/");
+      } else {
+        this.transfer();
+      }
+
+      console.log(res);
+    });
   },
   components: {
     SearchBar,
@@ -58,31 +69,93 @@ export default {
   },
   data() {
     return {
-      q:'',
-      parentSearch:'',
+      q: "",
+      page_To: 1,
+      parentSearch: "",
       parentPapers: []
     };
   },
   methods: {
     goSearch(searchData) {
       console.log(searchData);
-      this.parentSearch=searchData;
+      this.q = searchData.q;
+      this.parentSearch = searchData;
 
-      axios
-        .post(host+"/search", JSON.stringify(searchData))
-        .then(res => {
-          this.parentPapers=res.data
-          console.log(res);
-        });
+      axios.post(host + "/search", JSON.stringify(searchData)).then(res => {
+        if (res.data.code == 0) {
+          this.$message.warning("数据有限，建议加钱");
+          this.$router.push("/");
+        } else {
+          this.transfer();
+        }
+      });
     },
-    updatePage(page){
-        this.parentSearch.page_num=page;
-        axios
-        .post(host+"/search", JSON.stringify(searchData))
-        .then(res => {
-          this.parentPapers=res.data
-          console.log(res);
-        });
+    updatePage(page) {
+      this.parentSearch.page_num = page;
+      axios.post(host + "/search", JSON.stringify(searchData)).then(res => {
+        if (res.data.code == 0) {
+          this.$message.warning("数据有限，建议加钱");
+          this.$router.push("/");
+        } else {
+          this.transfer();
+        }
+      });
+    },
+    rep(str) {
+      var a = str.replace("[", "");
+      var b = a.replace("]", "");
+      var c = b.split("\'").join("");
+      var d = c.split('\"').join("");
+      var e = d.split(",");
+      return e;
+    },
+    transfer() {
+     
+      // for (var i = 0; i < 10; i++) {
+      //   tmp[i] = this.parentPapers[i];
+      //   if (this.parentPapers[i].n_citation == null) {
+      //     this.parentPapers[i].n_citation = "暂无";
+      //   }
+      //   if (this.parentPapers[i].year == null) {
+      //     this.parentPapers[i].year = "暂无";
+      //   }
+      //   if (this.parentPapers[i].keywords == null) {
+      //     this.parentPapers[i].keywords = ["暂无"];
+      //   }
+      // }
+      console.log(this.parentPapers);
+      if (this.parentPapers.code == 0) {
+        this.$message.warning("数据有限，建议加钱");
+        this.$$router.push("/");
+        return
+      }
+      this.page_To = 5;
+      var temp = [];
+
+      for (var i = 0; i < 10; i++) {
+        if (this.parentPapers[i].keywords == null) {
+          this.parentPapers[i].keywords = ["暂无"];
+        } else {
+          this.parentPapers[i].keywords = this.rep(
+            this.parentPapers[i].keywords
+          );
+          console.log(this.parentPapers[i].keywords);
+        }
+        if (this.parentPapers[i].author == null) {
+          this.parentPapers[i].author = ["暂无"];
+        } else {
+          var a = this.parentPapers[i].author.split("\'").join('\"');
+          this.parentPapers[i].author = JSON.parse(a);
+        }
+        if (this.parentPapers[i].n_citation == null) {
+          this.parentPapers[i].n_citation = "暂无";
+        }
+        if (this.parentPapers[i].year == null) {
+          this.parentPapers[i].year = "暂无";
+        }
+        temp[i] = this.parentPapers[i];
+      }
+      this.parentPapers = temp;
     }
   }
 };
