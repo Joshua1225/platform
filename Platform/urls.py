@@ -46,7 +46,7 @@ urlpatterns = [
     path('relatedacademia', user.relatedacademia),
     path('paperinfo', paperview.paperinfo),
     path('listfollow', user.listfollow),
-    path('upload_avator', user.upload_avator)
+    path('upload_avator', user.upload_avator),
     path('listfollow', user.listfollow),
     path('relatedpaper', user.relatedpaper),
     path('recommend', user.recommend)

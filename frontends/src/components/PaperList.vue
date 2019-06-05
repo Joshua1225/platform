@@ -17,60 +17,44 @@
         <div class="title">
           <router-link class="title" :to="{path:'paper',query:{id:paper.id}}">{{paper.title}}</router-link>
         </div>
-        <div class="abstract">{{paper.abstract}}</div>
+        <div class="abstract"><span v-for="kw in paper.keywords">{{kw}};&nbsp;</span></div>
         <div class="info">
-          <span v-for="author in paper.authors" :key="author.authorid">
-            <router-link to="/">{{author.name}}</router-link>&nbsp;
+          <span v-for="auth in paper.author">
+            <router-link :to="{path:'expert',query:{id:auth.id}}">{{auth.name}}</router-link>;&nbsp;
           </span>
-          <span>被引量：{{paper.cited}}</span>
+          <span>被引量：{{paper.n_citation}}</span>
           &nbsp;&nbsp;
           <span class="year">-{{paper.year}}年</span>
         </div>
       </div>
-      <el-pagination background layout="prev, pager, next" :total="page_total"></el-pagination>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="page_total"
+        :current-change="page_change"
+      ></el-pagination>
     </el-card>
   </div>
 </template>
 
 <script>
+import { constants } from 'crypto';
 export default {
   name: "paperList",
   props: {
     title: String,
     papers: [],
-    page_no: Int32Array,
-    page_total: Int32Array
+    page_no: Number,
+    page_total: Number
   },
   data: function() {
-    return {
-      // papers: [
-      //   {
-      //     id: "53e9ab9eb7602d970354a97e",
-      //     title: "基于深度学习的水文1",
-      //     abstract:
-      //       "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。今天搞个大新闻！",
-      //     authors: [
-      //       { name: "作者1", authorid: "12345" },
-      //       { name: "作者2", authorid: "15345" }
-      //     ],
-      //     cited: "555",
-      //     year: "2019",
-      //     origin: "BUAA"
-      //   },
-      //   {
-      //     id: "53e9ab9eb7602d970354a97e",
-      //     title: "基于深度学习的水文2",
-      //     abstract: "今天搞个大新闻！苟利国家生死以,岂因祸福避趋之。",
-      //     authors: [
-      //       { name: "作者1", authorid: "12345" },
-      //       { name: "作者2", authorid: "15345" }
-      //     ],
-      //     cited: "555",
-      //     year: "2019",
-      //     origin: "BUAA"
-      //   }
-      // ]
-    };
+    return {};
+  },
+  methods: {
+    page_change(p) {
+      consol.log(p+" page")
+      this.$$emit("pagechange", p);
+    }
   }
 };
 </script>
