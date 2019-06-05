@@ -84,7 +84,7 @@ export default {
     // 初始化页面数据
     this.transfer();
     var data={
-      academyid: "53f43d89dabfaedce5565d9a",
+      academyid: this.academyId,
     }
     var that=this;
     console.log(555555)
@@ -113,10 +113,9 @@ export default {
     },
     setFollow(){
       var data={
-        id:"53f43d89dabfaedce5565d9a",
+        id:this.academyId,
         type:0,
-        username:"123"
-        // username:this.$store.state.userName
+        username:this.$store.state.userName
       }
       var that=this;
        axios
@@ -136,7 +135,7 @@ export default {
     },
     offFollow(){
       var data={
-        id:"53f43d89dabfaedce5565d9a",
+        id:this.academyId,
         type:1,
         username:"123"
       }
