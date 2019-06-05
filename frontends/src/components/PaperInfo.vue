@@ -67,9 +67,9 @@ import Axios from "axios";
 var host = "";
 
 export default {
-  props: { 
-    paperid: String 
-    },
+  props: {
+    paperid: String
+  },
   name: "paperinfo",
   data() {
     return {
@@ -84,57 +84,60 @@ export default {
         DOI: "123",
         cited: "555",
         year: "2019",
-        origin: "BUAA",
-        
+        origin: "BUAA"
       },
       following: false //初始值设定为是否关注
     };
   },
   created: function() {
     //this.paperid="53e99784b7602d9701f3e132"
-    var js={
-        paperid: "53e99784b7602d9701f3e132",
-        username: 123
+    var js = {
+      paperid: "53e99784b7602d9701f3e132",
+      username: 123
+    };
+    Axios.post("http://154.8.237.76:8000/paperinfo", JSON.stringify(js)).then(
+      function(res) {
+        console.log(res);
+        paper = {
+          title: res['data']['paperinfo']['title'],
+          abstract:res['data']['paperinfo']['abstract'],
+          authors: res['data']['paperinfo']['authors'],
+          DOI: res['data']['paperinfo']['doi'],
+          cited: res['data']['paperinfo']['n_citation'],
+          year: res['data']['paperinfo']['year'],
+          origin: res['data']['paperinfo']['publisher'],
+        };
       }
-      Axios.post("http://154.8.237.76:8000/paperinfo",JSON.stringify(js)).then(
-        function(res)
-        {
-          console.log(res);
-          
-        }
-      )
+    );
   },
   methods: {
-    follow()
-    {
-      var js={
-        id:this.paperid,
-        type: this.following?1:0,
+    follow() {
+      var js = {
+        id: this.paperid,
+        type: this.following ? 1 : 0,
         username: 123
-      }
-      console.log(this.following)
-      var that=this
-      Axios.post("http://154.8.237.76:8000/collect",JSON.stringify(js)).then(
-        function(res)
-        {
+      };
+      console.log(this.following);
+      var that = this;
+      Axios.post("http://154.8.237.76:8000/collect", JSON.stringify(js)).then(
+        function(res) {
           console.log(res);
-          that.following = !that.following
+          that.following = !that.following;
         }
-      )
+      );
     },
     download_button() {
-      var js={
-        id : this.paperid,
+      var js = {
+        id: this.paperid,
         username: 123
-      }
-      Axios.post("http://154.8.237.76:8000/download_paper",JSON.stringify(js)).then(
-        function(res)
-        {
-          console.log(res);
-          window.open(res["data"][0]['response']);
-
-        }
-      )
+      };
+      Axios.post(
+        "http://154.8.237.76:8000/download_paper",
+        JSON.stringify(js)
+      ).then(function(res) {
+        console.log(res);
+        window.open(res["data"][0]["response"]);
+      });
     },
     goAppeal() {
       this.$router.push("/appeal");
