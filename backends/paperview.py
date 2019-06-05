@@ -8,6 +8,7 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from backends.user import check_login
 from backends.models import Papers,upload_paper_to
+from django.contrib.sessions.models import Session
 
 '''
 upload_paper() 上传论文
