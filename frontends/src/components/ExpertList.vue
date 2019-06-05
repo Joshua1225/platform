@@ -4,12 +4,12 @@
     <el-card shadow="hover" >
       <div class="expert"   v-for="expert in experts2">
         <div class="name">
-          <router-link class="name" to="/expert">{{expert.fields.name}}</router-link>
+          <router-link class="name" to="/expert">{{expert["fields"]["name"]}}</router-link>
         </div>
         <el-button type="danger" icon="el-icon-delete" circle style="float : right" v-show="flag==='true'"></el-button>
-        <div class="organization">{{expert.fields.orgs}}</div>
+        <div class="organization"><span>工作机构：{{expert["fields"]["orgs"]}}</span></div>
         <div class="info">
-          <span>研究领域：{{expert.field.tags}}</span>
+          <span>研究领域：{{expert["fields"]["tags"]}}</span>
           &nbsp;&nbsp;
         </div>
       </div>
@@ -32,12 +32,7 @@ export default {
     };
   },
   created: function(){
-    for(expert in experts2){
-      if(!boolean(expert.field.tags)){
-        expert.field.tags="暂无"
-        console.log(暂无)
-      }
-    }
+    
   }
 };
 </script>

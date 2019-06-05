@@ -88,30 +88,90 @@ export default {
       expertnum: "198",
       collectionnum: "您已收藏了10篇论文",
       message:[],
-      experts:[]
+      experts:[],
+      preexperts : {
+        
+    code: 0,
+    followed: [
+      {
+        "model": "backends.unidentifiedacademia",
+        "pk": "53f439a9dabfaec22ba9f894",
+        "fields": {
+          "name": "M. Krahe",
+          "n_pubs": 1,
+          "h_index": 0,
+          "n_citation": 0,
+          "orgs": "['']",
+          "tags": "暂无",
+          "pubs": "[{'i': '53e9a841b7602d970318af6b', 'r': 1}]",
+          "position": null,
+          "experience": null,
+          "education": null,
+          "tendency": null
+        }
+      },
+      {
+        "model": "backends.unidentifiedacademia",
+        "pk": "53f439a9dabfaee1c0abba5c",
+        "fields": {
+          "name": "Jonathan S Potts",
+          "n_pubs": 4,
+          "h_index": 1,
+          "n_citation": 63,
+          "orgs": "['Centre for Maritime Research, The National Maritime Museum, Greenwich, London SE10 9NF, UK']",
+          "tags": "'Recent Developments'",
+          "pubs": "[{'i': '53e99a04b7602d970224e4e0', 'r': 1}, {'i': '53e99f64b7602d97028361a0', 'r': 1}, {'i': '53e9b259b7602d9703cfc02d', 'r': 1}, {'i': '53e9b39db7602d9703e8245a', 'r': 0}]",
+          "position": null,
+          "experience": null,
+          "education": null,
+          "tendency": null
+        }
+      },
+      {
+        "model": "backends.unidentifiedacademia",
+        "pk": "53f43d98dabfaedf435b6442",
+        "fields": {
+          "name": "Lung-Ming Tsay",
+          "n_pubs": 5,
+          "h_index": 0,
+          "n_citation": 0,
+          "orgs": "['']",
+          "tags": "暂无",
+          "pubs": "[{'i': '53e9a3abb7602d9702cb8f10', 'r': 0}, {'i': '53e9b38fb7602d9703e7183e', 'r': 2}, {'i': '53e9a448b7602d9702d669b5', 'r': 0}, {'i': '56d866eddabfae2eeea78414', 'r': 0}, {'i': '56d8d216dabfae2eeeac6889', 'r': 0}]",
+          "position": null,
+          "experience": null,
+          "education": null,
+          "tendency": null
+        }
+      }
+    ]
+  }
     };
   },
   methods: {
     handleClick: function(res) {},
     getmessage: function() {
+      var that=this;
       Axios.post(host + "/getmessage").then(res => {
         console.log("message:",res);
-        this.message = res["data"];
+        that.message = res["data"];
       });
     },
     getexperts: function() {
+      var that=this;
       Axios.post(host + "/listfollow", JSON.stringify({username:123})).then(res => {
         console.log("experts:",res);
-        this.experts = res["data"][0]["followed"];
+        that.experts = that.preexperts.followed;
+        console.log("that.experts:",that.experts);
       });
     },
     updateInfo: function() {
       var that=this;
       Axios.post(host + "/userinfo", JSON.stringify({username:123})).then(res => {
         console.log("userinfo:",res);
-        this.userInfo.signature =
+        that.userInfo.signature =
           res["data"][0]["userinfo"][0]["fields"]["signature"];
-        this.userInfo.interests =
+        that.userInfo.interests =
           res["data"][0]["userinfo"][0]["fields"]["interest"];
       });
     }
