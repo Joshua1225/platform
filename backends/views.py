@@ -9,7 +9,9 @@ from backends.models import UnidentifiedAcademia
 
 
 def test(request):
-    return render(request, "test.html")
+    Papers.data_import()
+    return HttpResponse("ok")
+    # return render(request, "test.html")
 
 @csrf_exempt
 def data(request):

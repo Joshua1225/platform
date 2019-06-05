@@ -23,7 +23,7 @@
       </el-tab-pane>
       <el-tab-pane label="我的关注" name="second">
         <el-col>
-          <expertspot :title="expertnum"></expertspot>
+          <expertspot :experts1="experts"></expertspot>
         </el-col>
       </el-tab-pane>
       <el-tab-pane label="我的消息" name="third">

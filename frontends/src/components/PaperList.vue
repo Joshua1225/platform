@@ -27,7 +27,7 @@
           <span class="year">-{{paper.year}}年</span>
         </div>
       </div>
-      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination background layout="prev, pager, next" :total="page_total"></el-pagination>
     </el-card>
   </div>
 </template>
@@ -35,10 +35,12 @@
 <script>
 export default {
   name: "paperList",
-  props: { 
-    title: String ,
-    papers: []
-    },
+  props: {
+    title: String,
+    papers: [],
+    page_no: int,
+    page_total: int
+  },
   data: function() {
     return {
       // papers: [
